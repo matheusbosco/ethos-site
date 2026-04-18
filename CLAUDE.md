@@ -18,8 +18,46 @@
 
 ## 2. Stack e Estrutura
 
-> **Pendente** — sera definido apos reuniao entre Matheus e Luca.
-> Quando definido, atualizar esta secao com: framework, hospedagem, estrutura de pastas, comandos de dev/build.
+- **Framework:** Next.js 15 (App Router) + TypeScript
+- **Estilizacao:** Tailwind CSS v4 — tokens de cor e tipografia definidos em `src/app/globals.css` via `@theme`
+- **Hospedagem:** Vercel (deploy automatico a cada push na `main`)
+- **Idioma:** Portugues (PT-BR)
+
+### Estrutura de pastas
+
+```
+src/
+  app/
+    globals.css       — tokens de design (@theme) e reset global
+    layout.tsx        — layout raiz, metadata global, fonte
+    page.tsx          — composicao das secoes da landing page
+  components/
+    ui/               — componentes atomicos (Button, etc.)
+    layout/           — Nav, Footer, Section wrapper
+  sections/           — secoes da landing page (Hero, Manifesto, etc.)
+brand_assets/         — logo, paleta, tipografia (ver README la dentro)
+```
+
+### Comandos
+
+```bash
+npm run dev    # servidor local em localhost:3000
+npm run build  # build de producao
+npm run lint   # checar erros de lint antes de PR
+```
+
+### Sobre o Tailwind v4
+
+Nao existe `tailwind.config.ts` neste projeto. Tokens ficam em `src/app/globals.css`:
+
+```css
+@theme {
+  --color-primary: #...; /* cor primaria */
+  --font-heading: var(--font-...);
+}
+```
+
+Usar `bg-primary`, `text-primary`, etc. normalmente via classes Tailwind.
 
 ---
 
