@@ -1,10 +1,13 @@
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/sections/Hero";
+import { Numbers } from "@/sections/Numbers";
 import { Manifesto } from "@/sections/Manifesto";
 import { Services } from "@/sections/Services";
+import { TechStack } from "@/sections/TechStack";
 import { TechProof } from "@/sections/TechProof";
 import { Process } from "@/sections/Process";
+import { FAQ } from "@/sections/FAQ";
 import { CtaFinal } from "@/sections/CtaFinal";
 
 export default function Home() {
@@ -13,10 +16,13 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <Numbers />
         <Manifesto />
         <Services />
+        <TechStack />
         <TechProof />
         <Process />
+        <FAQ />
         <CtaFinal />
       </main>
       <Footer />

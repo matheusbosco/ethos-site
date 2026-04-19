@@ -27,7 +27,7 @@ export function Hero() {
 
         <div className="flex flex-col sm:flex-row gap-4">
           <Button as="a" href="#contato" variant="primary" className="text-sm px-8 py-3.5">
-            Iniciar diálogo
+            Diagnóstico gratuito — 30 min
           </Button>
           <Button as="a" href="#servicos" variant="secondary" className="text-sm px-8 py-3.5">
             O que entregamos

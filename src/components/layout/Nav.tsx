@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 const links = [
   { label: "O que entregamos", href: "#servicos" },
   { label: "Como funciona", href: "#processo" },
-  { label: "Manifesto", href: "#manifesto" },
+  { label: "FAQ", href: "#faq" },
 ];
 
 export function Nav() {
@@ -50,7 +50,7 @@ export function Nav() {
 
         <div className="hidden md:block">
           <Button as="a" href="#contato" variant="primary">
-            Iniciar diálogo
+            Diagnóstico gratuito
           </Button>
         </div>
 
@@ -80,7 +80,7 @@ export function Nav() {
             </a>
           ))}
           <Button as="a" href="#contato" variant="primary" className="w-full justify-center">
-            Iniciar diálogo
+            Diagnóstico gratuito
           </Button>
         </div>
       )}
