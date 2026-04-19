@@ -16,9 +16,9 @@ export default function Home() {
         <Hero />
         <Numbers />
         <Services />
+        <Process />
         <TechProof />
         <Manifesto />
-        <Process />
         <FAQ />
       </main>
       <Footer />
