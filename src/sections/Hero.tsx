@@ -1,12 +1,15 @@
 import { Button } from "@/components/ui/Button";
+import { HeroBackground } from "@/components/ui/HeroBackground";
 
 export function Hero() {
   return (
-    <section className="w-full min-h-screen flex items-center bg-[#FAF9F5] px-6 pt-16 relative overflow-hidden">
-      {/* Linha decorativa vertical */}
-      <div className="absolute left-6 top-1/2 -translate-y-1/2 w-px h-32 bg-[#E8E6DC] hidden lg:block" />
+    <section className="w-full min-h-screen flex items-center px-6 pt-16 relative overflow-hidden">
+      <HeroBackground />
 
-      <div className="mx-auto max-w-5xl py-28 md:py-36 animate-fade-up">
+      {/* Linha decorativa vertical */}
+      <div className="absolute left-6 top-1/2 -translate-y-1/2 w-px h-32 bg-[#E8E6DC] hidden lg:block z-10" />
+
+      <div className="mx-auto max-w-5xl py-28 md:py-36 animate-fade-up relative z-10">
         <p className="text-xs font-medium text-[#7C5C3E] tracking-[0.2em] uppercase mb-8">
           Agência de IA
         </p>
