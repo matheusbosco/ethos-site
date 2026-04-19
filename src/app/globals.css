@@ -2,9 +2,9 @@
 
 @theme inline {
   /* Cores */
-  --color-background: #FAF9F5;
-  --color-surface: #F0EEE6;
-  --color-border: #E8E6DC;
+  --color-background: #F0E9D6;
+  --color-surface: #E8DFCB;
+  --color-border: #DFD6C2;
 
   --color-text: #141413;
   --color-muted: #87867F;
@@ -40,7 +40,7 @@
 }
 
 body {
-  background-color: #FAF9F5;
+  background-color: #F0E9D6;
   color: #141413;
   font-family: var(--font-inter), Georgia, serif;
 }

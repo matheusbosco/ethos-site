@@ -7,7 +7,7 @@ export function Hero() {
       <HeroBackground />
 
       {/* Linha decorativa vertical */}
-      <div className="absolute left-6 top-1/2 -translate-y-1/2 w-px h-32 bg-[#E8E6DC] hidden lg:block z-10" />
+      <div className="absolute left-6 top-1/2 -translate-y-1/2 w-px h-32 bg-[#DFD6C2] hidden lg:block z-10" />
 
       <div className="mx-auto max-w-5xl py-28 md:py-36 animate-fade-up relative z-10">
         <p className="text-xs font-medium text-[#7C5C3E] tracking-[0.2em] uppercase mb-8">

@@ -40,7 +40,7 @@ export function Process() {
         </h2>
       </Reveal>
 
-      <div className="flex flex-col divide-y divide-[#E8E6DC]">
+      <div className="flex flex-col divide-y divide-[#DFD6C2]">
         {steps.map((step, i) => (
           <Reveal key={step.number} delay={i * 80}>
             <div className="flex flex-col md:flex-row gap-6 py-10">

@@ -13,7 +13,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#FAF9F5]/90 backdrop-blur-sm border-b border-[#E8E6DC]">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#F0E9D6]/90 backdrop-blur-sm border-b border-[#DFD6C2]">
       <div className="mx-auto max-w-5xl px-6 h-16 flex items-center justify-between">
         <a
           href="#"
@@ -55,7 +55,7 @@ export function Nav() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-[#FAF9F5] border-t border-[#E8E6DC] px-6 py-6 flex flex-col gap-6">
+        <div className="md:hidden bg-[#F0E9D6] border-t border-[#DFD6C2] px-6 py-6 flex flex-col gap-6">
           {links.map((l) => (
             <a
               key={l.href}

@@ -37,7 +37,7 @@ export function Services() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {services.map((s, i) => (
           <Reveal key={s.number} delay={i * 100}>
-            <div className="border border-[#E8E6DC] bg-[#FAF9F5] rounded-xl p-8 flex flex-col gap-6 hover:border-[#1C2B3A] hover:shadow-sm transition-all duration-300 h-full">
+            <div className="border border-[#DFD6C2] bg-[#F0E9D6] rounded-xl p-8 flex flex-col gap-6 hover:border-[#1C2B3A] hover:shadow-sm transition-all duration-300 h-full">
               <span className="text-xs font-medium text-[#87867F] tracking-widest">
                 {s.number}
               </span>
