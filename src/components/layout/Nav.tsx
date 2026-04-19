@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 
 const links = [
@@ -11,9 +11,22 @@ const links = [
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#F0E9D6]/90 backdrop-blur-sm border-b border-[#DFD6C2]">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
+        scrolled
+          ? "bg-[#F0E9D6]/80 backdrop-blur-md border-[#DFD6C2]"
+          : "bg-transparent border-transparent"
+      }`}
+    >
       <div className="mx-auto max-w-5xl px-6 h-16 flex items-center justify-between">
         <a
           href="#"
