@@ -7,6 +7,7 @@ import { Services } from "@/sections/Services";
 import { TechProof } from "@/sections/TechProof";
 import { Process } from "@/sections/Process";
 import { FAQ } from "@/sections/FAQ";
+import { CtaFinal } from "@/sections/CtaFinal";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <TechProof />
         <Manifesto />
         <FAQ />
+        <CtaFinal />
       </main>
       <Footer />
     </>
