@@ -1,22 +1,24 @@
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/layout/Section";
+import { Reveal } from "@/components/ui/Reveal";
 
 export function CtaFinal() {
   return (
     <Section id="contato">
-      <div className="max-w-2xl">
-        <h2 className="font-[family-name:var(--font-heading)] text-4xl md:text-5xl font-bold text-[#141413] leading-[1.15] tracking-tight mb-6">
-          [Placeholder — frase de encerramento forte. Uma pergunta ou provocação.]
+      <Reveal>
+        <div className="w-12 h-px bg-[#7C5C3E] mb-12" />
+        <h2 className="font-[family-name:var(--font-heading)] italic text-4xl md:text-5xl font-normal text-[#141413] leading-[1.15] mb-6 max-w-xl">
+          [Placeholder — frase de encerramento forte.]
         </h2>
 
-        <p className="text-lg text-[#87867F] leading-relaxed mb-12 max-w-md">
+        <p className="text-lg text-[#87867F] leading-[1.75] mb-12 max-w-md">
           [Placeholder — uma linha que reduz a fricção para entrar em contato.]
         </p>
 
-        <Button as="a" href="mailto:contato@ethos.ai" variant="primary" className="text-base px-8 py-4">
+        <Button as="a" href="mailto:contato@ethos.ai" variant="primary" className="text-sm px-8 py-3.5">
           Iniciar diálogo
         </Button>
-      </div>
+      </Reveal>
     </Section>
   );
 }

@@ -1,4 +1,5 @@
 import { Section } from "@/components/layout/Section";
+import { Reveal } from "@/components/ui/Reveal";
 
 const paragraphs = [
   "[Placeholder — Por que a Ethos existe. O problema que vocês viram no mercado e decidiram resolver.]",
@@ -10,18 +11,19 @@ export function Manifesto() {
   return (
     <Section id="manifesto" surface>
       <div className="max-w-2xl">
-        <p className="text-sm font-medium text-[#7C5C3E] tracking-widest uppercase mb-10">
-          Manifesto
-        </p>
+        <Reveal>
+          <p className="text-xs font-medium text-[#7C5C3E] tracking-[0.2em] uppercase mb-12">
+            Manifesto
+          </p>
+        </Reveal>
 
-        <div className="space-y-8">
+        <div className="space-y-10">
           {paragraphs.map((p, i) => (
-            <p
-              key={i}
-              className="text-lg md:text-xl text-[#141413] leading-[1.8]"
-            >
-              {p}
-            </p>
+            <Reveal key={i} delay={i * 120}>
+              <p className="text-xl md:text-2xl text-[#141413] leading-[1.75] font-[family-name:var(--font-heading)]">
+                {p}
+              </p>
+            </Reveal>
           ))}
         </div>
       </div>

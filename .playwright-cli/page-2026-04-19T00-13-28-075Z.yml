@@ -1,0 +1,91 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Ethos" [ref=e4] [cursor=pointer]:
+        - /url: "#"
+      - navigation [ref=e5]:
+        - link "O que entregamos" [ref=e6] [cursor=pointer]:
+          - /url: "#servicos"
+        - link "Como funciona" [ref=e7] [cursor=pointer]:
+          - /url: "#processo"
+        - link "Manifesto" [ref=e8] [cursor=pointer]:
+          - /url: "#manifesto"
+      - link "Iniciar diálogo" [ref=e10] [cursor=pointer]:
+        - /url: "#contato"
+  - main [ref=e11]:
+    - generic [ref=e14]:
+      - paragraph [ref=e15]: Agência de IA
+      - heading "Inteligência sob medida." [level=1] [ref=e16]
+      - paragraph [ref=e18]: "[Placeholder — uma frase que completa o posicionamento. O que a Ethos faz de diferente e para quem.]"
+      - generic [ref=e19]:
+        - link "Iniciar diálogo" [ref=e20] [cursor=pointer]:
+          - /url: "#contato"
+        - link "O que entregamos" [ref=e21] [cursor=pointer]:
+          - /url: "#servicos"
+    - generic [ref=e24]:
+      - paragraph [ref=e26]: Manifesto
+      - generic [ref=e27]:
+        - paragraph [ref=e29]: "[Placeholder — Por que a Ethos existe. O problema que vocês viram no mercado e decidiram resolver.]"
+        - paragraph [ref=e31]: "[Placeholder — O que vocês recusam fazer. O que não é a Ethos. O que diferencia de outras agências de IA.]"
+        - paragraph [ref=e33]: "[Placeholder — O que vocês acreditam. A visão de como IA deve ser aplicada nos negócios.]"
+    - generic [ref=e35]:
+      - generic [ref=e36]:
+        - paragraph [ref=e37]: O que entregamos
+        - heading "[Placeholder — headline da seção de serviços]" [level=2] [ref=e38]
+      - generic [ref=e39]:
+        - generic [ref=e41]:
+          - generic [ref=e42]: "01"
+          - paragraph [ref=e43]: "[Placeholder — Seu time perde horas em processos que deveriam acontecer sozinhos.]"
+          - generic [ref=e44]:
+            - heading "[Placeholder — nome do serviço]" [level=3] [ref=e45]
+            - paragraph [ref=e46]: "[Placeholder — descrição curta do que a Ethos entrega nesta área.]"
+        - generic [ref=e48]:
+          - generic [ref=e49]: "02"
+          - paragraph [ref=e50]: "[Placeholder — Você tem dados mas não sabe o que fazer com eles.]"
+          - generic [ref=e51]:
+            - heading "[Placeholder — nome do serviço]" [level=3] [ref=e52]
+            - paragraph [ref=e53]: "[Placeholder — descrição curta.]"
+        - generic [ref=e55]:
+          - generic [ref=e56]: "03"
+          - paragraph [ref=e57]: "[Placeholder — Sua operação escala mas a equipe não consegue acompanhar.]"
+          - generic [ref=e58]:
+            - heading "[Placeholder — nome do serviço]" [level=3] [ref=e59]
+            - paragraph [ref=e60]: "[Placeholder — descrição curta.]"
+    - generic [ref=e62]:
+      - generic [ref=e63]:
+        - paragraph [ref=e64]: Como funciona
+        - heading "[Placeholder — headline do método]" [level=2] [ref=e65]
+      - generic [ref=e66]:
+        - generic [ref=e68]:
+          - generic [ref=e69]: "1"
+          - generic [ref=e70]:
+            - heading "Diagnóstico" [level=3] [ref=e71]
+            - paragraph [ref=e72]: "[Placeholder — Entendemos onde estão os gargalos, o que pode ser automatizado e qual o impacto real esperado.]"
+        - generic [ref=e74]:
+          - generic [ref=e75]: "2"
+          - generic [ref=e76]:
+            - heading "Desenho" [level=3] [ref=e77]
+            - paragraph [ref=e78]: "[Placeholder — Projetamos a solução sob medida: fluxos, agentes, integrações. Nada genérico.]"
+        - generic [ref=e80]:
+          - generic [ref=e81]: "3"
+          - generic [ref=e82]:
+            - heading "Implementação" [level=3] [ref=e83]
+            - paragraph [ref=e84]: "[Placeholder — Construímos e entregamos. Código limpo, testado, documentado.]"
+        - generic [ref=e86]:
+          - generic [ref=e87]: "4"
+          - generic [ref=e88]:
+            - heading "Acompanhamento" [level=3] [ref=e89]
+            - paragraph [ref=e90]: "[Placeholder — A solução entra em operação e a gente continua junto para ajustar e evoluir.]"
+    - generic [ref=e93]:
+      - heading "[Placeholder — frase de encerramento forte.]" [level=2] [ref=e95]
+      - paragraph [ref=e96]: "[Placeholder — uma linha que reduz a fricção para entrar em contato.]"
+      - link "Iniciar diálogo" [ref=e97] [cursor=pointer]:
+        - /url: mailto:contato@ethos.ai
+  - contentinfo [ref=e98]:
+    - generic [ref=e99]:
+      - generic [ref=e100]: Ethos
+      - paragraph [ref=e101]: © 2026 Ethos. Todos os direitos reservados.
+      - link "contato@ethos.ai" [ref=e102] [cursor=pointer]:
+        - /url: mailto:contato@ethos.ai
+  - button "Open Next.js Dev Tools" [ref=e108] [cursor=pointer]:
+    - img [ref=e109]
