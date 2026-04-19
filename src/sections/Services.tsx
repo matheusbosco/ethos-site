@@ -246,14 +246,14 @@ export function Services() {
         </div>
       </section>
 
-      {/* Cards full-width empilhados */}
-      <div className="w-full bg-[#F0E9D6] pb-20 md:pb-28">
-        <div className="flex flex-col">
+      {/* Cards contidos com padding lateral */}
+      <div className="w-full bg-[#F0E9D6] px-6 pb-20 md:pb-28">
+        <div className="mx-auto max-w-5xl flex flex-col rounded-xl overflow-hidden border border-[#1C2B3A]/20">
           {services.map((s, i) => (
             <Reveal key={s.id} delay={i * 60}>
               <div
-                className={`relative w-full h-[580px] md:h-[680px] overflow-hidden group cursor-pointer ${
-                  i > 0 ? "border-t border-[#1C2B3A]/15" : ""
+                className={`relative w-full h-[540px] md:h-[620px] overflow-hidden group cursor-pointer ${
+                  i > 0 ? "border-t border-[#1C2B3A]/20" : ""
                 }`}
                 onClick={() => setActiveService(s)}
               >
