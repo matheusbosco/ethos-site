@@ -32,10 +32,10 @@ export function Process() {
   return (
     <Section id="processo" surface>
       <Reveal>
-        <p className="text-xs font-medium text-[#2A3D52] tracking-[0.2em] uppercase mb-10">
+        <p className="font-[family-name:var(--font-mono)] text-xs text-[#2A3D52] tracking-[0.2em] uppercase mb-10">
           Como funciona
         </p>
-        <h2 className="font-[family-name:var(--font-heading)] italic text-3xl md:text-4xl font-normal text-[#1E1D1B] leading-tight mb-16 max-w-lg">
+        <h2 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-extrabold text-[#1E1D1B] leading-tight tracking-tight mb-16 max-w-lg">
           [Placeholder — headline do método]
         </h2>
       </Reveal>
@@ -48,7 +48,7 @@ export function Process() {
                 {step.number}
               </span>
               <div className="flex flex-col md:flex-row gap-4 md:gap-16 flex-1">
-                <h3 className="font-[family-name:var(--font-heading)] text-xl font-bold text-[#1E1D1B] md:w-44 shrink-0">
+                <h3 className="font-[family-name:var(--font-display)] text-xl font-extrabold text-[#1E1D1B] tracking-tight md:w-44 shrink-0">
                   {step.title}
                 </h3>
                 <p className="text-base text-[#87867F] leading-[1.75] flex-1">

@@ -32,7 +32,7 @@ export function CtaFinal() {
     <Section id="contato">
       <Reveal>
         <div className="w-12 h-px bg-[#2A3D52] mb-12" />
-        <h2 className="font-[family-name:var(--font-heading)] italic text-4xl md:text-5xl font-normal text-[#1E1D1B] leading-[1.15] mb-6 max-w-xl">
+        <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl font-extrabold text-[#1E1D1B] leading-[1.1] tracking-tight mb-6 max-w-xl">
           [Placeholder — frase de encerramento forte.]
         </h2>
         <p className="text-lg text-[#87867F] leading-[1.75] mb-12 max-w-md">
