@@ -32,9 +32,14 @@ export function Nav() {
       <div className="mx-auto max-w-5xl px-6 h-16 flex items-center justify-between">
         <a
           href="#"
-          className="font-[family-name:var(--font-heading)] italic text-xl font-bold text-[#1E1D1B] tracking-tight"
+          className="flex items-center gap-2.5"
         >
-          Ethos
+          <div className="w-7 h-7 rounded-lg bg-[#2A3D52] flex items-center justify-center shrink-0">
+            <span className="font-[family-name:var(--font-display)] text-white text-[0.6rem] font-extrabold">E</span>
+          </div>
+          <span className="font-[family-name:var(--font-heading)] italic text-2xl font-bold text-[#1E1D1B] tracking-tight">
+            Ethos
+          </span>
         </a>
 
         {/* Desktop nav */}

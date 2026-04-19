@@ -7,19 +7,14 @@ export function HandwrittenCircle() {
     <motion.svg
       aria-hidden="true"
       className="absolute -inset-x-3 -inset-y-2 w-[calc(100%+1.5rem)] h-[calc(100%+1rem)] pointer-events-none"
-      viewBox="0 0 400 80"
+      viewBox="0 0 420 90"
       fill="none"
       preserveAspectRatio="none"
       initial="hidden"
       animate="visible"
     >
       <motion.path
-        d="M 385 18
-           C 392 4, 300 0, 200 1
-           C 100 2, 8 6, 4 30
-           C 0 54, 85 78, 200 77
-           C 315 76, 396 65, 392 38
-           C 390 24, 382 15, 385 18"
+        d="M 358 18 C 295 -10, 72 0, 22 32 C 0 55, 20 84, 200 86 C 342 88, 415 70, 408 46 C 402 28, 390 6, 350 12"
         stroke="#2A3D52"
         strokeWidth="3.5"
         strokeLinecap="round"

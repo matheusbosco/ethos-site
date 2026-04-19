@@ -187,13 +187,15 @@ export function Services() {
                     className="absolute inset-0 w-full h-full object-cover z-[1] scale-105 group-hover:scale-100 transition-transform duration-700"
                   />
                 ) : (
-                  <div className="absolute inset-0 z-[1]">
-                    <EthosChatPreview />
+                  <div className="absolute inset-0 z-[1] overflow-hidden">
+                    <div className="absolute inset-0 blur-[3px] scale-110">
+                      <EthosChatPreview />
+                    </div>
                   </div>
                 )}
 
                 {/* Overlay escuro */}
-                <div className="absolute inset-0 z-[2] bg-gradient-to-t from-[#0D1822]/95 via-[#0D1822]/40 to-transparent group-hover:from-[#0D1822]/90 transition-all duration-500" />
+                <div className="absolute inset-0 z-[2] bg-gradient-to-t from-[#0D1822]/98 via-[#0D1822]/65 to-[#0D1822]/10 group-hover:from-[#0D1822]/95 transition-all duration-500" />
 
                 {/* Conteúdo */}
                 <div className="absolute inset-0 z-[3] flex flex-col justify-end p-7">

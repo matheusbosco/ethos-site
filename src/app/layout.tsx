@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Libre_Baskerville, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import { ContactProvider } from "@/contexts/ContactContext";
 import { ContactModal } from "@/components/ui/ContactModal";
+import { ScrollCTA } from "@/components/ui/ScrollCTA";
 import "./globals.css";
 
 const inter = Inter({
@@ -54,6 +55,7 @@ export default function RootLayout({
         <ContactProvider>
           {children}
           <ContactModal />
+          <ScrollCTA />
         </ContactProvider>
       </body>
     </html>
