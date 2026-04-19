@@ -37,24 +37,14 @@ export function CtaFinal() {
             Inteligência sob medida começa aqui.
           </h2>
 
-          {/* Sub */}
-          <p className="font-[family-name:var(--font-mono)] text-[0.72rem] text-white/30 tracking-wide mb-14 leading-[1.9]">
-            30 minutos. Diagnóstico real. Sem compromisso.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-            <button
-              onClick={open}
-              className="inline-flex items-center gap-3 bg-[#F0E9D6] text-[#1C2B3A] hover:bg-[#DFD6C2] text-sm font-medium tracking-wide rounded-full px-8 py-3.5 transition-colors duration-200 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F0E9D6]"
-            >
-              Diagnóstico gratuito
-              <span aria-hidden="true">→</span>
-            </button>
-            <span className="font-[family-name:var(--font-mono)] text-[0.62rem] text-white/20 tracking-widest uppercase">
-              Sem compromisso
-            </span>
-          </div>
+          {/* CTA */}
+          <button
+            onClick={open}
+            className="inline-flex items-center gap-3 bg-[#F0E9D6] text-[#1C2B3A] hover:bg-[#DFD6C2] text-sm font-medium tracking-wide rounded-full px-8 py-3.5 transition-colors duration-200 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F0E9D6]"
+          >
+            Falar com a Ethos
+            <span aria-hidden="true">→</span>
+          </button>
         </Reveal>
       </div>
     </section>
