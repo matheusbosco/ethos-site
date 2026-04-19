@@ -6,7 +6,12 @@ import { HandwrittenCircle } from "@/components/ui/HandwrittenCircle";
 import { AnimatedWords } from "@/components/ui/AnimatedWords";
 import { useContact } from "@/contexts/ContactContext";
 
-const rotatingWords = ["automatiza.", "escala.", "otimiza.", "transforma."];
+const rotatingPhrases = [
+  "Automatize o que trava.",
+  "Escale sem contratar.",
+  "Otimize o que custa.",
+  "Transforme o que atrasa.",
+];
 
 export function Hero() {
   const { open } = useContact();
@@ -32,9 +37,8 @@ export function Hero() {
         </h1>
 
         <AnimatedWords
-          prefix="A IA que"
-          words={rotatingWords}
-          className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-extrabold text-[#1E1D1B] tracking-tight mb-10"
+          phrases={rotatingPhrases}
+          className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-extrabold text-[#1E1D1B] tracking-tight mb-10 h-[1.2em]"
         />
 
         <div className="w-12 h-px bg-[#2A3D52] mb-10" />

@@ -86,7 +86,7 @@ export function ContactModal() {
             <div className="mb-8">
               <div className="w-8 h-px bg-[#2A3D52] mb-6" />
               <h2 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-extrabold text-[#1E1D1B] tracking-tight leading-tight mb-3">
-                Pronto para recuperar tempo, foco e dinheiro?
+                Conta o que está travando. A gente mapeia o resto.
               </h2>
               <p className="text-sm text-[#87867F] leading-relaxed">
                 Uma conversa de 30 minutos. Sem apresentação de vendas.
