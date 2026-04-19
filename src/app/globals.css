@@ -15,8 +15,10 @@
   --color-accent-hover: #3A5370;
 
   /* Tipografia */
+  --font-display: var(--font-display);
   --font-heading: var(--font-heading);
   --font-body: var(--font-inter);
+  --font-mono: var(--font-mono);
 
   /* Animações */
   --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;

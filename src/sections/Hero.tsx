@@ -10,11 +10,11 @@ export function Hero() {
       <div className="absolute left-6 top-1/2 -translate-y-1/2 w-px h-32 bg-[#DFD6C2] hidden lg:block z-10" />
 
       <div className="mx-auto max-w-5xl py-28 md:py-36 animate-fade-up relative z-10">
-        <p className="text-xs font-medium text-[#2A3D52] tracking-[0.2em] uppercase mb-8">
+        <p className="font-[family-name:var(--font-mono)] text-xs text-[#2A3D52] tracking-[0.2em] uppercase mb-8">
           Agência de IA
         </p>
 
-        <h1 className="font-[family-name:var(--font-heading)] italic text-5xl md:text-[5.5rem] font-normal text-[#1E1D1B] leading-[1.05] mb-10 max-w-3xl">
+        <h1 className="font-[family-name:var(--font-display)] text-5xl md:text-[5.5rem] font-extrabold text-[#1E1D1B] leading-[1.05] tracking-tight mb-10 max-w-3xl">
           Inteligência sob medida.
         </h1>
 
