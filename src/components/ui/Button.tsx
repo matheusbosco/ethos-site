@@ -14,7 +14,7 @@ const styles: Record<Variant, string> = {
   secondary:
     "border border-[#1C2B3A] text-[#1C2B3A] hover:bg-[#E8DFCB] focus-visible:outline-[#1C2B3A]",
   ghost:
-    "text-[#7C5C3E] underline underline-offset-4 hover:text-[#9A7050] focus-visible:outline-[#7C5C3E]",
+    "text-[#2A3D52] underline underline-offset-4 hover:text-[#3A5370] focus-visible:outline-[#2A3D52]",
 };
 
 export function Button({

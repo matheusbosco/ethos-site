@@ -2,7 +2,7 @@ export function Footer() {
   return (
     <footer className="w-full border-t border-[#DFD6C2] bg-[#F0E9D6] px-6 py-10">
       <div className="mx-auto max-w-5xl flex flex-col md:flex-row items-center justify-between gap-4">
-        <span className="font-[family-name:var(--font-heading)] italic text-lg font-bold text-[#141413]">
+        <span className="font-[family-name:var(--font-heading)] italic text-lg font-bold text-[#1E1D1B]">
           Ethos
         </span>
         <p className="text-sm text-[#87867F]">
@@ -10,7 +10,7 @@ export function Footer() {
         </p>
         <a
           href="mailto:contato@ethos.ai"
-          className="text-sm text-[#7C5C3E] hover:text-[#9A7050] transition-colors underline underline-offset-4"
+          className="text-sm text-[#2A3D52] hover:text-[#3A5370] transition-colors underline underline-offset-4"
         >
           contato@ethos.ai
         </a>

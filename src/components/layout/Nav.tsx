@@ -30,7 +30,7 @@ export function Nav() {
       <div className="mx-auto max-w-5xl px-6 h-16 flex items-center justify-between">
         <a
           href="#"
-          className="font-[family-name:var(--font-heading)] italic text-xl font-bold text-[#141413] tracking-tight"
+          className="font-[family-name:var(--font-heading)] italic text-xl font-bold text-[#1E1D1B] tracking-tight"
         >
           Ethos
         </a>
@@ -41,7 +41,7 @@ export function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="text-sm text-[#87867F] hover:text-[#141413] transition-colors"
+              className="text-sm text-[#87867F] hover:text-[#1E1D1B] transition-colors"
             >
               {l.label}
             </a>
@@ -56,7 +56,7 @@ export function Nav() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden p-2 text-[#141413]"
+          className="md:hidden p-2 text-[#1E1D1B]"
           onClick={() => setOpen(!open)}
           aria-label={open ? "Fechar menu" : "Abrir menu"}
         >
@@ -74,7 +74,7 @@ export function Nav() {
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="text-base text-[#141413]"
+              className="text-base text-[#1E1D1B]"
             >
               {l.label}
             </a>

@@ -32,10 +32,10 @@ export function Process() {
   return (
     <Section id="processo" surface>
       <Reveal>
-        <p className="text-xs font-medium text-[#7C5C3E] tracking-[0.2em] uppercase mb-10">
+        <p className="text-xs font-medium text-[#2A3D52] tracking-[0.2em] uppercase mb-10">
           Como funciona
         </p>
-        <h2 className="font-[family-name:var(--font-heading)] italic text-3xl md:text-4xl font-normal text-[#141413] leading-tight mb-16 max-w-lg">
+        <h2 className="font-[family-name:var(--font-heading)] italic text-3xl md:text-4xl font-normal text-[#1E1D1B] leading-tight mb-16 max-w-lg">
           [Placeholder — headline do método]
         </h2>
       </Reveal>
@@ -44,11 +44,11 @@ export function Process() {
         {steps.map((step, i) => (
           <Reveal key={step.number} delay={i * 80}>
             <div className="flex flex-col md:flex-row gap-6 py-10">
-              <span className="text-xs font-medium text-[#7C5C3E] tracking-widest w-6 shrink-0 pt-1">
+              <span className="text-xs font-medium text-[#2A3D52] tracking-widest w-6 shrink-0 pt-1">
                 {step.number}
               </span>
               <div className="flex flex-col md:flex-row gap-4 md:gap-16 flex-1">
-                <h3 className="font-[family-name:var(--font-heading)] text-xl font-bold text-[#141413] md:w-44 shrink-0">
+                <h3 className="font-[family-name:var(--font-heading)] text-xl font-bold text-[#1E1D1B] md:w-44 shrink-0">
                   {step.title}
                 </h3>
                 <p className="text-base text-[#87867F] leading-[1.75] flex-1">

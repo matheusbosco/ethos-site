@@ -12,7 +12,7 @@ export function Manifesto() {
     <Section id="manifesto" surface>
       <div className="max-w-2xl">
         <Reveal>
-          <p className="text-xs font-medium text-[#7C5C3E] tracking-[0.2em] uppercase mb-12">
+          <p className="text-xs font-medium text-[#2A3D52] tracking-[0.2em] uppercase mb-12">
             Manifesto
           </p>
         </Reveal>
@@ -20,7 +20,7 @@ export function Manifesto() {
         <div className="space-y-10">
           {paragraphs.map((p, i) => (
             <Reveal key={i} delay={i * 120}>
-              <p className="text-xl md:text-2xl text-[#141413] leading-[1.75] font-[family-name:var(--font-heading)]">
+              <p className="text-xl md:text-2xl text-[#1E1D1B] leading-[1.75] font-[family-name:var(--font-heading)]">
                 {p}
               </p>
             </Reveal>

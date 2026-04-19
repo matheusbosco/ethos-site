@@ -26,10 +26,10 @@ export function Services() {
   return (
     <Section id="servicos">
       <Reveal>
-        <p className="text-xs font-medium text-[#7C5C3E] tracking-[0.2em] uppercase mb-10">
+        <p className="text-xs font-medium text-[#2A3D52] tracking-[0.2em] uppercase mb-10">
           O que entregamos
         </p>
-        <h2 className="font-[family-name:var(--font-heading)] italic text-3xl md:text-4xl font-normal text-[#141413] leading-tight mb-16 max-w-lg">
+        <h2 className="font-[family-name:var(--font-heading)] italic text-3xl md:text-4xl font-normal text-[#1E1D1B] leading-tight mb-16 max-w-lg">
           [Placeholder — headline da seção de serviços]
         </h2>
       </Reveal>
@@ -45,7 +45,7 @@ export function Services() {
                 {s.problem}
               </p>
               <div>
-                <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[#141413] mb-2">
+                <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[#1E1D1B] mb-2">
                   {s.solution}
                 </h3>
                 <p className="text-sm text-[#87867F] leading-relaxed">
