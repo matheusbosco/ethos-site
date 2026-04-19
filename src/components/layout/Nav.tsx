@@ -17,7 +17,7 @@ export function Nav() {
       <div className="mx-auto max-w-5xl px-6 h-16 flex items-center justify-between">
         <a
           href="#"
-          className="font-[family-name:var(--font-heading)] text-xl font-bold text-[#141413] tracking-tight"
+          className="font-[family-name:var(--font-heading)] italic text-xl font-bold text-[#141413] tracking-tight"
         >
           Ethos
         </a>
