@@ -5,7 +5,7 @@ export function CtaFinal() {
   return (
     <Section id="contato">
       <div className="max-w-2xl">
-        <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-bold text-[#141413] leading-[1.15] tracking-tight mb-6">
+        <h2 className="font-[family-name:var(--font-heading)] text-4xl md:text-5xl font-bold text-[#141413] leading-[1.15] tracking-tight mb-6">
           [Placeholder — frase de encerramento forte. Uma pergunta ou provocação.]
         </h2>
 

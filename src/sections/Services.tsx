@@ -28,7 +28,7 @@ export function Services() {
         O que entregamos
       </p>
 
-      <h2 className="font-[family-name:var(--font-playfair)] text-3xl md:text-4xl font-bold text-[#141413] leading-tight tracking-tight mb-16 max-w-lg">
+      <h2 className="font-[family-name:var(--font-heading)] text-3xl md:text-4xl font-bold text-[#141413] leading-tight tracking-tight mb-16 max-w-lg">
         [Placeholder — headline da seção de serviços]
       </h2>
 
@@ -45,7 +45,7 @@ export function Services() {
               {s.problem}
             </p>
             <div>
-              <h3 className="font-[family-name:var(--font-playfair)] text-xl font-bold text-[#141413] mb-2">
+              <h3 className="font-[family-name:var(--font-heading)] text-xl font-bold text-[#141413] mb-2">
                 {s.solution}
               </h3>
               <p className="text-sm text-[#87867F] leading-relaxed">

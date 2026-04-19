@@ -15,7 +15,7 @@
   --color-accent-hover: #9a7050;
 
   /* Tipografia */
-  --font-heading: var(--font-playfair);
+  --font-heading: var(--font-heading);
   --font-body: var(--font-inter);
 }
 

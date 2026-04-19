@@ -34,7 +34,7 @@ export function Process() {
         Como funciona
       </p>
 
-      <h2 className="font-[family-name:var(--font-playfair)] text-3xl md:text-4xl font-bold text-[#141413] leading-tight tracking-tight mb-16 max-w-lg">
+      <h2 className="font-[family-name:var(--font-heading)] text-3xl md:text-4xl font-bold text-[#141413] leading-tight tracking-tight mb-16 max-w-lg">
         [Placeholder — headline do método]
       </h2>
 
@@ -48,7 +48,7 @@ export function Process() {
               {step.number}
             </span>
             <div className="flex flex-col md:flex-row gap-4 md:gap-16 flex-1">
-              <h3 className="font-[family-name:var(--font-playfair)] text-xl font-bold text-[#141413] md:w-40 shrink-0">
+              <h3 className="font-[family-name:var(--font-heading)] text-xl font-bold text-[#141413] md:w-40 shrink-0">
                 {step.title}
               </h3>
               <p className="text-base text-[#87867F] leading-relaxed flex-1">

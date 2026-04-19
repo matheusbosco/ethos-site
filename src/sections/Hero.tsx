@@ -8,7 +8,7 @@ export function Hero() {
           Agência de IA
         </p>
 
-        <h1 className="font-[family-name:var(--font-playfair)] text-5xl md:text-7xl font-bold text-[#141413] leading-[1.1] tracking-tight mb-8 max-w-3xl">
+        <h1 className="font-[family-name:var(--font-heading)] text-5xl md:text-7xl font-bold text-[#141413] leading-[1.1] tracking-tight mb-8 max-w-3xl">
           Inteligência sob medida.
         </h1>
 
