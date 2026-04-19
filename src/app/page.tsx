@@ -1,7 +1,23 @@
+import { Nav } from "@/components/layout/Nav";
+import { Footer } from "@/components/layout/Footer";
+import { Hero } from "@/sections/Hero";
+import { Manifesto } from "@/sections/Manifesto";
+import { Services } from "@/sections/Services";
+import { Process } from "@/sections/Process";
+import { CtaFinal } from "@/sections/CtaFinal";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <p className="text-foreground">Ethos — em construção</p>
-    </main>
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <Manifesto />
+        <Services />
+        <Process />
+        <CtaFinal />
+      </main>
+      <Footer />
+    </>
   );
 }
