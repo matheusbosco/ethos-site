@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
+import { useContact } from "@/contexts/ContactContext";
 
 const links = [
   { label: "O que entregamos", href: "#servicos" },
@@ -12,6 +13,7 @@ const links = [
 export function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { open: openContact } = useContact();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -49,7 +51,7 @@ export function Nav() {
         </nav>
 
         <div className="hidden md:block">
-          <Button as="a" href="#contato" variant="primary">
+          <Button variant="primary" onClick={openContact}>
             Diagnóstico gratuito
           </Button>
         </div>
@@ -79,7 +81,11 @@ export function Nav() {
               {l.label}
             </a>
           ))}
-          <Button as="a" href="#contato" variant="primary" className="w-full justify-center">
+          <Button
+            variant="primary"
+            className="w-full justify-center"
+            onClick={() => { setOpen(false); openContact(); }}
+          >
             Diagnóstico gratuito
           </Button>
         </div>

@@ -18,8 +18,8 @@ const faqs = [
     a: "A solução entra em operação e permanecemos disponíveis para ajustes e evoluções. Não desaparecemos na entrega — acompanhamento pós-lançamento está incluído.",
   },
   {
-    q: "E se quisermos trazer o projeto para dentro da nossa equipe?",
-    a: "Tudo que construímos é documentado e entregue. Código, fluxos, integrações — você tem acesso total. Não criamos dependência de ferramentas proprietárias nossas.",
+    q: "O projeto fica nos servidores de vocês?",
+    a: "Sim. A solução roda nos nossos servidores — garantindo qualidade, segurança e evolução contínua. Você recebe documentação completa de tudo que foi construído. Essa escolha é deliberada: ela garante que alguém continua responsável pelo que funciona.",
   },
   {
     q: "Precisamos ter equipe técnica interna?",

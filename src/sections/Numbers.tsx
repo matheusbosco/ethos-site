@@ -4,7 +4,6 @@ const metrics = [
   { value: "72h", label: "para o primeiro diagnóstico" },
   { value: "4–6", label: "semanas da descoberta à entrega" },
   { value: "100%", label: "dos projetos documentados" },
-  { value: "0", label: "templates genéricos vendidos" },
 ];
 
 export function Numbers() {

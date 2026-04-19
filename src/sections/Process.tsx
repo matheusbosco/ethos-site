@@ -6,25 +6,25 @@ const steps = [
     number: "1",
     title: "Diagnóstico",
     description:
-      "[Placeholder — Entendemos onde estão os gargalos, o que pode ser automatizado e qual o impacto real esperado.]",
+      "Mapeamos o processo real — não o idealizado. Medimos o custo atual em tempo, foco e dinheiro, e identificamos exatamente onde a IA pode intervir.",
   },
   {
     number: "2",
-    title: "Desenho",
+    title: "Planejamento",
     description:
-      "[Placeholder — Projetamos a solução sob medida: fluxos, agentes, integrações. Nada genérico.]",
+      "Projetamos a solução sob medida: fluxos, agentes, integrações. Nada genérico. Você aprova cada etapa antes de começarmos a construir.",
   },
   {
     number: "3",
     title: "Implementação",
     description:
-      "[Placeholder — Construímos e entregamos. Código limpo, testado, documentado.]",
+      "Construímos, testamos e documentamos. A solução fica nos nossos servidores — com qualidade e segurança garantidas pela Ethos.",
   },
   {
     number: "4",
     title: "Acompanhamento",
     description:
-      "[Placeholder — A solução entra em operação e a gente continua junto para ajustar e evoluir.]",
+      "A solução entra em operação e continuamos juntos. Ajustamos, evoluímos e respondemos pelo que entregamos — sem desaparecer na entrega.",
   },
 ];
 
@@ -36,7 +36,7 @@ export function Process() {
           Como funciona
         </p>
         <h2 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-extrabold text-[#1E1D1B] leading-tight tracking-tight mb-16 max-w-lg">
-          [Placeholder — headline do método]
+          Como trabalhamos juntos.
         </h2>
       </Reveal>
 

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Libre_Baskerville, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { ContactProvider } from "@/contexts/ContactContext";
+import { ContactModal } from "@/components/ui/ContactModal";
 import "./globals.css";
 
 const inter = Inter({
@@ -48,7 +50,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`${inter.variable} ${libreBaskerville.variable} ${jetbrainsMono.variable} ${plusJakarta.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ContactProvider>
+          {children}
+          <ContactModal />
+        </ContactProvider>
+      </body>
     </html>
   );
 }
