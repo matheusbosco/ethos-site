@@ -6,7 +6,7 @@ export function Footer() {
         {/* Top row */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex flex-col gap-1">
-            <span className="font-[family-name:var(--font-logo)] text-lg font-bold text-[#1E1D1B]">
+            <span className="font-[family-name:var(--font-logo)] text-lg font-semibold text-[#1E1D1B]">
               Ethos
             </span>
             <span className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[#87867F] tracking-widest uppercase">

@@ -88,8 +88,13 @@ function AIPredictiveAnimation() {
   }, [phase]);
 
   return (
-    <div className="absolute inset-0 bg-[#0D1117] flex items-center justify-center select-none overflow-hidden">
-      <div className="w-full max-w-xl px-10 py-8">
+    <div className="absolute inset-0 bg-[#0D1117] flex items-center justify-center select-none overflow-hidden relative">
+      <div className="absolute inset-0 opacity-[0.02] flex items-center justify-center pointer-events-none" aria-hidden="true">
+        <span className="font-[family-name:var(--font-logo)] text-[20rem] font-semibold leading-none text-white">
+          Ethos
+        </span>
+      </div>
+      <div className="w-full max-w-xl px-10 py-8 relative z-10">
         {/* Prompt do usuário */}
         <div
           className={`mb-8 transition-[opacity,transform] duration-700 ${
@@ -172,8 +177,13 @@ function WorkflowAnimation() {
   }, [loopKey]);
 
   return (
-    <div className="absolute inset-0 bg-[#0D1117] flex items-center justify-center select-none overflow-hidden">
-      <div className="w-full max-w-xl px-10 py-8">
+    <div className="absolute inset-0 bg-[#0D1117] flex items-center justify-center select-none overflow-hidden relative">
+      <div className="absolute inset-0 opacity-[0.02] flex items-center justify-center pointer-events-none" aria-hidden="true">
+        <span className="font-[family-name:var(--font-logo)] text-[20rem] font-semibold leading-none text-white">
+          Ethos
+        </span>
+      </div>
+      <div className="w-full max-w-xl px-10 py-8 relative z-10">
         <div className="flex items-center justify-between mb-8">
           <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/25 tracking-[0.2em] uppercase">
             Automação em execução

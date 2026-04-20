@@ -42,7 +42,7 @@ const jetbrainsMono = JetBrains_Mono({
 const sourceSerif = Source_Serif_4({
   variable: "--font-logo",
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["600"],
   style: ["normal"],
   display: "swap",
 });

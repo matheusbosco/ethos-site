@@ -2,7 +2,7 @@ import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/ui/Reveal";
 
 const pullQuote =
-  "A maior parte dos projetos de IA morre antes de chegar à operação. Raramente por falta de técnica — quase sempre por excesso de ambição.";
+  "Diagnóstico honesto. Solução sob medida. Parceria de verdade.";
 
 const paragraphs = [
   "A revolução da IA não é hype — é a maior mudança na forma de trabalhar desde a internet. Empresas que não se adaptarem agora vão competir em desvantagem por anos. Nosso trabalho é garantir que isso não aconteça com você.",

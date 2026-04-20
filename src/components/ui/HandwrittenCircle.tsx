@@ -6,17 +6,17 @@ export function HandwrittenCircle() {
   return (
     <motion.svg
       aria-hidden="true"
-      className="absolute -inset-x-5 -inset-y-4 w-[calc(100%+2.5rem)] h-[calc(100%+2rem)] pointer-events-none"
-      viewBox="0 0 440 108"
+      className="absolute -inset-x-4 -inset-y-3 w-[calc(100%+2rem)] h-[calc(100%+1.5rem)] pointer-events-none"
+      viewBox="0 0 100 30"
       fill="none"
       preserveAspectRatio="none"
       initial="hidden"
       animate="visible"
     >
       <motion.path
-        d="M 395 26 C 348 4, 110 -4, 38 32 C 6 52, 14 86, 208 98 C 338 104, 434 90, 438 62 C 441 42, 422 10, 392 22"
+        d="M 92 8 Q 95 4, 85 2 Q 25 -2, 8 10 Q 2 14, 4 22 Q 8 27, 50 28 Q 85 27, 95 22 Q 98 18, 92 8"
         stroke="#2A3D52"
-        strokeWidth="3.5"
+        strokeWidth="1.2"
         strokeLinecap="round"
         strokeLinejoin="round"
         variants={{
@@ -25,8 +25,8 @@ export function HandwrittenCircle() {
             pathLength: 1,
             opacity: 1,
             transition: {
-              pathLength: { duration: 2, ease: [0.43, 0.13, 0.23, 0.96], delay: 0.5 },
-              opacity: { duration: 0.3, delay: 0.5 },
+              pathLength: { duration: 1.8, ease: [0.43, 0.13, 0.23, 0.96], delay: 0.3 },
+              opacity: { duration: 0.3, delay: 0.3 },
             },
           },
         }}

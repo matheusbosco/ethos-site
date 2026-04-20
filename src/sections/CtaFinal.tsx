@@ -13,7 +13,7 @@ export function CtaFinal() {
         className="absolute right-0 inset-y-0 flex items-center pointer-events-none select-none"
         aria-hidden="true"
       >
-        <span className="font-[family-name:var(--font-logo)] font-bold text-white/[0.028] leading-none translate-x-8"
+        <span className="font-[family-name:var(--font-logo)] font-semibold text-white/[0.028] leading-none translate-x-8"
           style={{ fontSize: "clamp(8rem, 18vw, 20rem)" }}>
           Ethos
         </span>
