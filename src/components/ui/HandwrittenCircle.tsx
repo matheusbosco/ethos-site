@@ -6,16 +6,16 @@ export function HandwrittenCircle() {
   return (
     <svg
       aria-hidden="true"
-      className="absolute -inset-x-5 -inset-y-4 w-[calc(100%+2.5rem)] h-[calc(100%+2rem)] pointer-events-none"
+      className="absolute -inset-x-5 -inset-y-4 md:-inset-x-10 md:-inset-y-6 w-[calc(100%+2.5rem)] md:w-[calc(100%+5rem)] h-[calc(100%+2rem)] md:h-[calc(100%+3rem)] pointer-events-none"
       viewBox="0 0 160 38"
       fill="none"
       preserveAspectRatio="none"
       style={{ display: "block" }}
     >
       <motion.path
-        d="M 148 13 Q 154 5, 136 3 Q 80 1, 24 3 Q 6 5, 6 19 Q 6 33, 24 35 Q 80 37, 136 35 Q 154 33, 148 13"
+        d="M 150 13 Q 157 5, 152 3 Q 80 1, 8 3 Q 3 6, 3 19 Q 3 32, 8 35 Q 80 37, 152 35 Q 157 33, 150 13"
         stroke="#2A3D52"
-        strokeWidth="1.5"
+        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
         vectorEffect="non-scaling-stroke"
