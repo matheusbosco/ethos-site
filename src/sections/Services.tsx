@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Reveal } from "@/components/ui/Reveal";
 import { HandwrittenCircle } from "@/components/ui/HandwrittenCircle";
@@ -9,7 +9,7 @@ interface Service {
   id: string;
   title: string;
   tags: string[];
-  background: "video" | "chat" | "workflow";
+  background: "video" | "neural" | "choreography";
   videoUrl?: string;
   posterUrl?: string;
   modal: { description: string };
@@ -20,7 +20,7 @@ const services: Service[] = [
     id: "automacoes",
     title: "Automações",
     tags: ["Workflows", "Integrações", "Notificações"],
-    background: "workflow",
+    background: "choreography",
     modal: {
       description:
         "Conectamos sistemas, eliminamos trabalho manual repetitivo e fazemos os dados fluírem onde precisam — sem intervenção humana. Cada automação é construída para o seu processo, não adaptada de um template.",
@@ -44,7 +44,7 @@ const services: Service[] = [
     id: "ia-preditiva",
     title: "IA Preditiva & Generativa",
     tags: ["Modelos preditivos", "Geração de conteúdo", "Análise de padrões"],
-    background: "chat",
+    background: "neural",
     modal: {
       description:
         "Modelos treinados para prever comportamentos, gerar conteúdo e identificar padrões invisíveis ao olho humano. Da previsão de churn ao gerador de propostas comerciais — IA que aprende com seus dados.",
@@ -52,202 +52,357 @@ const services: Service[] = [
   },
 ];
 
-const AI_RESPONSE_WORDS =
-  "Com base nos padrões identificados, sua maior concentração de churn está em clientes com menos de 60 dias de contrato. Recomendo uma campanha de onboarding focada na semana 3 para este segmento.".split(
-    " "
-  );
+// ——————————————————————————————————————————————
+// IA Generativa & Preditiva — "The Personalized Brain"
+// Rede neural abstrata: dados do cliente entram, viram insights.
+// Ethos como marca da inteligência que aprende com você.
+// ——————————————————————————————————————————————
 
-function AIPredictiveAnimation() {
-  const [phase, setPhase] = useState<0 | 1 | 2>(0);
-  const [visibleWords, setVisibleWords] = useState(0);
-  const [loopKey, setLoopKey] = useState(0);
+const BRAIN_INPUT_NODES = [
+  { x: 70, y: 90 },
+  { x: 70, y: 160 },
+  { x: 70, y: 230 },
+];
+const BRAIN_HIDDEN_1 = [
+  { x: 180, y: 70 },
+  { x: 180, y: 130 },
+  { x: 180, y: 190 },
+  { x: 180, y: 250 },
+];
+const BRAIN_HIDDEN_2 = [
+  { x: 290, y: 70 },
+  { x: 290, y: 130 },
+  { x: 290, y: 190 },
+  { x: 290, y: 250 },
+];
+const BRAIN_OUTPUT_NODES = [
+  { x: 400, y: 100 },
+  { x: 400, y: 160 },
+  { x: 400, y: 220 },
+];
 
-  useEffect(() => {
-    setPhase(0);
-    setVisibleWords(0);
-    const t1 = setTimeout(() => setPhase(1), 1600);
-    const t2 = setTimeout(() => setPhase(2), 3200);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
-  }, [loopKey]);
+const BRAIN_ALL_NODES = [
+  ...BRAIN_INPUT_NODES,
+  ...BRAIN_HIDDEN_1,
+  ...BRAIN_HIDDEN_2,
+  ...BRAIN_OUTPUT_NODES,
+];
 
-  useEffect(() => {
-    if (phase !== 2) return;
-    let count = 0;
-    const interval = setInterval(() => {
-      count++;
-      setVisibleWords(count);
-      if (count >= AI_RESPONSE_WORDS.length) {
-        clearInterval(interval);
-        setTimeout(() => setLoopKey((k) => k + 1), 2800);
-      }
-    }, 90);
-    return () => clearInterval(interval);
-  }, [phase]);
+const BRAIN_CONNECTIONS: { x1: number; y1: number; x2: number; y2: number }[] = [];
+BRAIN_INPUT_NODES.forEach((a) =>
+  BRAIN_HIDDEN_1.forEach((b) =>
+    BRAIN_CONNECTIONS.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y })
+  )
+);
+BRAIN_HIDDEN_1.forEach((a) =>
+  BRAIN_HIDDEN_2.forEach((b) =>
+    BRAIN_CONNECTIONS.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y })
+  )
+);
+BRAIN_HIDDEN_2.forEach((a) =>
+  BRAIN_OUTPUT_NODES.forEach((b) =>
+    BRAIN_CONNECTIONS.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y })
+  )
+);
 
+const BRAIN_PARTICLE_PATHS = [
+  { path: "M 70 90 L 180 70 L 290 70 L 400 100", dur: 3.2, delay: 0 },
+  { path: "M 70 90 L 180 130 L 290 130 L 400 160", dur: 2.8, delay: 0.6 },
+  { path: "M 70 160 L 180 130 L 290 190 L 400 160", dur: 3.6, delay: 1.2 },
+  { path: "M 70 160 L 180 190 L 290 130 L 400 100", dur: 2.6, delay: 1.8 },
+  { path: "M 70 230 L 180 250 L 290 250 L 400 220", dur: 3.0, delay: 0.9 },
+  { path: "M 70 230 L 180 190 L 290 190 L 400 220", dur: 3.4, delay: 2.1 },
+  { path: "M 70 90 L 180 70 L 290 130 L 400 160", dur: 2.9, delay: 2.4 },
+  { path: "M 70 160 L 180 250 L 290 250 L 400 220", dur: 3.8, delay: 0.3 },
+  { path: "M 70 230 L 180 190 L 290 70 L 400 100", dur: 3.1, delay: 1.5 },
+  { path: "M 70 90 L 180 190 L 290 190 L 400 160", dur: 2.7, delay: 2.8 },
+];
+
+function PersonalizedBrainAnimation() {
   return (
-    <div className="absolute inset-0 bg-[#0D1117] flex items-center justify-center select-none overflow-hidden relative">
-      <div className="absolute inset-0 opacity-[0.02] flex items-center justify-center pointer-events-none" aria-hidden="true">
-        <span className="font-[family-name:var(--font-logo)] text-[20rem] font-semibold leading-none text-white">
+    <div className="absolute inset-0 bg-[#0D1117] overflow-hidden select-none">
+      {/* Ethos watermark — IA é sua */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        aria-hidden="true"
+      >
+        <span className="font-[family-name:var(--font-logo)] text-[13rem] md:text-[16rem] font-semibold text-white/[0.022] leading-none tracking-tight">
           Ethos
         </span>
       </div>
-      <div className="w-full max-w-xl px-10 py-8 relative z-10">
-        {/* Prompt do usuário */}
-        <div
-          className={`mb-8 transition-[opacity,transform] duration-700 ${
-            phase >= 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
-          <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/25 tracking-[0.2em] uppercase mb-3">
-            Consulta
-          </p>
-          <div className="inline-block bg-[#2A3D52] text-white/85 text-sm rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-[85%] leading-relaxed">
-            Analise o churn dos últimos 90 dias e projete os próximos 30.
-          </div>
-        </div>
 
-        {/* Métricas */}
-        <div
-          className={`mb-8 grid grid-cols-2 gap-3 transition-[opacity,transform] duration-700 delay-100 ${
-            phase >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
-          <div className="bg-white/5 rounded-xl p-4 border border-white/8">
-            <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/30 tracking-widest uppercase mb-2">
-              Churn rate
-            </p>
-            <p className="font-[family-name:var(--font-display)] text-2xl font-extrabold text-white">
-              23,4%
-            </p>
-            <p className="text-[0.62rem] text-red-400/65 mt-1.5">↑ 4,1% vs mês anterior</p>
-          </div>
-          <div className="bg-white/5 rounded-xl p-4 border border-white/8">
-            <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/30 tracking-widest uppercase mb-2">
-              Em risco
-            </p>
-            <p className="font-[family-name:var(--font-display)] text-2xl font-extrabold text-white">
-              R$ 48k
-            </p>
-            <p className="text-[0.62rem] text-white/25 mt-1.5">próximos 30 dias</p>
-          </div>
-        </div>
+      {/* Rede neural */}
+      <svg
+        viewBox="0 0 470 320"
+        className="absolute inset-0 w-full h-full"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <defs>
+          <radialGradient id="brain-particle-glow">
+            <stop offset="0%" stopColor="#F0E9D6" stopOpacity="1" />
+            <stop offset="40%" stopColor="#F0E9D6" stopOpacity="0.45" />
+            <stop offset="100%" stopColor="#F0E9D6" stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id="brain-node-glow">
+            <stop offset="0%" stopColor="#F0E9D6" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#F0E9D6" stopOpacity="0" />
+          </radialGradient>
+        </defs>
 
-        {/* Texto gerado */}
-        <div
-          className={`transition-opacity duration-500 ${phase >= 2 ? "opacity-100" : "opacity-0"}`}
-        >
-          <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/25 tracking-[0.2em] uppercase mb-3">
-            Análise gerada
-          </p>
-          <p className="text-sm text-white/55 leading-[1.75]">
-            {AI_RESPONSE_WORDS.slice(0, visibleWords).join(" ")}
-            {phase >= 2 && visibleWords < AI_RESPONSE_WORDS.length && (
-              <span className="inline-block w-0.5 h-3.5 bg-white/40 ml-0.5 animate-pulse align-middle" />
-            )}
+        {/* Conexões (muito sutis) */}
+        {BRAIN_CONNECTIONS.map((c, i) => (
+          <line
+            key={`bc-${i}`}
+            x1={c.x1}
+            y1={c.y1}
+            x2={c.x2}
+            y2={c.y2}
+            stroke="rgba(240,233,214,0.055)"
+            strokeWidth="0.4"
+          />
+        ))}
+
+        {/* Nós pulsando */}
+        {BRAIN_ALL_NODES.map((n, i) => (
+          <g key={`bn-${i}`}>
+            <circle cx={n.x} cy={n.y} r="9" fill="url(#brain-node-glow)">
+              <animate
+                attributeName="opacity"
+                values="0.15;0.45;0.15"
+                dur={`${2.8 + (i % 4) * 0.5}s`}
+                repeatCount="indefinite"
+                begin={`${(i * 0.27) % 3}s`}
+              />
+            </circle>
+            <circle cx={n.x} cy={n.y} r="2" fill="#F0E9D6" opacity="0.6">
+              <animate
+                attributeName="opacity"
+                values="0.45;1;0.45"
+                dur={`${2.2 + (i % 3) * 0.4}s`}
+                repeatCount="indefinite"
+                begin={`${(i * 0.35) % 2.5}s`}
+              />
+            </circle>
+          </g>
+        ))}
+
+        {/* Partículas viajando pela rede */}
+        {BRAIN_PARTICLE_PATHS.map((p, i) => (
+          <g key={`bp-${i}`}>
+            <circle r="3.5" fill="url(#brain-particle-glow)">
+              <animateMotion
+                dur={`${p.dur}s`}
+                repeatCount="indefinite"
+                begin={`${p.delay}s`}
+                path={p.path}
+              />
+            </circle>
+            <circle r="1.3" fill="#F0E9D6">
+              <animateMotion
+                dur={`${p.dur}s`}
+                repeatCount="indefinite"
+                begin={`${p.delay}s`}
+                path={p.path}
+              />
+            </circle>
+          </g>
+        ))}
+      </svg>
+
+      {/* Header editorial */}
+      <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-10">
+        <div className="flex items-center gap-2.5">
+          <span className="w-4 h-px bg-white/25" />
+          <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/40 tracking-[0.22em] uppercase">
+            IA Personalizada
           </p>
         </div>
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#F0E9D6]/70 animate-pulse" />
+          <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/40 tracking-[0.18em] uppercase">
+            aprendendo
+          </p>
+        </div>
+      </div>
+
+      {/* Footer statement — diferencial Ethos */}
+      <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between z-10">
+        <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/32 tracking-[0.15em] uppercase">
+          Treinada com seus dados
+        </p>
+        <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/32 tracking-[0.15em] uppercase">
+          Apenas você a usa
+        </p>
       </div>
     </div>
   );
 }
 
-const WORKFLOW_STEPS = [
-  { label: "Formulário enviado", detail: "contato.com/novo-lead", icon: "↓" },
-  { label: "Enriquecimento + scoring", detail: "CRM · Clearbit · GPT-4", icon: "◊" },
-  { label: "Roteamento", detail: "Slack #sales · email SDR", icon: "→" },
+// ——————————————————————————————————————————————
+// Automações — "Choreography"
+// Sistemas conectados. Dados fluindo em curvas coreografadas.
+// Ethos como orquestrador central — tudo passa pela inteligência.
+// ——————————————————————————————————————————————
+
+const CHOREO_STATIONS = [
+  { label: "FORMS", x: 80, y: 80, isCore: false },
+  { label: "CRM", x: 80, y: 240, isCore: false },
+  { label: "ETHOS", x: 240, y: 160, isCore: true },
+  { label: "SLACK", x: 400, y: 80, isCore: false },
+  { label: "EMAIL", x: 400, y: 240, isCore: false },
 ];
 
-function WorkflowAnimation() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [loopKey, setLoopKey] = useState(0);
+const CHOREO_FLOWS = [
+  { path: "M 80 80 Q 240 160, 400 80", dur: 4.2, delay: 0 },
+  { path: "M 80 240 Q 240 160, 400 240", dur: 4.6, delay: 1.2 },
+  { path: "M 80 80 Q 240 160, 400 240", dur: 5.0, delay: 2.4 },
+  { path: "M 400 80 Q 240 160, 80 240", dur: 4.4, delay: 0.6 },
+  { path: "M 400 240 Q 240 160, 80 80", dur: 4.8, delay: 1.8 },
+  { path: "M 80 80 Q 240 160, 80 240", dur: 5.2, delay: 3.0 },
+  { path: "M 400 80 Q 240 160, 400 240", dur: 4.6, delay: 0.3 },
+];
 
-  useEffect(() => {
-    setActiveStep(0);
-    const timers = [
-      setTimeout(() => setActiveStep(1), 900),
-      setTimeout(() => setActiveStep(2), 2100),
-      setTimeout(() => setActiveStep(3), 3300),
-      setTimeout(() => setActiveStep(4), 4500),
-      setTimeout(() => setLoopKey((k) => k + 1), 6800),
-    ];
-    return () => timers.forEach(clearTimeout);
-  }, [loopKey]);
-
+function ChoreographyAnimation() {
   return (
-    <div className="absolute inset-0 bg-[#0D1117] flex items-center justify-center select-none overflow-hidden relative">
-      <div className="absolute inset-0 opacity-[0.02] flex items-center justify-center pointer-events-none" aria-hidden="true">
-        <span className="font-[family-name:var(--font-logo)] text-[20rem] font-semibold leading-none text-white">
+    <div className="absolute inset-0 bg-[#0D1117] overflow-hidden select-none">
+      {/* Ethos watermark no fundo — marca orquestradora */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        aria-hidden="true"
+      >
+        <span className="font-[family-name:var(--font-logo)] text-[14rem] md:text-[18rem] font-semibold text-white/[0.02] leading-none tracking-tight">
           Ethos
         </span>
       </div>
-      <div className="w-full max-w-xl px-10 py-8 relative z-10">
-        <div className="flex items-center justify-between mb-8">
-          <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/25 tracking-[0.2em] uppercase">
-            Automação em execução
+
+      {/* Orquestração */}
+      <svg
+        viewBox="0 0 480 320"
+        className="absolute inset-0 w-full h-full"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <defs>
+          <radialGradient id="choreo-glow">
+            <stop offset="0%" stopColor="#F0E9D6" stopOpacity="1" />
+            <stop offset="35%" stopColor="#F0E9D6" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#F0E9D6" stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id="choreo-core-glow">
+            <stop offset="0%" stopColor="#F0E9D6" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="#F0E9D6" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+
+        {/* Paths de fundo muito sutis */}
+        {CHOREO_FLOWS.map((f, i) => (
+          <path
+            key={`cf-${i}`}
+            d={f.path}
+            stroke="rgba(240,233,214,0.04)"
+            strokeWidth="0.5"
+            fill="none"
+          />
+        ))}
+
+        {/* Core halo (aro expandindo) */}
+        <circle cx="240" cy="160" r="34" fill="url(#choreo-core-glow)">
+          <animate attributeName="r" values="34;60;34" dur="4.5s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.8;0;0.8" dur="4.5s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="240" cy="160" r="34" fill="url(#choreo-core-glow)">
+          <animate
+            attributeName="r"
+            values="34;60;34"
+            dur="4.5s"
+            repeatCount="indefinite"
+            begin="2.25s"
+          />
+          <animate
+            attributeName="opacity"
+            values="0.8;0;0.8"
+            dur="4.5s"
+            repeatCount="indefinite"
+            begin="2.25s"
+          />
+        </circle>
+
+        {/* Partículas viajando em coreografia */}
+        {CHOREO_FLOWS.map((f, i) => (
+          <g key={`cp-${i}`}>
+            <circle r="5" fill="url(#choreo-glow)">
+              <animateMotion
+                dur={`${f.dur}s`}
+                repeatCount="indefinite"
+                begin={`${f.delay}s`}
+                path={f.path}
+              />
+            </circle>
+            <circle r="1.8" fill="#F0E9D6">
+              <animateMotion
+                dur={`${f.dur}s`}
+                repeatCount="indefinite"
+                begin={`${f.delay}s`}
+                path={f.path}
+              />
+            </circle>
+          </g>
+        ))}
+
+        {/* Estações */}
+        {CHOREO_STATIONS.map((s, i) => (
+          <g key={`cs-${i}`}>
+            <rect
+              x={s.x - 34}
+              y={s.y - 13}
+              width="68"
+              height="26"
+              rx="13"
+              fill={s.isCore ? "rgba(240,233,214,0.09)" : "rgba(255,255,255,0.035)"}
+              stroke={
+                s.isCore ? "rgba(240,233,214,0.45)" : "rgba(255,255,255,0.14)"
+              }
+              strokeWidth="0.75"
+            />
+            <text
+              x={s.x}
+              y={s.y + 3}
+              textAnchor="middle"
+              fill={s.isCore ? "#F0E9D6" : "rgba(255,255,255,0.58)"}
+              fontSize="7.5"
+              fontFamily="var(--font-mono), monospace"
+              letterSpacing="2.5"
+              fontWeight="500"
+            >
+              {s.label}
+            </text>
+          </g>
+        ))}
+      </svg>
+
+      {/* Header editorial */}
+      <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-10">
+        <div className="flex items-center gap-2.5">
+          <span className="w-4 h-px bg-white/25" />
+          <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/40 tracking-[0.22em] uppercase">
+            Orquestração
           </p>
-          <span className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/25 tracking-widest">
-            run_#8429
-          </span>
         </div>
-
-        <div className="flex flex-col gap-2.5">
-          {WORKFLOW_STEPS.map((step, i) => {
-            const stepNum = i + 1;
-            const isActive = activeStep === stepNum;
-            const isDone = activeStep > stepNum;
-            const isIdle = activeStep < stepNum;
-
-            return (
-              <div
-                key={i}
-                className={`flex items-center gap-4 px-4 py-3.5 rounded-xl border transition-[background-color,border-color,opacity] duration-500 ${
-                  isActive
-                    ? "bg-white/[0.06] border-white/15"
-                    : isDone
-                    ? "bg-white/[0.02] border-white/8 opacity-70"
-                    : "bg-transparent border-white/5 opacity-50"
-                }`}
-              >
-                <div
-                  className={`w-8 h-8 rounded-lg flex items-center justify-center font-[family-name:var(--font-mono)] text-xs transition-[background-color,color] duration-500 ${
-                    isActive
-                      ? "bg-emerald-400/15 text-emerald-300"
-                      : isDone
-                      ? "bg-white/10 text-white/70"
-                      : "bg-white/5 text-white/30"
-                  }`}
-                >
-                  {isDone ? "✓" : step.icon}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p
-                    className={`text-sm transition-colors duration-500 ${
-                      isIdle ? "text-white/35" : "text-white/85"
-                    }`}
-                  >
-                    {step.label}
-                  </p>
-                  <p className="font-[family-name:var(--font-mono)] text-[0.62rem] text-white/30 mt-0.5 truncate">
-                    {step.detail}
-                  </p>
-                </div>
-                {isActive && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="mt-8 flex items-center gap-3">
-          <div className="flex-1 h-px bg-white/8" />
-          <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/40 tracking-[0.2em] uppercase">
-            {activeStep === 4 ? "Concluído · 842ms" : "Em execução..."}
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80 animate-pulse" />
+          <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/40 tracking-[0.18em] uppercase">
+            em execução
           </p>
         </div>
+      </div>
+
+      {/* Footer statement */}
+      <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between z-10">
+        <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/32 tracking-[0.15em] uppercase">
+          Sistemas conectados · dados fluindo
+        </p>
+        <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/32 tracking-[0.15em] uppercase">
+          24 / 7
+        </p>
       </div>
     </div>
   );
@@ -387,13 +542,13 @@ export function Services() {
                   >
                     <source src={s.videoUrl} type="video/mp4" />
                   </video>
-                ) : s.background === "workflow" ? (
+                ) : s.background === "choreography" ? (
                   <div className="absolute inset-0 z-[1]">
-                    <WorkflowAnimation />
+                    <ChoreographyAnimation />
                   </div>
                 ) : (
                   <div className="absolute inset-0 z-[1]">
-                    <AIPredictiveAnimation />
+                    <PersonalizedBrainAnimation />
                   </div>
                 )}
 
