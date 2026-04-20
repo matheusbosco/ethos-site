@@ -3,7 +3,7 @@ import { HandwrittenCircle } from "@/components/ui/HandwrittenCircle";
 
 export function Tagline() {
   return (
-    <section className="w-full bg-[#F0E9D6] px-6 py-28 md:py-40 border-t border-[#DFD6C2]/60">
+    <section className="w-full bg-[#F0E9D6] px-6 py-28 md:py-40 border-t border-[#DFD6C2]">
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <div className="flex items-center gap-3 mb-12">

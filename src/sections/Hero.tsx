@@ -16,7 +16,7 @@ export function Hero() {
   const { open } = useContact();
 
   return (
-    <section style={{ backgroundColor: '#E8DFCB' }} className="w-full min-h-screen flex items-center px-6 pt-16 relative">
+    <section className="w-full min-h-screen flex items-center px-6 pt-16 relative bg-[#F0E9D6] border-b border-[#DFD6C2]">
       {/* Linha decorativa vertical */}
       <div className="absolute left-6 top-1/2 -translate-y-1/2 w-px h-32 bg-[#DFD6C2]/60 hidden lg:block z-10" />
 

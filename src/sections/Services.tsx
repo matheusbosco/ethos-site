@@ -230,7 +230,7 @@ export function Services() {
   return (
     <>
       {/* Header — max-width contido */}
-      <section id="servicos" className="w-full bg-[#F0E9D6] px-6 pt-20 md:pt-28 pb-12">
+      <section id="servicos" className="w-full bg-[#F0E9D6] border-t border-[#DFD6C2] px-6 pt-20 md:pt-28 pb-12">
         <div className="mx-auto max-w-5xl">
           <Reveal>
             <p className="font-[family-name:var(--font-mono)] text-xs text-[#2A3D52] tracking-[0.2em] uppercase mb-10">
