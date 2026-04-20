@@ -501,13 +501,14 @@ export function Services() {
               Soluções com inteligência artificial{" "}
               <span className="relative inline-block pb-5">
                 personalizadas
-                <motion.svg
+                <svg
                   width="100%"
                   height="32"
                   viewBox="0 0 300 32"
                   className="absolute -bottom-2 left-0"
                   aria-hidden="true"
                   preserveAspectRatio="none"
+                  style={{ display: "block" }}
                 >
                   <motion.path
                     d="M 0,16 Q 75,2 150,16 Q 225,30 300,16"
@@ -523,7 +524,7 @@ export function Services() {
                       transition: { duration: 0.8 },
                     }}
                   />
-                </motion.svg>
+                </svg>
               </span>
               .
             </h2>
