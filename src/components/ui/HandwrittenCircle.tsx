@@ -14,7 +14,7 @@ export function HandwrittenCircle() {
       animate="visible"
     >
       <motion.path
-        d="M 148 14 Q 152 6, 136 4 Q 80 -2, 24 4 Q 8 6, 8 19 Q 8 32, 24 34 Q 80 40, 136 34 Q 152 32, 148 14"
+        d="M 148 13 Q 154 5, 136 3 Q 80 1, 24 3 Q 6 5, 6 19 Q 6 33, 24 35 Q 80 37, 136 35 Q 154 33, 148 13"
         stroke="#2A3D52"
         strokeWidth="1.5"
         strokeLinecap="round"
