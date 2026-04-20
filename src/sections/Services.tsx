@@ -19,7 +19,7 @@ const services: Service[] = [
   {
     id: "automacoes",
     title: "Automações",
-    tags: ["Workflows", "Integrações", "Notificações"],
+    tags: ["Workflows", "Integrações", "WhatsApp"],
     background: "choreography",
     modal: {
       description:
@@ -248,7 +248,7 @@ const CHOREO_STATIONS = [
   { label: "FORMS", x: 80, y: 80, isCore: false },
   { label: "CRM", x: 80, y: 240, isCore: false },
   { label: "ETHOS", x: 240, y: 160, isCore: true },
-  { label: "SLACK", x: 400, y: 80, isCore: false },
+  { label: "WHATSAPP", x: 400, y: 80, isCore: false },
   { label: "EMAIL", x: 400, y: 240, isCore: false },
 ];
 
