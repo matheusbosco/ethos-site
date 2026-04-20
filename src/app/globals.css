@@ -23,6 +23,18 @@
   /* Animações */
   --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-fade-in: fade-in 0.5s ease-out both;
+  --animate-drift-slow: drift-slow 32s ease-in-out infinite;
+  --animate-drift-slow-reverse: drift-slow-reverse 38s ease-in-out infinite;
+}
+
+@keyframes drift-slow {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-40px, 30px); }
+}
+
+@keyframes drift-slow-reverse {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(50px, -40px); }
 }
 
 @keyframes fade-up {
@@ -42,23 +54,11 @@
 }
 
 body {
-  background-color: #F0E9D6;
+  background-color: #E8DFCB;
   color: #1E1D1B;
   font-family: var(--font-inter), Georgia, serif;
 }
 
-/* Grain texture — transmite o "feita à mão" */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-  background-repeat: repeat;
-}
 
 /* Scroll reveal — aplicar via JS ou diretamente nos elementos */
 .reveal {

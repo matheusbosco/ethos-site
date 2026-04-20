@@ -230,7 +230,7 @@ export function Services() {
   return (
     <>
       {/* Header — max-width contido */}
-      <section id="servicos" className="w-full bg-[#F0E9D6] px-6 pt-20 md:pt-28 pb-12">
+      <section id="servicos" className="w-full bg-[#E8DFCB] px-6 pt-20 md:pt-28 pb-12">
         <div className="mx-auto max-w-5xl">
           <Reveal>
             <p className="font-[family-name:var(--font-mono)] text-xs text-[#2A3D52] tracking-[0.2em] uppercase mb-10">
@@ -247,7 +247,7 @@ export function Services() {
       </section>
 
       {/* Cards contidos com padding lateral */}
-      <div className="w-full bg-[#F0E9D6] px-6 pb-20 md:pb-28">
+      <div className="w-full bg-[#E8DFCB] px-6 pb-20 md:pb-28">
         <div className="mx-auto max-w-5xl flex flex-col rounded-xl overflow-hidden border border-[#1C2B3A]/20">
           {services.map((s, i) => (
             <Reveal key={s.id} delay={i * 60}>

@@ -1,6 +1,7 @@
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/sections/Hero";
+import { Tagline } from "@/sections/Tagline";
 import { Manifesto } from "@/sections/Manifesto";
 import { Services } from "@/sections/Services";
 import { TechProof } from "@/sections/TechProof";
@@ -14,7 +15,8 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-<Services />
+        <Tagline />
+        <Services />
         <Process />
         <TechProof />
         <Manifesto />

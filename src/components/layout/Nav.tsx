@@ -25,7 +25,7 @@ export function Nav() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
         scrolled
-          ? "bg-[#F0E9D6]/80 backdrop-blur-md border-[#DFD6C2]"
+          ? "bg-[#E8DFCB]/80 backdrop-blur-md border-[#DFD6C2]"
           : "bg-transparent border-transparent"
       }`}
     >
@@ -70,7 +70,7 @@ export function Nav() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-[#F0E9D6] border-t border-[#DFD6C2] px-6 py-6 flex flex-col gap-6">
+        <div className="md:hidden bg-[#E8DFCB] border-t border-[#DFD6C2] px-6 py-6 flex flex-col gap-6">
           {links.map((l) => (
             <a
               key={l.href}

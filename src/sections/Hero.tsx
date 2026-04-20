@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
-import { VideoBackground } from "@/components/ui/VideoBackground";
 import { HandwrittenCircle } from "@/components/ui/HandwrittenCircle";
 import { AnimatedWords } from "@/components/ui/AnimatedWords";
 import { useContact } from "@/contexts/ContactContext";
@@ -17,9 +16,7 @@ export function Hero() {
   const { open } = useContact();
 
   return (
-    <section className="w-full min-h-screen flex items-center px-6 pt-16 relative overflow-hidden">
-      <VideoBackground />
-
+    <section style={{ backgroundColor: '#E8DFCB' }} className="w-full min-h-screen flex items-center px-6 pt-16 relative">
       {/* Linha decorativa vertical */}
       <div className="absolute left-6 top-1/2 -translate-y-1/2 w-px h-32 bg-[#DFD6C2]/60 hidden lg:block z-10" />
 
