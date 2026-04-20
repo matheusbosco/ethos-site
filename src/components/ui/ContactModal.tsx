@@ -139,7 +139,7 @@ export function ContactModal() {
                   className="text-sm px-8 py-3.5"
                   disabled={status === "sending"}
                 >
-                  {status === "sending" ? "Enviando..." : "Diagnóstico gratuito"}
+                  {status === "sending" ? "Enviando..." : "Enviar mensagem"}
                 </Button>
                 <p className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[#87867F] tracking-wide">
                   Respondemos em até 24h.

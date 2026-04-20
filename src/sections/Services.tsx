@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Reveal } from "@/components/ui/Reveal";
+import { HandwrittenCircle } from "@/components/ui/HandwrittenCircle";
 
 interface Service {
   id: string;
@@ -230,17 +231,31 @@ export function Services() {
   return (
     <>
       {/* Header — max-width contido */}
-      <section id="servicos" className="w-full bg-[#F0E9D6] border-t border-[#DFD6C2] px-6 pt-20 md:pt-28 pb-12">
+      <section id="servicos" className="w-full bg-[#F0E9D6] border-t border-[#DFD6C2] px-6 pt-28 md:pt-40 pb-16 md:pb-20">
         <div className="mx-auto max-w-5xl">
           <Reveal>
-            <p className="font-[family-name:var(--font-mono)] text-xs text-[#2A3D52] tracking-[0.2em] uppercase mb-10">
-              O que entregamos
-            </p>
-            <h2 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-extrabold text-[#1E1D1B] leading-tight tracking-tight mb-4 max-w-lg">
-              Onde aplicamos inteligência artificial.
+            <div className="flex items-center gap-3 mb-12">
+              <div className="w-6 h-px bg-[#2A3D52]/40" />
+              <p className="font-[family-name:var(--font-mono)] text-[0.62rem] text-[#87867F] tracking-[0.25em] uppercase">
+                O que entregamos
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={100}>
+            <h2 className="font-[family-name:var(--font-display)] text-[2.4rem] md:text-[3.6rem] lg:text-[4.4rem] font-extrabold text-[#1E1D1B] leading-[1.08] tracking-tight max-w-4xl">
+              Soluções com inteligência artificial{" "}
+              <span className="relative inline-block">
+                personalizadas
+                <HandwrittenCircle />
+              </span>
+              .
             </h2>
-            <p className="text-base text-[#87867F] max-w-md leading-relaxed">
-              Cada solução é construída para o seu processo. Nada aqui é genérico.
+          </Reveal>
+
+          <Reveal delay={200}>
+            <p className="font-[family-name:var(--font-mono)] text-xs text-[#2A3D52]/70 tracking-[0.2em] uppercase mt-12">
+              Construídas do zero — para o seu negócio, não para o mercado.
             </p>
           </Reveal>
         </div>

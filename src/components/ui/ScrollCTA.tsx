@@ -62,7 +62,7 @@ export function ScrollCTA() {
             className="w-full text-sm py-2.5"
             onClick={() => { dismiss(); open(); }}
           >
-            Diagnóstico gratuito
+            Conversar com a Ethos
           </Button>
         </motion.div>
       )}

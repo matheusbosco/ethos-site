@@ -41,7 +41,7 @@ export function Hero() {
         <div className="w-12 h-px bg-[#2A3D52] mb-10" />
 
         <p className="text-lg md:text-xl text-[#87867F] leading-[1.8] max-w-md mb-14">
-          Enquanto você lê isso, seus concorrentes já estão automatizando. A IA de hoje faz o que era inimaginável há dois anos — e nós colocamos esse poder a serviço do seu negócio.
+          A IA de hoje resolve problemas que há dois anos exigiriam meses de engenharia. Nós mapeamos onde ela faz sentido no seu negócio — e construímos só o que tem retorno real.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4">
@@ -50,7 +50,7 @@ export function Hero() {
             className="text-sm px-8 py-3.5"
             onClick={open}
           >
-            Diagnóstico gratuito
+            Conversar com a Ethos
           </Button>
           <Button as="a" href="#servicos" variant="secondary" className="text-sm px-8 py-3.5">
             O que entregamos

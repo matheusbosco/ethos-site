@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Libre_Baskerville, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import {
+  Inter,
+  Libre_Baskerville,
+  JetBrains_Mono,
+  Plus_Jakarta_Sans,
+  Playfair_Display,
+} from "next/font/google";
 import { ContactProvider } from "@/contexts/ContactContext";
 import { ContactModal } from "@/components/ui/ContactModal";
 import { ScrollCTA } from "@/components/ui/ScrollCTA";
@@ -33,6 +39,14 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const playfairDisplay = Playfair_Display({
+  variable: "--font-logo",
+  subsets: ["latin"],
+  weight: ["700"],
+  style: ["normal"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Ethos — Inteligência sob medida",
   description: "Agência de soluções com IA. Automação e agentes de IA para empresas que querem operar com mais inteligência.",
@@ -50,7 +64,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} ${libreBaskerville.variable} ${jetbrainsMono.variable} ${plusJakarta.variable} h-full antialiased`}>
+    <html lang="pt-BR" className={`${inter.variable} ${libreBaskerville.variable} ${jetbrainsMono.variable} ${plusJakarta.variable} ${playfairDisplay.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <ContactProvider>
           {children}

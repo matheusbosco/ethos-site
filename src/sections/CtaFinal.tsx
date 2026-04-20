@@ -13,7 +13,7 @@ export function CtaFinal() {
         className="absolute right-0 inset-y-0 flex items-center pointer-events-none select-none"
         aria-hidden="true"
       >
-        <span className="font-[family-name:var(--font-heading)] italic font-bold text-white/[0.028] leading-none translate-x-8"
+        <span className="font-[family-name:var(--font-logo)] font-bold text-white/[0.028] leading-none translate-x-8"
           style={{ fontSize: "clamp(8rem, 18vw, 20rem)" }}>
           Ethos
         </span>
@@ -34,7 +34,7 @@ export function CtaFinal() {
 
           {/* Headline principal — Libre Baskerville italic, autoridade máxima */}
           <h2 className="font-[family-name:var(--font-heading)] italic text-[2.8rem] md:text-[4rem] lg:text-[5rem] font-normal text-[#F0E9D6] leading-[1.08] tracking-tight mb-8 max-w-2xl">
-            Inteligência sob medida começa aqui.
+            O primeiro passo é uma conversa.
           </h2>
 
           {/* CTA */}
@@ -42,7 +42,7 @@ export function CtaFinal() {
             onClick={open}
             className="inline-flex items-center gap-3 bg-[#F0E9D6] text-[#1C2B3A] hover:bg-[#DFD6C2] text-sm font-medium tracking-wide rounded-full px-8 py-3.5 transition-colors duration-200 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F0E9D6]"
           >
-            Falar com a Ethos
+            Conversar com a Ethos
             <span aria-hidden="true">→</span>
           </button>
         </Reveal>
