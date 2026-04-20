@@ -9,7 +9,7 @@ interface Service {
   id: string;
   title: string;
   tags: string[];
-  background: "video" | "chat";
+  background: "video" | "chat" | "workflow";
   videoUrl?: string;
   posterUrl?: string;
   modal: { description: string };
@@ -20,11 +20,7 @@ const services: Service[] = [
     id: "automacoes",
     title: "Automações",
     tags: ["Workflows", "Integrações", "Notificações"],
-    background: "video",
-    videoUrl:
-      "https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-flowing-data-network-27506-large.mp4",
-    posterUrl:
-      "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=2090&auto=format&fit=crop",
+    background: "workflow",
     modal: {
       description:
         "Conectamos sistemas, eliminamos trabalho manual repetitivo e fazemos os dados fluírem onde precisam — sem intervenção humana. Cada automação é construída para o seu processo, não adaptada de um template.",
@@ -146,6 +142,100 @@ function AIPredictiveAnimation() {
             {phase >= 2 && visibleWords < AI_RESPONSE_WORDS.length && (
               <span className="inline-block w-0.5 h-3.5 bg-white/40 ml-0.5 animate-pulse align-middle" />
             )}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const WORKFLOW_STEPS = [
+  { label: "Formulário enviado", detail: "contato.com/novo-lead", icon: "↓" },
+  { label: "Enriquecimento + scoring", detail: "CRM · Clearbit · GPT-4", icon: "◊" },
+  { label: "Roteamento", detail: "Slack #sales · email SDR", icon: "→" },
+];
+
+function WorkflowAnimation() {
+  const [activeStep, setActiveStep] = useState(0);
+  const [loopKey, setLoopKey] = useState(0);
+
+  useEffect(() => {
+    setActiveStep(0);
+    const timers = [
+      setTimeout(() => setActiveStep(1), 900),
+      setTimeout(() => setActiveStep(2), 2100),
+      setTimeout(() => setActiveStep(3), 3300),
+      setTimeout(() => setActiveStep(4), 4500),
+      setTimeout(() => setLoopKey((k) => k + 1), 6800),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, [loopKey]);
+
+  return (
+    <div className="absolute inset-0 bg-[#0D1117] flex items-center justify-center select-none overflow-hidden">
+      <div className="w-full max-w-xl px-10 py-8">
+        <div className="flex items-center justify-between mb-8">
+          <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/25 tracking-[0.2em] uppercase">
+            Automação em execução
+          </p>
+          <span className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/25 tracking-widest">
+            run_#8429
+          </span>
+        </div>
+
+        <div className="flex flex-col gap-2.5">
+          {WORKFLOW_STEPS.map((step, i) => {
+            const stepNum = i + 1;
+            const isActive = activeStep === stepNum;
+            const isDone = activeStep > stepNum;
+            const isIdle = activeStep < stepNum;
+
+            return (
+              <div
+                key={i}
+                className={`flex items-center gap-4 px-4 py-3.5 rounded-xl border transition-[background-color,border-color,opacity] duration-500 ${
+                  isActive
+                    ? "bg-white/[0.06] border-white/15"
+                    : isDone
+                    ? "bg-white/[0.02] border-white/8 opacity-70"
+                    : "bg-transparent border-white/5 opacity-50"
+                }`}
+              >
+                <div
+                  className={`w-8 h-8 rounded-lg flex items-center justify-center font-[family-name:var(--font-mono)] text-xs transition-[background-color,color] duration-500 ${
+                    isActive
+                      ? "bg-emerald-400/15 text-emerald-300"
+                      : isDone
+                      ? "bg-white/10 text-white/70"
+                      : "bg-white/5 text-white/30"
+                  }`}
+                >
+                  {isDone ? "✓" : step.icon}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p
+                    className={`text-sm transition-colors duration-500 ${
+                      isIdle ? "text-white/35" : "text-white/85"
+                    }`}
+                  >
+                    {step.label}
+                  </p>
+                  <p className="font-[family-name:var(--font-mono)] text-[0.62rem] text-white/30 mt-0.5 truncate">
+                    {step.detail}
+                  </p>
+                </div>
+                {isActive && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-8 flex items-center gap-3">
+          <div className="flex-1 h-px bg-white/8" />
+          <p className="font-[family-name:var(--font-mono)] text-[0.58rem] text-white/40 tracking-[0.2em] uppercase">
+            {activeStep === 4 ? "Concluído · 842ms" : "Em execução..."}
           </p>
         </div>
       </div>
@@ -287,6 +377,10 @@ export function Services() {
                   >
                     <source src={s.videoUrl} type="video/mp4" />
                   </video>
+                ) : s.background === "workflow" ? (
+                  <div className="absolute inset-0 z-[1]">
+                    <WorkflowAnimation />
+                  </div>
                 ) : (
                   <div className="absolute inset-0 z-[1]">
                     <AIPredictiveAnimation />
