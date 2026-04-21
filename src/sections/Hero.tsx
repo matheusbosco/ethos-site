@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
-import { HandwrittenCircle } from "@/components/ui/HandwrittenCircle";
 import { AnimatedWords } from "@/components/ui/AnimatedWords";
 import { useContact } from "@/contexts/ContactContext";
 
@@ -26,11 +25,7 @@ export function Hero() {
         </p>
 
         <h1 className="font-[family-name:var(--font-display)] text-5xl md:text-[5.5rem] font-extrabold text-[#1E1D1B] leading-[1.05] tracking-tight mb-4 max-w-3xl">
-          <span className="relative inline-block">
-            Inteligência
-            <HandwrittenCircle />
-          </span>{" "}
-          sob medida.
+          Inteligência sob medida.
         </h1>
 
         <AnimatedWords
