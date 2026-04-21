@@ -499,28 +499,28 @@ export function Services() {
           <Reveal delay={100}>
             <h2 className="font-[family-name:var(--font-display)] text-[2.4rem] md:text-[3.6rem] lg:text-[4.4rem] font-extrabold text-[#1E1D1B] leading-[1.08] tracking-tight max-w-4xl">
               Soluções com inteligência artificial{" "}
-              <span className="relative inline-block pb-5">
+              <span className="relative inline-block pb-6">
                 personalizadas
                 <svg
                   width="100%"
-                  height="32"
-                  viewBox="0 0 300 32"
-                  className="absolute -bottom-2 left-0"
+                  height="20"
+                  viewBox="0 0 300 20"
+                  className="absolute -bottom-4 left-0"
                   aria-hidden="true"
                   preserveAspectRatio="none"
                   style={{ display: "block" }}
                 >
                   <motion.path
-                    d="M 0,16 Q 75,2 150,16 Q 225,30 300,16"
+                    d="M 0,10 Q 75,0 150,10 Q 225,20 300,10"
                     stroke="currentColor"
-                    strokeWidth="2.5"
+                    strokeWidth="2"
                     fill="none"
                     vectorEffect="non-scaling-stroke"
                     initial={{ pathLength: 0, opacity: 0 }}
                     animate={{ pathLength: 1, opacity: 1 }}
                     transition={{ duration: 1.5, ease: "easeInOut", delay: 0.6 }}
                     whileHover={{
-                      d: "M 0,16 Q 75,30 150,16 Q 225,2 300,16",
+                      d: "M 0,10 Q 75,20 150,10 Q 225,0 300,10",
                       transition: { duration: 0.8 },
                     }}
                   />
