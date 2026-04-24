@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Section } from "@/components/layout/Section";
-import { Reveal } from "@/components/ui/Reveal";
 
 const faqs = [
   {
@@ -35,30 +33,39 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <Section id="faq">
-      <Reveal>
-        <p className="font-[family-name:var(--font-mono)] text-xs text-[#2A3D52] tracking-[0.2em] uppercase mb-10">
-          Perguntas frequentes
-        </p>
-        <h2 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-extrabold text-[#1E1D1B] leading-tight tracking-tight mb-16 max-w-lg">
+    <section id="faq" className="w-full bg-[#F4EFE8] px-6 py-20 md:py-28 border-t border-[#8BA5BB]/20">
+      <div className="mx-auto max-w-5xl">
+
+        <div className="flex items-center gap-3 mb-10">
+          <div className="w-5 h-px bg-[#5A7090]/50" />
+          <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase">
+            Perguntas frequentes
+          </p>
+        </div>
+
+        <h2
+          className="text-3xl md:text-4xl font-extrabold text-[#2C2620] leading-tight tracking-tight mb-16 max-w-lg"
+          style={{ fontFamily: "var(--font-jakarta)" }}
+        >
           O que você provavelmente quer saber antes de entrar em contato.
         </h2>
-      </Reveal>
 
-      <div className="flex flex-col divide-y divide-[#DFD6C2] max-w-2xl">
-        {faqs.map((faq, i) => (
-          <Reveal key={i} delay={i * 50}>
-            <div>
+        <div className="flex flex-col divide-y divide-[#8BA5BB]/20 max-w-2xl">
+          {faqs.map((faq, i) => (
+            <div key={i}>
               <button
                 className="w-full text-left py-7 flex items-start justify-between gap-6 group cursor-pointer"
                 onClick={() => setOpen(open === i ? null : i)}
                 aria-expanded={open === i}
               >
-                <span className="font-[family-name:var(--font-display)] text-base font-extrabold text-[#1E1D1B] tracking-tight leading-snug group-hover:text-[#2A3D52] transition-colors duration-200">
+                <span
+                  className="text-base font-extrabold text-[#2C2620] tracking-tight leading-snug group-hover:text-[#5A7090] transition-colors duration-200"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
                   {faq.q}
                 </span>
                 <span
-                  className="text-[#2A3D52] shrink-0 mt-0.5 text-xl leading-none transition-transform duration-300 select-none"
+                  className="text-[#C89A4F] shrink-0 mt-0.5 text-xl leading-none transition-transform duration-300 select-none"
                   style={{ transform: open === i ? "rotate(45deg)" : "rotate(0deg)" }}
                   aria-hidden
                 >
@@ -69,14 +76,15 @@ export function FAQ() {
                 className="overflow-hidden transition-all duration-300"
                 style={{ maxHeight: open === i ? "200px" : "0px" }}
               >
-                <p className="text-base text-[#87867F] leading-[1.8] pb-7 pr-10">
+                <p className="text-base text-[#8BA5BB] leading-[1.8] pb-7 pr-10">
                   {faq.a}
                 </p>
               </div>
             </div>
-          </Reveal>
-        ))}
+          ))}
+        </div>
+
       </div>
-    </Section>
+    </section>
   );
 }

@@ -14,7 +14,7 @@ export function Section({
 }: SectionProps) {
   return (
     <Tag
-      className={`w-full px-6 py-20 md:py-28 bg-[#F0E9D6] border-t border-[#DFD6C2] ${className}`}
+      className={`w-full px-6 py-20 md:py-28 bg-[#F4EFE8] border-t border-[#8BA5BB]/20 ${className}`}
       {...props}
     >
       <div className="mx-auto max-w-5xl">{children}</div>

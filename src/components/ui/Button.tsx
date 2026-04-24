@@ -10,11 +10,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const styles: Record<Variant, string> = {
   primary:
-    "bg-[#1C2B3A] text-[#F0E9D6] hover:bg-[#263D54] focus-visible:outline-[#1C2B3A]",
+    "bg-[#C89A4F] text-[#2C2620] hover:bg-[#b88c47] focus-visible:outline-[#C89A4F]",
   secondary:
-    "border border-[#1C2B3A] text-[#1C2B3A] hover:bg-[#E8DFCB] focus-visible:outline-[#1C2B3A]",
+    "border border-white/40 text-white hover:bg-white/10 focus-visible:outline-white",
   ghost:
-    "text-[#2A3D52] underline underline-offset-4 hover:text-[#3A5370] focus-visible:outline-[#2A3D52]",
+    "text-[#8BA5BB] underline underline-offset-4 hover:text-white focus-visible:outline-[#8BA5BB]",
 };
 
 export function Button({
@@ -26,7 +26,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide rounded-full transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 active:scale-[0.98]";
+    "inline-flex items-center justify-center px-6 py-3 text-sm font-semibold tracking-wide rounded-full transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 active:scale-[0.98]";
 
   if (Tag === "a") {
     return (

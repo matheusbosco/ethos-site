@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/Button";
+import { useState } from "react";
 import { useContact } from "@/contexts/ContactContext";
 
 const links = [
@@ -10,32 +9,35 @@ const links = [
   { label: "FAQ", href: "#faq" },
 ];
 
+function EthosLogo() {
+  return (
+    <a href="#" className="flex items-center gap-3 group">
+      <div className="flex flex-col gap-[5px]">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="h-[3px] w-6 rounded-full bg-[#C89A4F] transition-all duration-300 group-hover:w-7"
+          />
+        ))}
+      </div>
+      <span
+        className="text-white font-extrabold tracking-[0.14em] text-lg"
+        style={{ fontFamily: "var(--font-jakarta)" }}
+      >
+        ETHOS
+      </span>
+    </a>
+  );
+}
+
 export function Nav() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const { open: openContact } = useContact();
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
-        scrolled
-          ? "bg-[#F0E9D6]/80 backdrop-blur-md border-[#DFD6C2]"
-          : "bg-transparent border-transparent"
-      }`}
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#2C2620]">
       <div className="mx-auto max-w-5xl px-6 h-16 flex items-center justify-between">
-        <a
-          href="#"
-          className="font-[family-name:var(--font-logo)] text-2xl font-semibold text-[#1E1D1B] tracking-tight"
-        >
-          Ethos
-        </a>
+        <EthosLogo />
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
@@ -43,7 +45,7 @@ export function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="text-sm text-[#87867F] hover:text-[#1E1D1B] transition-colors"
+              className="text-sm text-[#8BA5BB] hover:text-white transition-colors duration-200 font-medium"
             >
               {l.label}
             </a>
@@ -51,43 +53,55 @@ export function Nav() {
         </nav>
 
         <div className="hidden md:block">
-          <Button variant="primary" onClick={openContact}>
-            Conversar com a Ethos
-          </Button>
+          <button
+            onClick={openContact}
+            className="inline-flex items-center gap-2 bg-[#C89A4F] text-[#2C2620] text-sm font-bold tracking-wide rounded-full px-5 py-2.5 hover:bg-[#b88c47] transition-colors duration-200 active:scale-[0.98]"
+          >
+            Conversar
+            <span aria-hidden="true">→</span>
+          </button>
         </div>
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden p-2 text-[#1E1D1B]"
+          className="md:hidden p-2 text-white"
           onClick={() => setOpen(!open)}
           aria-label={open ? "Fechar menu" : "Abrir menu"}
         >
-          <span className="block w-5 h-px bg-current mb-1.5 transition-transform" />
-          <span className="block w-5 h-px bg-current mb-1.5" />
-          <span className="block w-5 h-px bg-current transition-transform" />
+          <div
+            className="w-5 h-px bg-current mb-1.5 transition-transform duration-200"
+            style={{ transform: open ? "rotate(45deg) translateY(4px)" : "none" }}
+          />
+          <div
+            className="w-5 h-px bg-current mb-1.5 transition-opacity duration-200"
+            style={{ opacity: open ? 0 : 1 }}
+          />
+          <div
+            className="w-5 h-px bg-current transition-transform duration-200"
+            style={{ transform: open ? "rotate(-45deg) translateY(-4px)" : "none" }}
+          />
         </button>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-[#F0E9D6] border-t border-[#DFD6C2] px-6 py-6 flex flex-col gap-6">
+        <div className="md:hidden bg-[#2C2620] border-t border-white/8 px-6 py-6 flex flex-col gap-5">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="text-base text-[#1E1D1B]"
+              className="text-base text-[#8BA5BB] hover:text-white transition-colors"
             >
               {l.label}
             </a>
           ))}
-          <Button
-            variant="primary"
-            className="w-full justify-center"
+          <button
             onClick={() => { setOpen(false); openContact(); }}
+            className="w-full bg-[#C89A4F] text-[#2C2620] text-sm font-bold tracking-wide rounded-full px-5 py-3 hover:bg-[#b88c47] transition-colors"
           >
-            Conversar com a Ethos
-          </Button>
+            Conversar →
+          </button>
         </div>
       )}
     </header>

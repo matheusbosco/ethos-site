@@ -1,40 +1,15 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Cores */
-  --color-background: #F0E9D6;
-  --color-surface: #E8DFCB;
-  --color-border: #DFD6C2;
+  --color-carvao:  #2C2620;
+  --color-azul:    #5A7090;
+  --color-nevoa:   #8BA5BB;
+  --color-ambar:   #C89A4F;
+  --color-areia:   #F4EFE8;
+  --font-jakarta:  var(--font-jakarta);
 
-  --color-text: #1E1D1B;
-  --color-muted: #87867F;
-
-  --color-primary: #1C2B3A;
-  --color-primary-hover: #263d54;
-  --color-accent: #2A3D52;
-  --color-accent-hover: #3A5370;
-
-  /* Tipografia */
-  --font-display: var(--font-display);
-  --font-heading: var(--font-heading);
-  --font-body: var(--font-inter);
-  --font-mono: var(--font-mono);
-
-  /* Animações */
   --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-fade-in: fade-in 0.5s ease-out both;
-  --animate-drift-slow: drift-slow 32s ease-in-out infinite;
-  --animate-drift-slow-reverse: drift-slow-reverse 38s ease-in-out infinite;
-}
-
-@keyframes drift-slow {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-40px, 30px); }
-}
-
-@keyframes drift-slow-reverse {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(50px, -40px); }
 }
 
 @keyframes fade-up {
@@ -54,13 +29,11 @@
 }
 
 body {
-  background-color: #F0E9D6;
-  color: #1E1D1B;
-  font-family: var(--font-inter), Georgia, serif;
+  background-color: #F4EFE8;
+  color: #2C2620;
+  font-family: var(--font-jakarta), sans-serif;
 }
 
-
-/* Scroll reveal — aplicar via JS ou diretamente nos elementos */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
