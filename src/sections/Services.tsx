@@ -56,16 +56,38 @@ function ChoreographyAnimation() {
           <animate attributeName="opacity" values="0.8;0;0.8" dur="4.5s" repeatCount="indefinite" />
         </circle>
 
-        {CHOREO_FLOWS.map((f, i) => (
-          <g key={`cp-${i}`}>
-            <circle r="5" fill="url(#choreo-glow2)">
-              <animateMotion dur={`${f.dur}s`} repeatCount="indefinite" begin={`${f.delay}s`} path={f.path} />
-            </circle>
-            <circle r="1.8" fill="#C89A4F">
-              <animateMotion dur={`${f.dur}s`} repeatCount="indefinite" begin={`${f.delay}s`} path={f.path} />
-            </circle>
-          </g>
-        ))}
+        {CHOREO_FLOWS.map((f, i) => {
+          // A bolinha some pouco antes do meio do caminho (chegada no Ethos)
+          // e reaparece logo depois — efeito de "absorvida e emitida" pelo Ethos.
+          const fadeKeyTimes = "0;0.08;0.42;0.49;0.51;0.58;0.92;1";
+          const fadeValues = "0;1;1;0;0;1;1;0";
+          return (
+            <g key={`cp-${i}`}>
+              <circle r="5" fill="url(#choreo-glow2)" opacity="0">
+                <animate
+                  attributeName="opacity"
+                  values={fadeValues}
+                  keyTimes={fadeKeyTimes}
+                  dur={`${f.dur}s`}
+                  repeatCount="indefinite"
+                  begin={`${f.delay}s`}
+                />
+                <animateMotion dur={`${f.dur}s`} repeatCount="indefinite" begin={`${f.delay}s`} path={f.path} />
+              </circle>
+              <circle r="1.8" fill="#C89A4F" opacity="0">
+                <animate
+                  attributeName="opacity"
+                  values={fadeValues}
+                  keyTimes={fadeKeyTimes}
+                  dur={`${f.dur}s`}
+                  repeatCount="indefinite"
+                  begin={`${f.delay}s`}
+                />
+                <animateMotion dur={`${f.dur}s`} repeatCount="indefinite" begin={`${f.delay}s`} path={f.path} />
+              </circle>
+            </g>
+          );
+        })}
 
         {CHOREO_STATIONS.map((s, i) => (
           <g key={`cs-${i}`}>
