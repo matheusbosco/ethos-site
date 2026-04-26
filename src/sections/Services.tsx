@@ -14,14 +14,17 @@ const CHOREO_STATIONS = [
   { label: "EMAIL", x: 400, y: 240, isCore: false },
 ];
 
+// Caminhos em dois segmentos: cada partícula passa pelo Ethos (240,160) antes
+// de seguir para o próximo canal. O fim do primeiro segmento coincide com o
+// início do segundo, garantindo que a bolinha entre no nome Ethos.
 const CHOREO_FLOWS = [
-  { path: "M 80 80 Q 240 160, 400 80", dur: 4.2, delay: 0 },
-  { path: "M 80 240 Q 240 160, 400 240", dur: 4.6, delay: 1.2 },
-  { path: "M 80 80 Q 240 160, 400 240", dur: 5.0, delay: 2.4 },
-  { path: "M 400 80 Q 240 160, 80 240", dur: 4.4, delay: 0.6 },
-  { path: "M 400 240 Q 240 160, 80 80", dur: 4.8, delay: 1.8 },
-  { path: "M 80 80 Q 240 160, 80 240", dur: 5.2, delay: 3.0 },
-  { path: "M 400 80 Q 240 160, 400 240", dur: 4.6, delay: 0.3 },
+  { path: "M 80 80 Q 160 100, 240 160 Q 320 100, 400 80", dur: 4.2, delay: 0 },
+  { path: "M 80 240 Q 160 220, 240 160 Q 320 220, 400 240", dur: 4.6, delay: 1.2 },
+  { path: "M 80 80 Q 180 130, 240 160 Q 300 190, 400 240", dur: 5.0, delay: 2.4 },
+  { path: "M 400 80 Q 300 130, 240 160 Q 180 190, 80 240", dur: 4.4, delay: 0.6 },
+  { path: "M 400 240 Q 300 190, 240 160 Q 180 130, 80 80", dur: 4.8, delay: 1.8 },
+  { path: "M 80 80 Q 140 100, 240 160 Q 140 220, 80 240", dur: 5.2, delay: 3.0 },
+  { path: "M 400 80 Q 340 100, 240 160 Q 340 220, 400 240", dur: 4.6, delay: 0.3 },
 ];
 
 function ChoreographyAnimation() {
