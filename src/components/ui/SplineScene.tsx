@@ -1,41 +1,68 @@
 'use client'
 
-import { Suspense, lazy, useEffect, useRef } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useRef } from 'react'
 
 const Spline = lazy(() => import('@splinetool/react-spline'))
 
 interface SplineSceneProps {
   scene: string
   className?: string
+  /**
+   * When true, listens to mousemove on the whole window and forwards it to
+   * the Spline canvas, so any mouse-look behaviour set up inside the scene
+   * tracks the cursor across the entire page (not just inside the canvas
+   * bounds).
+   */
   followGlobalMouse?: boolean
 }
 
 export function SplineScene({ scene, className, followGlobalMouse = false }: SplineSceneProps) {
-  const wrapperRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+
+  // Latch the canvas as soon as Spline mounts it.
+  const handleLoad = useCallback(() => {
+    if (!containerRef.current) return
+    canvasRef.current = containerRef.current.querySelector('canvas')
+  }, [])
 
   useEffect(() => {
     if (!followGlobalMouse) return
 
     const forward = (e: MouseEvent) => {
-      const canvas = wrapperRef.current?.querySelector('canvas')
+      const canvas =
+        canvasRef.current || containerRef.current?.querySelector('canvas') || null
       if (!canvas) return
+
+      const init: MouseEventInit & PointerEventInit = {
+        clientX: e.clientX,
+        clientY: e.clientY,
+        screenX: e.screenX,
+        screenY: e.screenY,
+        bubbles: true,
+        cancelable: true,
+        view: window,
+      }
+
+      // Dispatch both event families because @splinetool/runtime listens to
+      // pointer events on recent versions and mouse events on older ones.
+      canvas.dispatchEvent(new MouseEvent('mousemove', init))
       canvas.dispatchEvent(
-        new MouseEvent('mousemove', {
-          clientX: e.clientX,
-          clientY: e.clientY,
-          bubbles: true,
-          cancelable: true,
-          view: window,
+        new PointerEvent('pointermove', {
+          ...init,
+          pointerType: 'mouse',
+          pointerId: 1,
+          isPrimary: true,
         }),
       )
     }
 
-    window.addEventListener('mousemove', forward)
+    window.addEventListener('mousemove', forward, { passive: true })
     return () => window.removeEventListener('mousemove', forward)
   }, [followGlobalMouse])
 
   return (
-    <div ref={wrapperRef} style={{ display: 'contents' }}>
+    <div ref={containerRef} className="w-full h-full">
       <Suspense
         fallback={
           <div className="w-full h-full flex items-center justify-center bg-white/5">
@@ -43,7 +70,7 @@ export function SplineScene({ scene, className, followGlobalMouse = false }: Spl
           </div>
         }
       >
-        <Spline scene={scene} className={className} />
+        <Spline scene={scene} className={className} onLoad={handleLoad} />
       </Suspense>
     </div>
   )
