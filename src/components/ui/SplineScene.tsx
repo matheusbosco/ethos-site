@@ -1,77 +1,71 @@
 'use client'
 
-import { Suspense, lazy, useCallback, useEffect, useRef } from 'react'
-
-const Spline = lazy(() => import('@splinetool/react-spline'))
+import { useEffect, useRef, useState } from 'react'
 
 interface SplineSceneProps {
   scene: string
   className?: string
   /**
-   * When true, listens to mousemove on the whole window and forwards it to
-   * the Spline canvas, so any mouse-look behaviour set up inside the scene
-   * tracks the cursor across the entire page (not just inside the canvas
-   * bounds).
+   * When true, the Spline scene listens to mouse events on the whole window
+   * instead of only inside the canvas — so any mouse-look behaviour set up
+   * in the scene tracks the cursor across the entire page. Implemented via
+   * the `events-target="global"` attribute supported by `<spline-viewer>`.
    */
   followGlobalMouse?: boolean
 }
 
 export function SplineScene({ scene, className, followGlobalMouse = false }: SplineSceneProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
-
-  // Latch the canvas as soon as Spline mounts it.
-  const handleLoad = useCallback(() => {
-    if (!containerRef.current) return
-    canvasRef.current = containerRef.current.querySelector('canvas')
-  }, [])
+  const hostRef = useRef<HTMLDivElement>(null)
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    if (!followGlobalMouse) return
+    if (!hostRef.current) return
+    const host = hostRef.current
+    let viewer: HTMLElement | null = null
+    let cancelled = false
 
-    const forward = (e: MouseEvent) => {
-      const canvas =
-        canvasRef.current || containerRef.current?.querySelector('canvas') || null
-      if (!canvas) return
+    // The viewer module registers a custom element on import — must run
+    // client-side only (this component is already 'use client').
+    import('@splinetool/viewer')
+      .then(() => {
+        if (cancelled || !host.isConnected) return
+        viewer = document.createElement('spline-viewer')
+        viewer.setAttribute('url', scene)
+        if (followGlobalMouse) viewer.setAttribute('events-target', 'global')
+        viewer.setAttribute('loading-anim-type', 'none')
+        viewer.style.cssText = 'width:100%;height:100%;display:block;background:transparent;'
 
-      const init: MouseEventInit & PointerEventInit = {
-        clientX: e.clientX,
-        clientY: e.clientY,
-        screenX: e.screenX,
-        screenY: e.screenY,
-        bubbles: true,
-        cancelable: true,
-        view: window,
+        const onLoad = () => setLoaded(true)
+        viewer.addEventListener('load', onLoad)
+        viewer.addEventListener('load-complete', onLoad)
+        host.appendChild(viewer)
+      })
+      .catch((err) => {
+        // Don't crash — just hide the loader and let the slot stay empty.
+        console.error('[SplineScene] failed to load spline-viewer:', err)
+        setLoaded(true)
+      })
+
+    return () => {
+      cancelled = true
+      if (viewer) {
+        try {
+          viewer.remove()
+        } catch {
+          // ignore
+        }
       }
-
-      // Dispatch both event families because @splinetool/runtime listens to
-      // pointer events on recent versions and mouse events on older ones.
-      canvas.dispatchEvent(new MouseEvent('mousemove', init))
-      canvas.dispatchEvent(
-        new PointerEvent('pointermove', {
-          ...init,
-          pointerType: 'mouse',
-          pointerId: 1,
-          isPrimary: true,
-        }),
-      )
     }
-
-    window.addEventListener('mousemove', forward, { passive: true })
-    return () => window.removeEventListener('mousemove', forward)
-  }, [followGlobalMouse])
+  }, [scene, followGlobalMouse])
 
   return (
-    <div ref={containerRef} className="w-full h-full">
-      <Suspense
-        fallback={
-          <div className="w-full h-full flex items-center justify-center bg-white/5">
-            <div className="w-8 h-8 border-2 border-[#C89A4F]/30 border-t-[#C89A4F] rounded-full animate-spin" />
-          </div>
-        }
-      >
-        <Spline scene={scene} className={className} onLoad={handleLoad} />
-      </Suspense>
+    <div className={className} style={{ position: 'relative', width: '100%', height: '100%' }}>
+      <div ref={hostRef} style={{ position: 'absolute', inset: 0 }} />
+      {!loaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-white/5">
+          <div className="w-8 h-8 border-2 border-[#C89A4F]/30 border-t-[#C89A4F] rounded-full animate-spin" />
+        </div>
+      )}
     </div>
   )
 }
