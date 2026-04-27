@@ -16,17 +16,17 @@ export function Hero() {
   const { open } = useContact();
 
   return (
-    <section className="w-full min-h-screen bg-[#2C2620] pt-16 flex items-center overflow-hidden">
-      <div className="mx-auto max-w-5xl w-full px-6 py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <section className="w-full bg-[#2C2620] pt-16 overflow-hidden">
+      <div className="mx-auto max-w-5xl w-full px-6 py-6 md:py-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
         {/* Coluna esquerda — texto */}
         <div className="animate-fade-up">
-          <p className="text-xs font-semibold text-[#C89A4F] tracking-[0.22em] uppercase mb-7">
+          <p className="text-xs font-semibold text-[#C89A4F] tracking-[0.22em] uppercase mb-5">
             Agência de soluções com IA
           </p>
 
           <h1
-            className="text-5xl md:text-[4.5rem] font-extrabold text-white leading-[1.05] tracking-tight mb-4"
+            className="text-5xl md:text-[4.5rem] font-extrabold text-white leading-[1.05] tracking-tight mb-3"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
             Inteligência sob medida.
@@ -34,12 +34,10 @@ export function Hero() {
 
           <AnimatedWords
             phrases={rotatingPhrases}
-            className="text-2xl md:text-3xl font-extrabold text-[#C89A4F] tracking-tight mb-8 h-[1.3em]"
+            className="text-2xl md:text-3xl font-extrabold text-[#C89A4F] tracking-tight mb-5 h-[1.3em]"
           />
 
-          <div className="w-10 h-[2px] bg-[#C89A4F] mb-8" />
-
-          <p className="text-base md:text-lg text-[#8BA5BB] leading-[1.85] max-w-md mb-10">
+          <p className="text-base md:text-lg text-[#8BA5BB] leading-[1.85] max-w-md mb-6">
             A IA de hoje resolve problemas que há dois anos exigiriam meses de engenharia.
             Nós mapeamos onde ela faz sentido no seu negócio — e construímos só o que tem retorno real.
           </p>
@@ -70,26 +68,40 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Spline 3D */}
-            <div className="relative w-full h-[460px] bg-[#1e1712]">
+            {/* Spline 3D + footer overlay (cobre o badge nativo do spline-viewer) */}
+            <div className="relative w-full h-[400px] bg-[#1e1712] overflow-hidden">
               <SplineScene
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                 className="w-full h-full"
                 followGlobalMouse
               />
-            </div>
 
-            {/* Card footer */}
-            <div className="flex items-center justify-between px-5 py-3.5 border-t border-white/8">
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#C89A4F]" />
-                <span className="text-[0.62rem] text-white/30 tracking-[0.15em] uppercase font-medium">
-                  Render · 60fps
+              {/* Fade do robô para a barra inferior — 88px, opaco a partir de ~28% */}
+              <div
+                aria-hidden
+                className="absolute inset-x-0 bottom-0 h-[88px] pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(30,23,18,0) 0%, rgba(30,23,18,0.85) 28%, #1e1712 45%, #1e1712 100%)",
+                  zIndex: 10,
+                }}
+              />
+
+              {/* Barra sólida 64px — cobre o badge "Built with Spline" (36px @ bottom:20px) */}
+              <div
+                className="absolute inset-x-0 bottom-0 h-16 flex items-center justify-between px-5 border-t border-white/8 pointer-events-none"
+                style={{ background: "#1e1712", zIndex: 11 }}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C89A4F]" />
+                  <span className="text-[0.62rem] text-white/30 tracking-[0.15em] uppercase font-medium">
+                    Render · 60fps
+                  </span>
+                </div>
+                <span className="text-[0.62rem] text-[#C89A4F]/60 tracking-[0.15em] uppercase font-semibold">
+                  Ethos · 3D
                 </span>
               </div>
-              <span className="text-[0.62rem] text-[#C89A4F]/60 tracking-[0.15em] uppercase font-semibold">
-                Ethos · 3D
-              </span>
             </div>
           </div>
         </div>

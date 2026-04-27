@@ -14,18 +14,56 @@ const CHOREO_STATIONS = [
   { label: "EMAIL", x: 400, y: 240, isCore: false },
 ];
 
-// Caminhos em dois segmentos: cada partícula passa pelo Ethos (240,160) antes
-// de seguir para o próximo canal. O fim do primeiro segmento coincide com o
-// início do segundo, garantindo que a bolinha entre no nome Ethos.
-const CHOREO_FLOWS = [
-  { path: "M 80 80 Q 160 100, 240 160 Q 320 100, 400 80", dur: 4.2, delay: 0 },
-  { path: "M 80 240 Q 160 220, 240 160 Q 320 220, 400 240", dur: 4.6, delay: 1.2 },
-  { path: "M 80 80 Q 180 130, 240 160 Q 300 190, 400 240", dur: 5.0, delay: 2.4 },
-  { path: "M 400 80 Q 300 130, 240 160 Q 180 190, 80 240", dur: 4.4, delay: 0.6 },
-  { path: "M 400 240 Q 300 190, 240 160 Q 180 130, 80 80", dur: 4.8, delay: 1.8 },
-  { path: "M 80 80 Q 140 100, 240 160 Q 140 220, 80 240", dur: 5.2, delay: 3.0 },
-  { path: "M 400 80 Q 340 100, 240 160 Q 340 220, 400 240", dur: 4.6, delay: 0.3 },
+// Cada flow é definido por 6 pontos: [start, control1, edge1, edge2, control2, end].
+// O path é gerado dinamicamente com um deslocamento `dy` aplicado aos pontos de
+// controle — isso permite morphing leve da curva (efeito rede neural respirando)
+// sem reescrever os 7 paths em três variantes cada.
+//
+// Tanto as 4 estações quanto o Ethos têm pílulas 68×26 (rx=13). Os pontos de
+// borda usados:
+//   FORMS (80,80) → (107, 93)        EMAIL (400,240) → (373, 227)
+//   CRM   (80,240)→ (107, 227)       WHATSAPP (400,80)→ (373, 93)
+//   ETHOS topo-esq (210,150)  topo-dir (270,150)
+//   ETHOS base-esq (210,170)  base-dir (270,170)
+type Pt = readonly [number, number];
+type FlowPts = readonly [Pt, Pt, Pt, Pt, Pt, Pt];
+
+function flowPath(pts: FlowPts, dy = 0): string {
+  const [s, c1, e1, e2, c2, e] = pts;
+  return `M ${s[0]} ${s[1]} Q ${c1[0]} ${c1[1] + dy}, ${e1[0]} ${e1[1]} L ${e2[0]} ${e2[1]} Q ${c2[0]} ${c2[1] + dy}, ${e[0]} ${e[1]}`;
+}
+
+interface ChoreoFlow {
+  pts: FlowPts;
+  /** duração da partícula percorrendo o path (s) */
+  dur: number;
+  /** offset de início da partícula (s) */
+  delay: number;
+  /** período da oscilação da linha (s) */
+  waveDur: number;
+  /** offset de início da oscilação para desacoplar fases entre linhas (s) */
+  waveDelay: number;
+}
+
+const CHOREO_FLOWS: ChoreoFlow[] = [
+  // FORMS → WHATSAPP (entra topo-esquerdo, sai topo-direito do Ethos)
+  { pts: [[107, 93], [145, 100], [210, 150], [270, 150], [335, 100], [373, 93]], dur: 4.2, delay: 0,   waveDur: 7.5, waveDelay: 0   },
+  // CRM → EMAIL (entra base-esquerda, sai base-direita do Ethos)
+  { pts: [[107, 227], [145, 220], [210, 170], [270, 170], [335, 220], [373, 227]], dur: 4.6, delay: 1.2, waveDur: 8.2, waveDelay: 2.0 },
+  // FORMS → EMAIL (diagonal: topo-esquerdo → base-direita)
+  { pts: [[107, 93], [145, 110], [210, 150], [270, 170], [335, 200], [373, 227]], dur: 5.0, delay: 2.4, waveDur: 9.0, waveDelay: 3.5 },
+  // WHATSAPP → CRM (diagonal: topo-direito → base-esquerda)
+  { pts: [[373, 93], [335, 110], [270, 150], [210, 170], [145, 200], [107, 227]], dur: 4.4, delay: 0.6, waveDur: 7.8, waveDelay: 1.5 },
+  // EMAIL → FORMS (diagonal inversa)
+  { pts: [[373, 227], [335, 200], [270, 170], [210, 150], [145, 110], [107, 93]], dur: 4.8, delay: 1.8, waveDur: 8.6, waveDelay: 0.8 },
+  // FORMS → CRM (lateral esquerda)
+  { pts: [[107, 93], [145, 100], [210, 150], [210, 170], [145, 220], [107, 227]], dur: 5.2, delay: 3.0, waveDur: 9.5, waveDelay: 4.2 },
+  // WHATSAPP → EMAIL (lateral direita)
+  { pts: [[373, 93], [335, 100], [270, 150], [270, 170], [335, 220], [373, 227]], dur: 4.6, delay: 0.3, waveDur: 8.0, waveDelay: 5.0 },
 ];
+
+// Amplitude da oscilação (pixels). Mantida pequena para um efeito sutil.
+const WAVE_AMPLITUDE = 4;
 
 function ChoreographyAnimation() {
   return (
@@ -47,9 +85,28 @@ function ChoreographyAnimation() {
           </radialGradient>
         </defs>
 
-        {CHOREO_FLOWS.map((f, i) => (
-          <path key={`cf-${i}`} d={f.path} stroke="rgba(200,154,79,0.06)" strokeWidth="0.5" fill="none" />
-        ))}
+        {CHOREO_FLOWS.map((f, i) => {
+          // Linha visível faz uma respiração suave — pontos de controle oscilam
+          // entre +amplitude → 0 → -amplitude → 0 → +amplitude com ease-in-out.
+          const dPlus = flowPath(f.pts, WAVE_AMPLITUDE);
+          const dZero = flowPath(f.pts, 0);
+          const dMinus = flowPath(f.pts, -WAVE_AMPLITUDE);
+          const wavingD = `${dPlus};${dZero};${dMinus};${dZero};${dPlus}`;
+          return (
+            <path key={`cf-${i}`} d={dZero} stroke="rgba(200,154,79,0.06)" strokeWidth="0.5" fill="none">
+              <animate
+                attributeName="d"
+                values={wavingD}
+                keyTimes="0;0.25;0.5;0.75;1"
+                dur={`${f.waveDur}s`}
+                begin={`${f.waveDelay}s`}
+                repeatCount="indefinite"
+                calcMode="spline"
+                keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1"
+              />
+            </path>
+          );
+        })}
 
         <circle cx="240" cy="160" r="34" fill="url(#choreo-core-glow2)">
           <animate attributeName="r" values="34;60;34" dur="4.5s" repeatCount="indefinite" />
@@ -57,9 +114,15 @@ function ChoreographyAnimation() {
         </circle>
 
         {CHOREO_FLOWS.map((f, i) => {
-          // A bolinha some pouco antes do meio do caminho (chegada no Ethos)
-          // e reaparece logo depois — efeito de "absorvida e emitida" pelo Ethos.
-          const fadeKeyTimes = "0;0.08;0.42;0.49;0.51;0.58;0.92;1";
+          // Bolinha some nas bordas dos 5 nós (4 estações + Ethos):
+          //  • fade-in 0–5%   : emerge da borda da estação de origem
+          //  • visível 5–38%  : viaja até a borda do Ethos
+          //  • fade-out 38–40%: encosta na borda do Ethos
+          //  • invisível 40–60%: atravessa por dentro do Ethos (segmento L)
+          //  • fade-in 60–62% : ressurge na borda oposta do Ethos
+          //  • visível 62–95% : viaja até a borda da estação de destino
+          //  • fade-out 95–100%: encosta na borda da estação de destino
+          const fadeKeyTimes = "0;0.05;0.38;0.40;0.60;0.62;0.95;1";
           const fadeValues = "0;1;1;0;0;1;1;0";
           return (
             <g key={`cp-${i}`}>
@@ -72,7 +135,7 @@ function ChoreographyAnimation() {
                   repeatCount="indefinite"
                   begin={`${f.delay}s`}
                 />
-                <animateMotion dur={`${f.dur}s`} repeatCount="indefinite" begin={`${f.delay}s`} path={f.path} />
+                <animateMotion dur={`${f.dur}s`} repeatCount="indefinite" begin={`${f.delay}s`} path={flowPath(f.pts)} />
               </circle>
               <circle r="1.8" fill="#C89A4F" opacity="0">
                 <animate
@@ -83,7 +146,7 @@ function ChoreographyAnimation() {
                   repeatCount="indefinite"
                   begin={`${f.delay}s`}
                 />
-                <animateMotion dur={`${f.dur}s`} repeatCount="indefinite" begin={`${f.delay}s`} path={f.path} />
+                <animateMotion dur={`${f.dur}s`} repeatCount="indefinite" begin={`${f.delay}s`} path={flowPath(f.pts)} />
               </circle>
             </g>
           );
