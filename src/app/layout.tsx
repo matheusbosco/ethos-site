@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Google_Sans_Flex } from "next/font/google";
 import { ContactProvider } from "@/contexts/ContactContext";
 import { ContactModal } from "@/components/ui/ContactModal";
 import { ScrollCTA } from "@/components/ui/ScrollCTA";
@@ -9,6 +9,12 @@ const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+const googleSans = Google_Sans_Flex({
+  variable: "--font-google-sans",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -29,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${plusJakarta.variable} h-full antialiased`}>
+    <html lang="pt-BR" className={`${plusJakarta.variable} ${googleSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <ContactProvider>
           {children}
