@@ -29,6 +29,9 @@
 # playwright-cli
 .playwright-cli/
 
+# claude code preview
+.claude/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

@@ -16,7 +16,7 @@ export function Hero() {
   const { open } = useContact();
 
   return (
-    <section className="w-full bg-[#2C2620] pt-16 overflow-hidden">
+    <section className="w-full min-h-screen bg-[#2C2620] pt-16 overflow-hidden">
       <div className="mx-auto max-w-5xl w-full px-6 py-6 md:py-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
         {/* Coluna esquerda — texto */}
@@ -38,8 +38,8 @@ export function Hero() {
           />
 
           <p className="text-base md:text-lg text-[#8BA5BB] leading-[1.85] max-w-md mb-6">
-            A IA de hoje resolve problemas que há dois anos exigiriam meses de engenharia.
-            Nós mapeamos onde ela faz sentido no seu negócio — e construímos só o que tem retorno real.
+            A IA de hoje resolve em dias problemas que há dois anos pediam meses de engenharia.
+            A gente mapeia onde ela faz diferença pro seu negócio e só constrói o que vai dar retorno.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3">

@@ -13,10 +13,10 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Ethos — Inteligência sob medida",
+  title: "Ethos · Inteligência sob medida",
   description: "Agência de soluções com IA. Automação e agentes de IA para empresas que querem operar com mais inteligência.",
   openGraph: {
-    title: "Ethos — Inteligência sob medida",
+    title: "Ethos · Inteligência sob medida",
     description: "Agência de soluções com IA. Automação e agentes de IA para empresas que querem operar com mais inteligência.",
     locale: "pt_BR",
     type: "website",
