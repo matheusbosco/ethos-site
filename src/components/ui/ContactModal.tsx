@@ -6,6 +6,26 @@ import { Button } from "@/components/ui/Button";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+// Estilos compartilhados entre os campos do formulário — mantém visual consistente.
+const labelCls =
+  "font-[family-name:var(--font-mono)] text-[0.65rem] text-[#87867F] tracking-[0.15em] uppercase";
+
+const inputCls =
+  "bg-transparent border border-[#DFD6C2] rounded-lg px-4 py-3 text-sm text-[#1E1D1B] placeholder:text-[#87867F]/40 focus:outline-none focus:border-[#2A3D52] transition-colors";
+
+// Select reutiliza inputCls + remove o chevron nativo (appearance-none) e
+// usa pr-10 pra abrir espaço para o chevron customizado (definido em chevronStyle).
+// Cor de placeholder enquanto a option selecionada é a placeholder (que tem
+// `disabled`). Quando o usuário escolhe qualquer outra (não disabled), o
+// :has(option:checked:not([disabled])) ativa e aplica a cor de texto normal.
+const selectCls = `${inputCls} appearance-none pr-10 cursor-pointer bg-no-repeat bg-[right_1rem_center] bg-[length:0.7rem_auto] text-[#87867F]/60 has-[option:checked:not([disabled])]:text-[#1E1D1B]`;
+
+// Chevron como SVG inline em data-URL — sem dependência externa.
+const chevronStyle: React.CSSProperties = {
+  backgroundImage:
+    "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2387867F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>\")",
+};
+
 export function ContactModal() {
   const { isOpen, close } = useContact();
   const [status, setStatus] = useState<Status>("idle");
@@ -94,41 +114,102 @@ export function ContactModal() {
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              {/* Nome + Empresa */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
-                  <label className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[#87867F] tracking-[0.15em] uppercase">
-                    Nome
-                  </label>
+                  <label className={labelCls}>Nome</label>
                   <input
                     ref={firstInputRef}
                     name="nome"
                     required
                     placeholder="Seu nome"
-                    className="bg-transparent border border-[#DFD6C2] rounded-lg px-4 py-3 text-sm text-[#1E1D1B] placeholder:text-[#87867F]/40 focus:outline-none focus:border-[#2A3D52] transition-colors"
+                    className={inputCls}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[#87867F] tracking-[0.15em] uppercase">
-                    Empresa
-                  </label>
+                  <label className={labelCls}>Empresa</label>
                   <input
                     name="empresa"
+                    required
                     placeholder="Nome da empresa"
-                    className="bg-transparent border border-[#DFD6C2] rounded-lg px-4 py-3 text-sm text-[#1E1D1B] placeholder:text-[#87867F]/40 focus:outline-none focus:border-[#2A3D52] transition-colors"
+                    className={inputCls}
                   />
                 </div>
               </div>
 
+              {/* E-mail + Telefone */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className={labelCls}>E-mail</label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="contato@email.com.br"
+                    className={inputCls}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className={labelCls}>Telefone</label>
+                  <input
+                    type="tel"
+                    name="telefone"
+                    required
+                    placeholder="(99) 99999-9999"
+                    className={inputCls}
+                  />
+                </div>
+              </div>
+
+              {/* Faturamento + Tamanho */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className={labelCls}>Faturamento mensal</label>
+                  <select
+                    name="faturamento"
+                    required
+                    defaultValue=""
+                    className={selectCls}
+                    style={chevronStyle}
+                  >
+                    <option value="" disabled hidden>
+                      Selecione uma faixa
+                    </option>
+                    <option value="ate-50k">Até 50k/mês</option>
+                    <option value="50k-100k">50k até 100k</option>
+                    <option value="100k-300k">100k até 300k</option>
+                    <option value="superior-500k">Superior a 500k</option>
+                  </select>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className={labelCls}>Tamanho da empresa</label>
+                  <select
+                    name="tamanho"
+                    required
+                    defaultValue=""
+                    className={selectCls}
+                    style={chevronStyle}
+                  >
+                    <option value="" disabled hidden>
+                      Selecione um porte
+                    </option>
+                    <option value="1-5">1-5 pessoas</option>
+                    <option value="5-15">5-15 pessoas</option>
+                    <option value="16-25">16-25 pessoas</option>
+                    <option value="30+">Mais de 30 funcionários</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Desafio */}
               <div className="flex flex-col gap-2">
-                <label className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[#87867F] tracking-[0.15em] uppercase">
-                  Qual é o desafio?
-                </label>
+                <label className={labelCls}>Qual o seu maior desafio na empresa hoje?</label>
                 <textarea
                   name="mensagem"
                   required
                   rows={4}
                   placeholder="Descreva o processo ou problema que você quer resolver..."
-                  className="bg-transparent border border-[#DFD6C2] rounded-lg px-4 py-3 text-sm text-[#1E1D1B] placeholder:text-[#87867F]/40 focus:outline-none focus:border-[#2A3D52] transition-colors resize-none"
+                  className={`${inputCls} resize-none`}
                 />
               </div>
 

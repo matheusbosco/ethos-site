@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useContact } from "@/contexts/ContactContext";
 
 const links = [
-  { label: "O que entregamos", href: "#servicos" },
-  { label: "Como funciona", href: "#processo" },
+  { label: "o que entregamos", href: "#servicos" },
+  { label: "como funciona", href: "#processo" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -45,7 +45,7 @@ export function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="text-sm text-[#8BA5BB] hover:text-white transition-colors duration-200 font-medium"
+              className="text-sm text-[#8BA5BB] hover:text-white transition-colors duration-200 font-medium font-[family-name:var(--font-google-sans)]"
             >
               {l.label}
             </a>
@@ -91,7 +91,7 @@ export function Nav() {
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="text-base text-[#8BA5BB] hover:text-white transition-colors"
+              className="text-base text-[#8BA5BB] hover:text-white transition-colors font-[family-name:var(--font-google-sans)]"
             >
               {l.label}
             </a>
