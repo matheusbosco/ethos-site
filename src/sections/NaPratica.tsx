@@ -15,17 +15,20 @@ interface ChatMsg {
   ticks?: boolean;
   slots?: string[];
   selectedSlot?: string;
+  /** Delay (ms) entre a mensagem anterior e esta. Tempos variados simulam
+   *  ritmo natural — bot "pensando", paciente "digitando", etc. */
+  delayMs: number;
 }
 
 const chatMessages: ChatMsg[] = [
-  { type: "bot", text: "Olá, Marina! 🌺 Aqui é a Ethos, assistente da Clínica Meridian.", time: "09:10" },
-  { type: "bot", text: "Confirmando sua consulta com Dra. Helena — amanhã, 14h30. Posso confirmar?", time: "09:12" },
-  { type: "patient", text: "Consegue trocar pra sexta? Surgiu um imprevisto", time: "09:14", ticks: true },
-  { type: "bot", text: "Claro. Tenho estes horários na sexta:", time: "09:16" },
-  { type: "slots", slots: ["Sex 09:00", "Sex 10:00", "Sex 11:30", "Sex 14:00"], selectedSlot: "Sex 10:00" },
-  { type: "patient", text: "Sexta 10h perfeito", time: "09:20", ticks: true },
-  { type: "bot", text: "Reagendado ✓ Dra. Helena · sexta 10h00. Te lembro no dia anterior.", time: "09:22" },
-  { type: "badge", text: "ATUALIZADO NO SISTEMA · 0 INTERVENÇÕES HUMANAS" },
+  { type: "bot", text: "Olá, Marina! 🌺 Aqui é a Ethos, assistente da Clínica Meridian.", time: "09:10", delayMs: 600 },
+  { type: "bot", text: "Confirmando sua consulta com Dra. Helena, amanhã às 14h30. Posso confirmar?", time: "09:12", delayMs: 1900 },
+  { type: "patient", text: "Consegue trocar pra sexta? Surgiu um imprevisto", time: "09:14", ticks: true, delayMs: 2600 },
+  { type: "bot", text: "Claro. Tenho estes horários na sexta:", time: "09:16", delayMs: 1500 },
+  { type: "slots", slots: ["Sex 09:00", "Sex 10:00", "Sex 11:30", "Sex 14:00"], selectedSlot: "Sex 10:00", delayMs: 1000 },
+  { type: "patient", text: "Sexta 10h perfeito", time: "09:20", ticks: true, delayMs: 2200 },
+  { type: "bot", text: "Reagendado ✓ Dra. Helena · sexta 10h00. Te lembro no dia anterior.", time: "09:22", delayMs: 1800 },
+  { type: "badge", text: "ATUALIZADO NO SISTEMA · 0 INTERVENÇÕES HUMANAS", delayMs: 1300 },
 ];
 
 const backofficeLog = [
@@ -47,14 +50,25 @@ function BotIcon() {
 
 function WhatsAppSection({ visible }: { visible: boolean }) {
   const [step, setStep] = useState(0);
+  const messagesScrollRef = useRef<HTMLDivElement>(null);
 
+  // Avança um step por vez, usando o delay próprio da próxima mensagem.
   useEffect(() => {
     if (!visible) return;
     if (step >= chatMessages.length) return;
-    const delay = step === 0 ? 400 : 900;
-    const id = setTimeout(() => setStep((s) => s + 1), delay);
+    const next = chatMessages[step];
+    const id = setTimeout(() => setStep((s) => s + 1), next.delayMs);
     return () => clearTimeout(id);
   }, [visible, step]);
+
+  // Auto-scroll suave dentro do container do chat sempre que uma mensagem nova
+  // aparece. Restrito ao próprio container — não afeta a página.
+  useEffect(() => {
+    if (step === 0) return;
+    const c = messagesScrollRef.current;
+    if (!c) return;
+    c.scrollTo({ top: c.scrollHeight, behavior: "smooth" });
+  }, [step]);
 
   const shownMessages = chatMessages.slice(0, step);
   const shownLogItems = backofficeLog.slice(0, Math.max(0, step - 2));
@@ -75,14 +89,14 @@ function WhatsAppSection({ visible }: { visible: boolean }) {
         Um dia no WhatsApp da sua clínica.
       </h2>
       <p className="text-base text-[#8BA5BB] mb-12 leading-relaxed">
-        A simulação abaixo é real — os mesmos fluxos que rodam em produção.
+        A simulação abaixo é real. São os mesmos fluxos que rodam em produção.
       </p>
 
-      {/* Dois painéis */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      {/* Dois painéis com altura idêntica para alinhamento perfeito */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
 
         {/* Painel esquerdo — WhatsApp mock */}
-        <div className="rounded-2xl overflow-hidden bg-[#111B21] flex flex-col min-h-[500px]">
+        <div className="rounded-2xl overflow-hidden bg-[#111B21] flex flex-col h-[480px]">
           {/* Header do chat */}
           <div className="flex items-center gap-3 px-4 py-3.5 bg-[#202C33] border-b border-white/5">
             <BotIcon />
@@ -103,8 +117,11 @@ function WhatsAppSection({ visible }: { visible: boolean }) {
             </div>
           </div>
 
-          {/* Mensagens */}
-          <div className="flex-1 px-3 py-4 flex flex-col gap-2.5 overflow-hidden">
+          {/* Mensagens — scrollável internamente, com scroll suave automático */}
+          <div
+            ref={messagesScrollRef}
+            className="flex-1 px-3 py-4 flex flex-col gap-2.5 overflow-y-auto scroll-smooth [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full"
+          >
             {shownMessages.map((msg, i) => {
               if (msg.type === "bot") return (
                 <div key={i} className="flex gap-2 items-end max-w-[85%] animate-fade-in">
@@ -157,9 +174,9 @@ function WhatsAppSection({ visible }: { visible: boolean }) {
           </div>
         </div>
 
-        {/* Painel direito — back-office log */}
-        <div className="rounded-2xl bg-white border border-[#8BA5BB]/20 p-7 md:p-8 flex flex-col gap-6 min-h-[500px]">
-          <div>
+        {/* Painel direito — back-office log (mesma altura do chat) */}
+        <div className="rounded-2xl bg-white border border-[#8BA5BB]/20 p-7 md:p-8 flex flex-col h-[480px]">
+          <div className="mb-5">
             <p className="text-[0.6rem] font-bold text-[#8BA5BB] tracking-[0.2em] uppercase mb-3">
               No Back-Office
             </p>
@@ -171,11 +188,13 @@ function WhatsAppSection({ visible }: { visible: boolean }) {
             </h3>
           </div>
 
-          <div className="flex-1 flex flex-col gap-0 divide-y divide-[#F4EFE8]">
+          {/* Log: items se distribuem igualmente para preencher o espaço sem deixar
+              um vão grande entre o último item e o chip */}
+          <div className="flex-1 flex flex-col divide-y divide-[#F4EFE8]">
             {backofficeLog.map((log, i) => (
               <div
                 key={i}
-                className={`flex items-center justify-between py-4 transition-all duration-500 ${
+                className={`flex-1 flex items-center justify-between transition-all duration-500 ${
                   i < shownLogItems.length ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
                 }`}
               >
@@ -189,7 +208,7 @@ function WhatsAppSection({ visible }: { visible: boolean }) {
           </div>
 
           {/* Chip de custo */}
-          <div className="border border-[#8BA5BB]/20 rounded-xl px-5 py-3.5 flex items-center gap-3">
+          <div className="mt-5 border border-[#8BA5BB]/20 rounded-xl px-5 py-3.5 flex items-center gap-3">
             <div className="flex flex-col gap-[3px] shrink-0">
               {[0,1,2].map(i => <div key={i} className="h-[2px] w-4 rounded-full bg-[#C89A4F]" />)}
             </div>
@@ -229,10 +248,10 @@ const traces: Record<string, TraceLine[]> = {
     { text: "→ Economia estimada: 16h / semana", type: "success" },
     { text: "", type: "blank" },
     { text: "─────────────────────────────────────", type: "divider" },
-    { text: "✓ Diagnóstico concluído — 2.3s", type: "done" },
+    { text: "✓ Diagnóstico concluído em 2.3s", type: "done" },
   ],
   saude: [
-    { text: "DIAGNÓSTICO ETHOS — SAÚDE PRIVADA", type: "header" },
+    { text: "DIAGNÓSTICO ETHOS · SAÚDE PRIVADA", type: "header" },
     { text: "─────────────────────────────────────", type: "divider" },
     { text: "Processo: Agendamento e confirmação de consultas", type: "info" },
     { text: "Fonte: WhatsApp + agenda manual + ligações", type: "info" },
@@ -241,7 +260,6 @@ const traces: Record<string, TraceLine[]> = {
     { text: "", type: "blank" },
     { text: "RESULTADO", type: "header" },
     { text: "→ Taxa de no-show: 31% das consultas", type: "output" },
-    { text: "→ Custo por no-show: ~R$ 180 (sala + profissional)", type: "output" },
     { text: "→ Perda estimada: R$ 8.200 / mês", type: "output" },
     { text: "→ Gargalo: sem confirmação automatizada", type: "output" },
     { text: "", type: "blank" },
@@ -251,13 +269,59 @@ const traces: Record<string, TraceLine[]> = {
     { text: "→ Recuperação estimada: R$ 6.500 / mês", type: "success" },
     { text: "", type: "blank" },
     { text: "─────────────────────────────────────", type: "divider" },
-    { text: "✓ Diagnóstico concluído — 1.8s", type: "done" },
+    { text: "✓ Diagnóstico concluído em 1.8s", type: "done" },
+  ],
+  relatorio: [
+    { text: "RELATÓRIO SEMANAL · 22-28 ABR", type: "header" },
+    { text: "─────────────────────────────────────", type: "divider" },
+    { text: "Cliente: Clínica Meridian · 7 dias", type: "info" },
+    { text: "Última atualização: hoje, 08:00", type: "info" },
+    { text: "", type: "blank" },
+    { text: "Compilando dados da semana...", type: "running" },
+    { text: "", type: "blank" },
+    { text: "OPERAÇÃO", type: "header" },
+    { text: "→ Consultas realizadas: 142 (+11%)", type: "output" },
+    { text: "→ Tempo médio de consulta: 27min", type: "output" },
+    { text: "→ No-show: 8% (-3pp vs sem. ant.)", type: "output" },
+    { text: "", type: "blank" },
+    { text: "FINANCEIRO", type: "header" },
+    { text: "→ Faturamento bruto: R$ 47.200", type: "output" },
+    { text: "→ Ticket médio: R$ 332", type: "output" },
+    { text: "→ Crescimento sustentado pelo 3º mês", type: "success" },
+    { text: "", type: "blank" },
+    { text: "─────────────────────────────────────", type: "divider" },
+    { text: "✓ Relatório consolidado em 0.9s", type: "done" },
+  ],
+  analise: [
+    { text: "ANÁLISE EMPRESARIAL · TEMPO REAL", type: "header" },
+    { text: "─────────────────────────────────────", type: "divider" },
+    { text: "Sistema: Ethos · 14 agentes ativos", type: "info" },
+    { text: "Última varredura: há 2min", type: "info" },
+    { text: "", type: "blank" },
+    { text: "Monitorando processos da empresa...", type: "running" },
+    { text: "", type: "blank" },
+    { text: "OPERAÇÃO", type: "header" },
+    { text: "→ Atendimento: rodando ✓ (47 conversas)", type: "output" },
+    { text: "→ Máquinas: 1 pendente · Impressora 03", type: "output" },
+    { text: "→ Equipe: 11/12 online · 1 alerta overtime", type: "output" },
+    { text: "", type: "blank" },
+    { text: "OPORTUNIDADES", type: "header" },
+    { text: "→ Pipeline: 28 leads · R$ 184k em propostas", type: "output" },
+    { text: "→ Estoque: reposição automática ativa", type: "output" },
+    { text: "→ Triagem automática pode poupar ~9h/sem", type: "success" },
+    { text: "", type: "blank" },
+    { text: "─────────────────────────────────────", type: "divider" },
+    { text: "✓ Análise atualizada em 1.2s", type: "done" },
   ],
 };
 
-const tabs = [
+type TabKey = "leads" | "saude" | "relatorio" | "analise";
+
+const tabs: { key: TabKey; label: string }[] = [
   { key: "leads", label: "Qualificação de leads" },
   { key: "saude", label: "Consultório de saúde" },
+  { key: "relatorio", label: "Relatório semanal" },
+  { key: "analise", label: "Análise empresarial" },
 ];
 
 const lineColor: Record<string, string> = {
@@ -272,7 +336,7 @@ const lineColor: Record<string, string> = {
 };
 
 function TerminalSection({ visible }: { visible: boolean }) {
-  const [activeTab, setActiveTab] = useState<"leads" | "saude">("leads");
+  const [activeTab, setActiveTab] = useState<TabKey>("leads");
   const trace = traces[activeTab];
 
   return (
@@ -290,27 +354,29 @@ function TerminalSection({ visible }: { visible: boolean }) {
             O diagnóstico vem antes de qualquer proposta.
           </h2>
           <p className="text-[#8BA5BB] leading-[1.85] text-base mb-10">
-            Antes de escrever uma linha de código, mapeamos o processo real —
+            Antes de escrever uma linha de código, mapeamos o processo real,
             não o idealizado. Medimos o custo atual, identificamos o gargalo e
             só então desenhamos a solução.
           </p>
-          <div className="flex flex-col gap-2">
-            <p className="text-[0.65rem] text-[#8BA5BB]/50 tracking-widest uppercase mb-2 font-medium">
+          <div>
+            <p className="text-[0.65rem] text-[#8BA5BB]/50 tracking-widest uppercase mb-3 font-medium">
               Ver diagnóstico para:
             </p>
-            {tabs.map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key as "leads" | "saude")}
-                className={`text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  activeTab === tab.key
-                    ? "bg-[#5A7090]/15 text-[#5A7090] border border-[#5A7090]/30"
-                    : "text-[#8BA5BB]/50 hover:text-[#8BA5BB] hover:bg-[#5A7090]/8 border border-transparent"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+            <div className="grid grid-cols-2 gap-2">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
+                  className={`text-left px-4 py-3 rounded-lg text-sm font-medium border transition-[color,background-color,border-color] duration-200 ${
+                    activeTab === tab.key
+                      ? "bg-[#5A7090]/15 text-[#5A7090] border-[#5A7090]/30"
+                      : "text-[#8BA5BB]/70 border-[#8BA5BB]/15 hover:text-[#5A7090] hover:bg-[#5A7090]/8 hover:border-[#5A7090]/25"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -318,11 +384,11 @@ function TerminalSection({ visible }: { visible: boolean }) {
         <div className={`transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
           <div className="bg-[#1e1712] rounded-xl border border-white/8 overflow-hidden">
             <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8">
-              <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-              <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-              <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+              <span className="w-3 h-3 rounded-full bg-[#FF5F57] shadow-[inset_0_0.5px_0_rgba(255,255,255,0.22),inset_0_-0.5px_0_rgba(0,0,0,0.18)]" />
+              <span className="w-3 h-3 rounded-full bg-[#FEBC2E] shadow-[inset_0_0.5px_0_rgba(255,255,255,0.22),inset_0_-0.5px_0_rgba(0,0,0,0.18)]" />
+              <span className="w-3 h-3 rounded-full bg-[#28C840] shadow-[inset_0_0.5px_0_rgba(255,255,255,0.22),inset_0_-0.5px_0_rgba(0,0,0,0.18)]" />
               <span className="text-[0.65rem] text-white/20 ml-2 tracking-wide font-medium">
-                ethos — diagnóstico
+                ethos · diagnóstico
               </span>
             </div>
             <div className="px-5 py-5 space-y-0.5">

@@ -267,45 +267,39 @@ function PersonalizedBrainAnimation() {
 interface Service {
   id: string;
   number: string;
+  tag: string;
   title: string;
-  tags: string[];
   description: string;
-  background: "video" | "neural" | "choreography";
-  videoUrl?: string;
-  posterUrl?: string;
+  footer: string;
 }
 
 const services: Service[] = [
   {
     id: "automacoes",
     number: "01",
-    title: "Automações",
-    tags: ["Workflows", "Integrações", "WhatsApp"],
+    tag: "Automações",
+    title: "Eliminamos o trabalho manual",
     description:
-      "Conectamos sistemas, eliminamos trabalho manual repetitivo e fazemos os dados fluírem onde precisam — sem intervenção humana. Cada automação é construída para o seu processo, não adaptada de um template.",
-    background: "choreography",
+      "Fluxos automáticos que conectam Forms, CRM, WhatsApp e e-mail e tiram da sua equipe as tarefas repetitivas. Cada um é desenhado pro seu processo, não um template.",
+    footer: "Integrações",
   },
   {
     id: "agentes",
     number: "02",
-    title: "Agentes de IA",
-    tags: ["Agentes autônomos", "Atendimento", "Análise de dados"],
+    tag: "Agentes de IA",
+    title: "Atendemos com inteligência real",
     description:
-      "Agentes que raciocinam, tomam decisões e agem de forma autônoma. Qualificam leads, respondem clientes, analisam documentos e executam tarefas complexas — 24 horas por dia.",
-    background: "video",
-    videoUrl:
-      "https://assets.mixkit.co/videos/preview/mixkit-robotic-arm-with-blue-luminescent-neon-9099-large.mp4",
-    posterUrl:
-      "https://images.unsplash.com/photo-1677756119517-756a188d2d94?q=80&w=2070&auto=format&fit=crop",
+      "Agentes que leem o contexto, qualificam leads, respondem clientes e analisam documentos. Não são respostas automáticas. Decidem em segundos.",
+    footer: "Decisão autônoma",
   },
   {
     id: "ia-preditiva",
     number: "03",
-    title: "IA Preditiva & Generativa",
-    tags: ["Modelos preditivos", "Geração de conteúdo", "Análise de padrões"],
+    tag: "IA Preditiva",
+    title: "Antecipamos o que vem depois",
     description:
-      "Modelos treinados para prever comportamentos, gerar conteúdo e identificar padrões invisíveis ao olho humano. Da previsão de churn ao gerador de propostas comerciais — IA que aprende com seus dados.",
-    background: "neural",
+      "Modelos treinados nos seus dados pra prever churn, demanda e comportamento de cliente. Você decide com base no que vai acontecer, não no que já passou.",
+    footer: "Sob medida",
   },
 ];
 
@@ -315,77 +309,73 @@ const services: Service[] = [
 
 export function Services() {
   return (
-    <section id="servicos" className="w-full bg-[#F4EFE8] px-6 pt-24 md:pt-32 pb-16 md:pb-24">
+    <section id="servicos" className="w-full bg-[#F4EFE8] px-6 pt-12 md:pt-16 pb-12 md:pb-16">
       <div className="mx-auto max-w-5xl">
 
         {/* Header */}
         <Reveal>
-          <div className="flex items-center gap-3 mb-10">
+          <div className="flex items-center gap-3 mb-6">
             <div className="w-5 h-px bg-[#5A7090]/50" />
             <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase">
               O que entregamos
             </p>
           </div>
           <h2
-            className="text-[2.2rem] md:text-[3.2rem] font-extrabold text-[#2C2620] leading-[1.1] tracking-tight max-w-3xl mb-4"
+            className="text-[2rem] md:text-[2.6rem] font-extrabold text-[#2C2620] leading-[1.1] tracking-tight max-w-3xl mb-3"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
             Soluções com inteligência artificial personalizadas.
           </h2>
-          <p className="text-sm font-medium text-[#8BA5BB] tracking-[0.18em] uppercase mt-8 mb-14">
-            Construídas do zero — para o seu negócio, não para o mercado.
+          <p className="text-sm font-medium text-[#8BA5BB] tracking-[0.18em] uppercase mt-3 mb-8">
+            Construídas do zero, para o seu negócio. Nada de templates.
           </p>
         </Reveal>
 
-        {/* Cards split horizontal */}
-        <div className="flex flex-col gap-5">
+        {/* Cards compactos em grade — 3 colunas no desktop, empilha no mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
           {services.map((s, i) => (
             <Reveal key={s.id} delay={i * 80}>
-              <div className="flex flex-col md:flex-row rounded-2xl overflow-hidden border border-[#8BA5BB]/20 bg-white min-h-[380px] md:min-h-[420px]"
+              <article
+                className="relative h-full rounded-2xl border border-[#8BA5BB]/20 bg-white p-7 md:p-8 flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(44,38,32,0.25)]"
                 style={{ borderLeft: "3px solid #C89A4F" }}
               >
-                {/* Painel esquerdo — media */}
-                <div className="relative md:w-[45%] min-h-[240px] md:min-h-full flex-shrink-0 bg-[#0D1117] overflow-hidden">
-                  {s.background === "video" ? (
-                    <video
-                      autoPlay loop muted playsInline poster={s.posterUrl}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    >
-                      <source src={s.videoUrl} type="video/mp4" />
-                    </video>
-                  ) : s.background === "choreography" ? (
-                    <ChoreographyAnimation />
-                  ) : (
-                    <PersonalizedBrainAnimation />
-                  )}
-                </div>
+                {/* Número em marca-d'água no canto superior direito */}
+                <span
+                  aria-hidden
+                  className="absolute top-5 right-6 text-[3.75rem] md:text-[4.25rem] font-extrabold text-[#5A7090]/12 leading-none select-none"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  {s.number}
+                </span>
 
-                {/* Painel direito — conteúdo */}
-                <div className="flex-1 flex flex-col justify-center p-8 md:p-10 lg:p-14">
-                  <span className="text-[0.65rem] font-bold text-[#8BA5BB] tracking-[0.2em] uppercase mb-5 block">
-                    {s.number}
+                {/* Tag (categoria) */}
+                <p className="text-[0.62rem] font-bold text-[#5A7090] tracking-[0.22em] uppercase mb-4">
+                  {s.tag}
+                </p>
+
+                {/* Título — verbo de ação */}
+                <h3
+                  className="text-xl md:text-2xl font-extrabold text-[#2C2620] tracking-tight leading-[1.15] mb-3 pr-12"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  {s.title}
+                </h3>
+
+                {/* Descrição */}
+                <p className="text-sm text-[#5A7090] leading-[1.7] flex-1">
+                  {s.description}
+                </p>
+
+                {/* Rodapé com divisor + label + seta */}
+                <div className="border-t border-[#8BA5BB]/20 pt-4 mt-6 flex items-center justify-between">
+                  <span className="text-[0.62rem] font-bold text-[#5A7090] tracking-[0.22em] uppercase">
+                    {s.footer}
                   </span>
-                  <h3
-                    className="text-2xl md:text-3xl font-extrabold text-[#2C2620] tracking-tight mb-4 leading-tight"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    {s.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {s.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[0.65rem] font-semibold text-[#5A7090] bg-[#5A7090]/10 border border-[#5A7090]/20 rounded-full px-3 py-1 tracking-wide"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-base text-[#5A7090] leading-[1.8]">
-                    {s.description}
-                  </p>
+                  <span className="text-[#C89A4F] text-base leading-none" aria-hidden>
+                    →
+                  </span>
                 </div>
-              </div>
+              </article>
             </Reveal>
           ))}
         </div>

@@ -8,7 +8,7 @@ const steps = [
     categoria: "Diagnóstico",
     title: "Diagnóstico",
     description:
-      "Mapeamos o processo real — não o idealizado. Medimos o custo atual em tempo, foco e dinheiro, e identificamos exatamente onde a IA pode intervir.",
+      "Mapeamos o processo real, não o idealizado. Medimos o custo atual em tempo, foco e dinheiro, e identificamos exatamente onde a IA pode intervir.",
     badge: "Entregue em até 5 dias",
   },
   {
@@ -24,7 +24,7 @@ const steps = [
     categoria: "Implementação",
     title: "Implementação",
     description:
-      "Construímos, testamos e documentamos. A solução fica nos nossos servidores — com qualidade e segurança garantidas pela Ethos.",
+      "Construímos, testamos e documentamos. A solução roda na nossa infraestrutura. Qualidade e segurança ficam por nossa conta.",
     badge: "Live em até 3 semanas",
   },
   {
@@ -32,7 +32,7 @@ const steps = [
     categoria: "Acompanhamento",
     title: "Acompanhamento",
     description:
-      "A solução entra em operação e continuamos juntos. Ajustamos, evoluímos e respondemos pelo que entregamos — sem desaparecer na entrega.",
+      "A solução entra em operação e continuamos juntos. Ajustamos, evoluímos e respondemos pelo que entregamos. A gente não some quando tudo começa a rodar.",
     badge: "Revisão mensal contínua",
   },
 ];

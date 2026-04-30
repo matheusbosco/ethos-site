@@ -5,7 +5,6 @@ import { Services } from "@/sections/Services";
 import { AutomacoesVivas } from "@/sections/AutomacoesVivas";
 import { Process } from "@/sections/Process";
 import { NaPratica } from "@/sections/NaPratica";
-import { Manifesto } from "@/sections/Manifesto";
 import { FAQ } from "@/sections/FAQ";
 import { CtaFinal } from "@/sections/CtaFinal";
 
@@ -19,9 +18,8 @@ export default function Home() {
         <AutomacoesVivas />
         <Process />
         <NaPratica />
-        <Manifesto />
-        <FAQ />
         <CtaFinal />
+        <FAQ />
       </main>
       <Footer />
     </>

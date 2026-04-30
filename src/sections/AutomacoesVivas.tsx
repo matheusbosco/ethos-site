@@ -15,7 +15,7 @@ const automacoes: AutomacaoCard[] = [
     categoria: "Agendamento",
     titulo: "Agendamento inteligente com IA",
     descricao:
-      "Assistente conversacional que encaixa consultas, respeita regras de especialidade e manda para o sistema.",
+      "Assistente conversacional que encaixa consultas, respeita regras de especialidade e registra tudo direto no sistema.",
     badges: ["73% das consultas marcadas sem humano", "WhatsApp · IA", "LGPD · CFM"],
     accentColor: "ambar",
   },
@@ -24,7 +24,7 @@ const automacoes: AutomacaoCard[] = [
     categoria: "Confirmação",
     titulo: "Confirmação via WhatsApp",
     descricao:
-      "Fluxo de confirmação com lembrete no D-1, reagendamento automático e escalonamento educado para a recepção.",
+      "Fluxo de confirmação com lembrete na véspera, reagendamento automático e repasse cuidadoso para a recepção quando precisa de humano.",
     badges: ["38% menos no-show"],
     accentColor: "azul",
   },
@@ -49,9 +49,9 @@ const automacoes: AutomacaoCard[] = [
   {
     number: "05",
     categoria: "Relatórios",
-    titulo: "Relatórios pro gestor",
+    titulo: "Relatórios para o gestor",
     descricao:
-      "Resumo executivo semanal no WhatsApp: ocupação, faturamento, gargalos e tendências.",
+      "Resumo da semana no WhatsApp: ocupação, faturamento, gargalos e tendências.",
     badges: ["1 mensagem · toda segunda"],
     accentColor: "azul",
   },
@@ -65,7 +65,7 @@ function Card({ a, fullWidth = false }: { a: AutomacaoCard; fullWidth?: boolean 
 
   return (
     <div
-      className={`relative bg-white rounded-2xl p-7 md:p-8 overflow-hidden border border-[#8BA5BB]/15 flex flex-col gap-4 ${fullWidth ? "md:flex-row md:gap-10 md:items-start" : ""}`}
+      className={`relative h-full bg-white rounded-2xl p-7 md:p-8 overflow-hidden border border-[#8BA5BB]/15 flex flex-col gap-4 ${fullWidth ? "md:flex-row md:gap-10 md:items-start" : ""}`}
       style={{ borderLeft: `3px solid ${borderColor}` }}
     >
       {/* Número watermark */}
@@ -89,7 +89,7 @@ function Card({ a, fullWidth = false }: { a: AutomacaoCard; fullWidth?: boolean 
         <p className="text-sm text-[#8BA5BB] leading-[1.75]">{a.descricao}</p>
       </div>
 
-      <div className={`flex flex-wrap gap-2 ${fullWidth ? "md:flex-col md:items-start md:shrink-0 md:pt-6" : "mt-1"}`}>
+      <div className={`flex flex-wrap gap-2 ${fullWidth ? "md:flex-col md:items-start md:shrink-0 md:pt-6" : "mt-auto"}`}>
         {a.badges.map((badge) => (
           <span
             key={badge}
@@ -136,7 +136,7 @@ export function AutomacoesVivas() {
         </Reveal>
 
         {/* Cards 02–03 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5 items-stretch">
           {row2.map((a, i) => (
             <Reveal key={a.number} delay={i * 60}>
               <Card a={a} />
@@ -145,7 +145,7 @@ export function AutomacoesVivas() {
         </div>
 
         {/* Cards 04–05 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
           {row3.map((a, i) => (
             <Reveal key={a.number} delay={i * 60}>
               <Card a={a} />

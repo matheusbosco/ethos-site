@@ -63,7 +63,7 @@ export default function OgImage() {
             maxWidth: 700,
           }}
         >
-          Automação e agentes de IA para empresas que querem operar com mais inteligência — sem templates, sem atalhos.
+          Automação e agentes de IA para empresas que querem operar com mais inteligência. Sem templates, sem atalhos.
         </div>
 
         {/* Bottom logo */}
