@@ -1,6 +1,7 @@
 "use client";
 
 import { useContact } from "@/contexts/ContactContext";
+import { AmberUnderline } from "@/components/ui/AmberUnderline";
 
 export function CtaFinal() {
   const { open } = useContact();
@@ -39,7 +40,10 @@ export function CtaFinal() {
           style={{ fontFamily: "var(--font-jakarta)" }}
         >
           O primeiro passo é uma{" "}
-          <span className="text-[#C89A4F]">conversa.</span>
+          <span className="relative inline-block">
+            conversa.
+            <AmberUnderline />
+          </span>
         </h2>
 
         {/* CTA */}

@@ -1,10 +1,9 @@
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/sections/Hero";
+import { Dores } from "@/sections/Dores";
 import { Services } from "@/sections/Services";
-import { AutomacoesVivas } from "@/sections/AutomacoesVivas";
 import { Process } from "@/sections/Process";
-import { NaPratica } from "@/sections/NaPratica";
 import { FAQ } from "@/sections/FAQ";
 import { CtaFinal } from "@/sections/CtaFinal";
 
@@ -14,12 +13,11 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <Dores />
         <Services />
-        <AutomacoesVivas />
         <Process />
-        <NaPratica />
-        <CtaFinal />
         <FAQ />
+        <CtaFinal />
       </main>
       <Footer />
     </>

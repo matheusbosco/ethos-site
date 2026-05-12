@@ -35,10 +35,31 @@ export function SplineScene({ scene, className, followGlobalMouse = false }: Spl
         viewer.setAttribute('loading-anim-type', 'none')
         viewer.style.cssText = 'width:100%;height:100%;display:block;background:transparent;'
 
-        const onLoad = () => setLoaded(true)
+        // Hide the "Built with Spline" badge via a stylesheet injected into the
+        // viewer's shadow DOM. We hide (not remove) #logo because spline-viewer's
+        // own code re-queries that element and would crash on a null reference.
+        const hideBadge = (attempts = 0) => {
+          const root = viewer?.shadowRoot
+          if (root) {
+            if (!root.getElementById('ethos-hide-spline-badge')) {
+              const style = document.createElement('style')
+              style.id = 'ethos-hide-spline-badge'
+              style.textContent = '#logo{display:none!important;}'
+              root.appendChild(style)
+            }
+            return
+          }
+          if (attempts < 25) window.setTimeout(() => hideBadge(attempts + 1), 100)
+        }
+
+        const onLoad = () => {
+          setLoaded(true)
+          hideBadge()
+        }
         viewer.addEventListener('load', onLoad)
         viewer.addEventListener('load-complete', onLoad)
         host.appendChild(viewer)
+        hideBadge()
       })
       .catch((err) => {
         // Don't crash — just hide the loader and let the slot stay empty.

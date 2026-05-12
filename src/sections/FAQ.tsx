@@ -1,31 +1,32 @@
 "use client";
 
 import { useState } from "react";
+import { AmberUnderline } from "@/components/ui/AmberUnderline";
 
 const faqs = [
   {
     q: "Quanto tempo leva um projeto típico?",
-    a: "Da descoberta à primeira entrega em produção: 4 a 6 semanas. Projetos mais complexos são divididos em fases, então você vê resultado real antes de comprometer o orçamento todo.",
+    a: "Da descoberta à primeira entrega em produção, de 4 a 6 semanas. Projetos mais complexos são divididos em fases, de forma que há resultado concreto antes do comprometimento de todo o orçamento.",
   },
   {
     q: "Como vocês cobram?",
-    a: "Trabalhamos por projeto, não por hora. Depois do diagnóstico, a gente fecha uma proposta com escopo e valor fixos. Sem surpresa no final do mês.",
+    a: "Trabalhamos por projeto, não por hora. Após o diagnóstico, apresentamos uma proposta com escopo e valor fixos, sem cobranças variáveis ao fim do mês.",
   },
   {
     q: "O que acontece depois que o projeto é entregue?",
-    a: "A solução entra em operação e a gente continua junto pra ajustes e evoluções. O acompanhamento pós-lançamento já vem incluído. A gente não some quando tudo começa a rodar.",
+    a: "A solução entra em operação e o acompanhamento continua, com ajustes e evoluções. Esse acompanhamento pós-lançamento já está incluído. O trabalho não termina quando a operação começa.",
   },
   {
     q: "O projeto fica nos servidores de vocês?",
-    a: "Sim. A solução roda na nossa infraestrutura, monitorada e mantida por nós. Você recebe a documentação completa do que foi construído. A gente faz assim de propósito: alguém precisa continuar responsável pelo que funciona.",
+    a: "Sim. A solução opera na nossa infraestrutura, monitorada e mantida por nós, e você recebe a documentação completa do que foi construído. É uma escolha deliberada: alguém precisa permanecer responsável pelo que está em funcionamento.",
   },
   {
     q: "Precisamos ter equipe técnica interna?",
-    a: "Não. Trabalhamos com empresas que não têm time de TI. Tudo o que precisamos é de acesso ao processo, não ao código que ele usa hoje.",
+    a: "Não. Atendemos empresas que não têm equipe de TI. O que precisamos é de acesso ao processo, não ao código que o sustenta hoje.",
   },
   {
     q: "Como é o diagnóstico gratuito?",
-    a: "Uma conversa de 30 minutos onde mapeamos o processo, identificamos o gargalo e estimamos o impacto real de automatizar. Sem apresentação de vendas, sem compromisso.",
+    a: "Uma conversa de 30 minutos em que mapeamos o processo, identificamos o gargalo e estimamos o impacto real da automação. Sem apresentação de vendas e sem compromisso.",
   },
 ];
 
@@ -44,10 +45,15 @@ export function FAQ() {
         </div>
 
         <h2
-          className="text-2xl md:text-3xl font-extrabold text-white leading-tight tracking-tight mb-10 max-w-lg"
+          className="text-[2rem] md:text-[2.75rem] font-extrabold text-white leading-[1.1] tracking-tight mb-10 max-w-2xl"
           style={{ fontFamily: "var(--font-jakarta)" }}
         >
-          O que você provavelmente quer saber antes de entrar em contato.
+          O que você provavelmente quer{" "}
+          <span className="relative inline-block">
+            saber
+            <AmberUnderline />
+          </span>{" "}
+          antes de entrar em contato.
         </h2>
 
         {/* 2 colunas independentes no desktop (3 perguntas cada). Cada coluna é

@@ -70,13 +70,13 @@ export function ContactModal() {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-overlay-in"
       role="dialog"
       aria-modal="true"
       aria-label="Formulário de contato"
       onClick={(e) => { if (e.target === overlayRef.current) close(); }}
     >
-      <div className="relative w-full max-w-lg bg-[#F0E9D6] rounded-2xl shadow-2xl p-8 md:p-10 max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-lg bg-[#F0E9D6] rounded-2xl shadow-2xl p-8 md:p-10 max-h-[90vh] overflow-y-auto animate-modal-in">
         {/* Fechar */}
         <button
           onClick={close}
@@ -106,10 +106,10 @@ export function ContactModal() {
             <div className="mb-8">
               <div className="w-8 h-px bg-[#2A3D52] mb-6" />
               <h2 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-extrabold text-[#1E1D1B] tracking-tight leading-tight mb-3">
-                Conta o que está travando. A gente mapeia o resto.
+                Descreva o que está travando. Nós mapeamos o restante.
               </h2>
               <p className="text-sm text-[#87867F] leading-relaxed">
-                Uma conversa de 30 minutos. Sem apresentação de vendas.
+                Uma conversa de 30 minutos, sem apresentação de vendas.
               </p>
             </div>
 
@@ -229,7 +229,7 @@ export function ContactModal() {
 
               {status === "error" && (
                 <p className="text-xs text-red-700">
-                  Algo deu errado. Escreva diretamente:{" "}
+                  Não foi possível enviar agora. Escreva diretamente para{" "}
                   <a href="mailto:contato@ethos.ai" className="underline">
                     contato@ethos.ai
                   </a>
