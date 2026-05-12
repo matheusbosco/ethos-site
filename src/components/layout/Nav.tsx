@@ -4,27 +4,24 @@ import { useState } from "react";
 import { useContact } from "@/contexts/ContactContext";
 
 const links = [
-  { label: "o que entregamos", href: "#servicos" },
-  { label: "como funciona", href: "#processo" },
+  { label: "O que entregamos", href: "#servicos" },
+  { label: "Como funciona", href: "#processo" },
   { label: "FAQ", href: "#faq" },
 ];
 
 function EthosLogo() {
   return (
-    <a href="#" className="flex items-center gap-3 group">
+    <a href="#" className="flex items-center gap-2 group">
       <div className="flex flex-col gap-[5px]">
-        {[0, 1, 2].map((i) => (
-          <div
-            key={i}
-            className="h-[3px] w-6 rounded-full bg-[#C89A4F] transition-all duration-300 group-hover:w-7"
-          />
-        ))}
+        <div className="h-[3px] w-6 rounded-full bg-[#C89A4F]" />
+        <div className="h-[3px] w-4 rounded-full bg-[#C89A4F]" />
+        <div className="h-[3px] w-5 rounded-full bg-[#C89A4F]" />
       </div>
       <span
-        className="text-white font-extrabold tracking-[0.14em] text-lg"
+        className="text-white font-extrabold tracking-[0.05em] text-lg"
         style={{ fontFamily: "var(--font-jakarta)" }}
       >
-        ETHOS
+        ETHOS.
       </span>
     </a>
   );

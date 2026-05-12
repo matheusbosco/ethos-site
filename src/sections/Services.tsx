@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal } from "@/components/ui/Reveal";
+import { AmberUnderline } from "@/components/ui/AmberUnderline";
 
 // ——————————————————————————————————————————————
 // Automações — Choreography: sistemas conectados, dados fluindo
@@ -270,36 +271,32 @@ interface Service {
   tag: string;
   title: string;
   description: string;
-  footer: string;
 }
 
 const services: Service[] = [
   {
-    id: "automacoes",
+    id: "atendimento",
     number: "01",
-    tag: "Automações",
-    title: "Eliminamos o trabalho manual",
+    tag: "ATENDIMENTO",
+    title: "Você perde clientes pela demora na resposta.",
     description:
-      "Fluxos automáticos que conectam Forms, CRM, WhatsApp e e-mail e tiram da sua equipe as tarefas repetitivas. Cada um é desenhado pro seu processo, não um template.",
-    footer: "Integrações",
+      "Agentes de IA que respondem, qualificam e encaminham contatos no WhatsApp, no site e por e-mail. Disponíveis 24 horas por dia, sem depender de atendimento humano em tempo real.",
   },
   {
-    id: "agentes",
+    id: "operacao",
     number: "02",
-    tag: "Agentes de IA",
-    title: "Atendemos com inteligência real",
+    tag: "OPERAÇÃO",
+    title: "Sua equipe executa manualmente o que deveria ser automático.",
     description:
-      "Agentes que leem o contexto, qualificam leads, respondem clientes e analisam documentos. Não são respostas automáticas. Decidem em segundos.",
-    footer: "Decisão autônoma",
+      "Tarefas repetitivas como cobranças, agendamentos, relatórios e cadastros consomem horas da equipe e podem ser automatizadas de ponta a ponta.",
   },
   {
-    id: "ia-preditiva",
+    id: "gestao",
     number: "03",
-    tag: "IA Preditiva",
-    title: "Antecipamos o que vem depois",
+    tag: "GESTÃO",
+    title: "Você decide sem visibilidade do que acontece na operação.",
     description:
-      "Modelos treinados nos seus dados pra prever churn, demanda e comportamento de cliente. Você decide com base no que vai acontecer, não no que já passou.",
-    footer: "Sob medida",
+      "Dashboards e integrações que conectam os seus sistemas e entregam a informação certa no momento certo, sem consolidação manual de planilhas.",
   },
 ];
 
@@ -317,21 +314,27 @@ export function Services() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-5 h-px bg-[#5A7090]/50" />
             <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase">
-              O que entregamos
+              O que trava a operação
             </p>
           </div>
           <h2
-            className="text-[2rem] md:text-[2.6rem] font-extrabold text-[#2C2620] leading-[1.1] tracking-tight max-w-3xl mb-3"
+            className="text-[2.25rem] md:text-[3.25rem] font-extrabold text-[#2C2620] leading-[1.08] tracking-tight max-w-3xl mb-6"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
-            Soluções com inteligência artificial personalizadas.
+            O que está travando a sua{" "}
+            <span className="relative inline-block">
+              operação
+              <AmberUnderline />
+            </span>{" "}
+            agora.
           </h2>
-          <p className="text-sm font-medium text-[#8BA5BB] tracking-[0.18em] uppercase mt-3 mb-8">
-            Construídas do zero, para o seu negócio. Nada de templates.
+          <p className="text-base md:text-lg text-[#5A7090] leading-[1.7] max-w-2xl mb-8">
+            Você provavelmente reconhece pelo menos um destes cenários. Para cada um,
+            a solução é projetada a partir do seu contexto, não de um modelo pronto.
           </p>
         </Reveal>
 
-        {/* Cards compactos em grade — 3 colunas no desktop, empilha no mobile */}
+        {/* Cards — a dor em destaque; a solução, secundária */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
           {services.map((s, i) => (
             <Reveal key={s.id} delay={i * 80}>
@@ -348,32 +351,27 @@ export function Services() {
                   {s.number}
                 </span>
 
-                {/* Tag (categoria) */}
-                <p className="text-[0.62rem] font-bold text-[#5A7090] tracking-[0.22em] uppercase mb-4">
+                {/* Categoria — discreta */}
+                <p className="text-[0.6rem] font-bold text-[#8BA5BB] tracking-[0.24em] uppercase mb-5">
                   {s.tag}
                 </p>
 
-                {/* Título — verbo de ação */}
+                {/* A dor — elemento principal do card */}
                 <h3
-                  className="text-xl md:text-2xl font-extrabold text-[#2C2620] tracking-tight leading-[1.15] mb-3 pr-12"
+                  className="text-[1.4rem] md:text-[1.6rem] font-extrabold text-[#2C2620] tracking-tight leading-[1.18] mb-6 pr-12"
                   style={{ fontFamily: "var(--font-jakarta)" }}
                 >
                   {s.title}
                 </h3>
 
-                {/* Descrição */}
-                <p className="text-sm text-[#5A7090] leading-[1.7] flex-1">
-                  {s.description}
-                </p>
-
-                {/* Rodapé com divisor + label + seta */}
-                <div className="border-t border-[#8BA5BB]/20 pt-4 mt-6 flex items-center justify-between">
-                  <span className="text-[0.62rem] font-bold text-[#5A7090] tracking-[0.22em] uppercase">
-                    {s.footer}
-                  </span>
-                  <span className="text-[#C89A4F] text-base leading-none" aria-hidden>
-                    →
-                  </span>
+                {/* A solução — secundária, ancorada na base */}
+                <div className="mt-auto pt-5 border-t border-[#8BA5BB]/20">
+                  <p className="text-[0.58rem] font-semibold text-[#C89A4F] tracking-[0.2em] uppercase mb-2.5">
+                    Como a Ethos resolve
+                  </p>
+                  <p className="text-[0.8rem] text-[#5A7090]/80 leading-[1.65]">
+                    {s.description}
+                  </p>
                 </div>
               </article>
             </Reveal>

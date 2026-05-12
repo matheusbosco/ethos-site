@@ -1,111 +1,119 @@
 "use client";
 
+import { motion } from "framer-motion";
+import AnimatedTextCycle from "@/components/ui/animated-text-cycle";
 import { Button } from "@/components/ui/Button";
-import { AnimatedWords } from "@/components/ui/AnimatedWords";
 import { SplineScene } from "@/components/ui/SplineScene";
 import { useContact } from "@/contexts/ContactContext";
-
-const rotatingPhrases = [
-  "Automatize o que trava.",
-  "Escale sem contratar.",
-  "Otimize o que custa.",
-  "Transforme o que atrasa.",
-];
 
 export function Hero() {
   const { open } = useContact();
 
   return (
-    <section className="w-full min-h-screen bg-[#2C2620] pt-16 overflow-hidden">
-      <div className="mx-auto max-w-5xl w-full px-6 py-6 md:py-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
-        {/* Coluna esquerda — texto */}
-        <div className="animate-fade-up">
-          <p className="text-xs font-semibold text-[#C89A4F] tracking-[0.22em] uppercase mb-5">
-            Agência de soluções com IA
-          </p>
-
-          <h1
-            className="text-5xl md:text-[4.5rem] font-extrabold text-white leading-[1.05] tracking-tight mb-3"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            Inteligência sob medida.
-          </h1>
-
-          <AnimatedWords
-            phrases={rotatingPhrases}
-            className="text-2xl md:text-3xl font-extrabold text-[#C89A4F] tracking-tight mb-5 h-[1.3em]"
+    <section className="relative w-full min-h-screen bg-[#2C2620] pt-16 flex items-center justify-center overflow-hidden">
+      {/* Robô 3D — fundo, com zoom */}
+      <div aria-hidden className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 origin-center translate-y-[17%] scale-[1.35] md:scale-[1.5]">
+          <SplineScene
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="w-full h-full"
+            followGlobalMouse
           />
+        </div>
+      </div>
 
-          <p className="text-base md:text-lg text-[#8BA5BB] leading-[1.85] max-w-md mb-6">
-            A IA de hoje resolve em dias problemas que há dois anos pediam meses de engenharia.
-            A gente mapeia onde ela faz diferença pro seu negócio e só constrói o que vai dar retorno.
-          </p>
+      {/* Escurecimento radial — legibilidade do texto sobre o robô */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 65% 55% at 50% 45%, rgba(44,38,32,0.62) 0%, rgba(44,38,32,0.3) 45%, rgba(44,38,32,0) 75%)",
+        }}
+      />
 
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button variant="primary" className="text-sm px-8 py-3.5" onClick={open}>
-              Conversar com a Ethos
-            </Button>
-            <Button as="a" href="#servicos" variant="secondary" className="text-sm px-8 py-3.5">
-              O que entregamos
-            </Button>
-          </div>
+      {/* Fades topo (nav) e base — blend com o fundo */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-32 pointer-events-none"
+        style={{ background: "linear-gradient(180deg, #2C2620 0%, rgba(44,38,32,0) 100%)" }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
+        style={{ background: "linear-gradient(0deg, #2C2620 0%, rgba(44,38,32,0) 100%)" }}
+      />
+
+      {/* Glow âmbar sutil */}
+      <div
+        aria-hidden
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] max-w-[800px] aspect-square pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(200,154,79,0.14) 0%, rgba(200,154,79,0.04) 40%, rgba(44,38,32,0) 70%)",
+        }}
+      />
+
+      {/* Texto — por cima do robô, centralizado */}
+      <div className="relative z-10 mx-auto max-w-5xl w-full px-6 text-center animate-fade-up">
+        <p className="text-xs font-semibold text-[#C89A4F] tracking-[0.22em] uppercase mb-5">
+          O seu BPO de tecnologia
+        </p>
+
+        <h1
+          className="whitespace-nowrap text-[clamp(1.55rem,6.6vw,5rem)] font-extrabold text-white leading-[1.05] tracking-tight mb-7 [text-shadow:0_2px_30px_rgba(0,0,0,0.45)]"
+          style={{ fontFamily: "var(--font-jakarta)" }}
+        >
+          Inteligência sob{" "}
+          <span className="relative inline-block">
+            medida.
+            <motion.svg
+              aria-hidden
+              viewBox="0 0 300 20"
+              preserveAspectRatio="none"
+              className="absolute left-0 -bottom-[0.18em] w-full h-[0.3em] text-[#C89A4F] overflow-visible"
+            >
+              <motion.path
+                d="M 0,12 Q 75,2 150,12 Q 225,22 300,12"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                fill="none"
+                vectorEffect="non-scaling-stroke"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 1.3, ease: "easeInOut", delay: 0.6 }}
+              />
+            </motion.svg>
+          </span>
+        </h1>
+
+        <p className="text-base md:text-lg text-[#cdd7e0] leading-[1.8] max-w-xl mx-auto [text-shadow:0_1px_16px_rgba(0,0,0,0.5)]">
+          Cada operação tem gargalos próprios.
+          <br />
+          A solução precisa ser desenhada para os seus.
+        </p>
+
+        <div className="mt-6 text-base md:text-lg text-[#8BA5BB] [text-shadow:0_1px_16px_rgba(0,0,0,0.5)]">
+          Feita para{" "}
+          <AnimatedTextCycle
+            words={[
+              "o seu atendimento",
+              "o seu financeiro",
+              "o seu comercial",
+              "a sua operação",
+              "o seu pós-venda",
+            ]}
+            interval={2800}
+            className="text-[#C89A4F]"
+          />
         </div>
 
-        {/* Coluna direita — card do robô */}
-        <div className="hidden lg:flex flex-col animate-fade-up" style={{ animationDelay: "150ms" }}>
-          <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
-            {/* Card header */}
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/8">
-              <span className="text-[0.65rem] font-semibold text-white/40 tracking-[0.18em] uppercase">
-                Ethos · Interativo
-              </span>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[0.65rem] text-emerald-400/80 tracking-widest uppercase font-medium">
-                  ao vivo
-                </span>
-              </div>
-            </div>
-
-            {/* Spline 3D + footer overlay (cobre o badge nativo do spline-viewer) */}
-            <div className="relative w-full h-[400px] bg-[#1e1712] overflow-hidden">
-              <SplineScene
-                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                className="w-full h-full"
-                followGlobalMouse
-              />
-
-              {/* Fade do robô para a barra inferior — 88px, opaco a partir de ~28% */}
-              <div
-                aria-hidden
-                className="absolute inset-x-0 bottom-0 h-[88px] pointer-events-none"
-                style={{
-                  background:
-                    "linear-gradient(180deg, rgba(30,23,18,0) 0%, rgba(30,23,18,0.85) 28%, #1e1712 45%, #1e1712 100%)",
-                  zIndex: 10,
-                }}
-              />
-
-              {/* Barra sólida 64px — cobre o badge "Built with Spline" (36px @ bottom:20px) */}
-              <div
-                className="absolute inset-x-0 bottom-0 h-16 flex items-center justify-between px-5 border-t border-white/8 pointer-events-none"
-                style={{ background: "#1e1712", zIndex: 11 }}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#C89A4F]" />
-                  <span className="text-[0.62rem] text-white/30 tracking-[0.15em] uppercase font-medium">
-                    Render · 60fps
-                  </span>
-                </div>
-                <span className="text-[0.62rem] text-[#C89A4F]/60 tracking-[0.15em] uppercase font-semibold">
-                  Ethos · 3D
-                </span>
-              </div>
-            </div>
-          </div>
+        <div className="mt-7 flex justify-center">
+          <Button variant="primary" className="text-sm px-8 py-3.5" onClick={open}>
+            Conversar com a Ethos
+          </Button>
         </div>
-
       </div>
     </section>
   );

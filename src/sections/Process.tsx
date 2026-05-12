@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import { AmberUnderline } from "@/components/ui/AmberUnderline";
 
 const steps = [
   {
@@ -8,7 +9,7 @@ const steps = [
     categoria: "Diagnóstico",
     title: "Diagnóstico",
     description:
-      "Mapeamos o processo real, não o idealizado. Medimos o custo atual em tempo, foco e dinheiro, e identificamos exatamente onde a IA pode intervir.",
+      "Mapeamos o processo real, não o idealizado. Medimos o custo atual em tempo, foco e recursos e identificamos onde a IA pode intervir.",
     badge: "Entregue em até 5 dias",
   },
   {
@@ -16,23 +17,23 @@ const steps = [
     categoria: "Planejamento",
     title: "Planejamento",
     description:
-      "Projetamos a solução sob medida: fluxos, agentes, integrações. Nada genérico. Você aprova cada etapa antes de começarmos a construir.",
-    badge: "Prioridades definidas juntos",
+      "Projetamos a solução sob medida: fluxos, agentes e integrações. Você aprova cada etapa antes do início da construção.",
+    badge: "Prioridades definidas em conjunto",
   },
   {
     number: "03",
     categoria: "Implementação",
     title: "Implementação",
     description:
-      "Construímos, testamos e documentamos. A solução roda na nossa infraestrutura. Qualidade e segurança ficam por nossa conta.",
-    badge: "Live em até 3 semanas",
+      "Construímos, testamos e documentamos. A solução opera na nossa infraestrutura, com qualidade e segurança sob nossa responsabilidade.",
+    badge: "Em produção em até 3 semanas",
   },
   {
     number: "04",
     categoria: "Acompanhamento",
     title: "Acompanhamento",
     description:
-      "A solução entra em operação e continuamos juntos. Ajustamos, evoluímos e respondemos pelo que entregamos. A gente não some quando tudo começa a rodar.",
+      "A solução entra em operação e o acompanhamento continua. Ajustamos, evoluímos e respondemos pelo que foi entregue. O trabalho não termina quando a operação começa.",
     badge: "Revisão mensal contínua",
   },
 ];
@@ -73,10 +74,14 @@ export function Process() {
             </p>
           </div>
           <h2
-            className="text-3xl md:text-4xl font-extrabold text-white leading-tight tracking-tight mb-16 max-w-lg"
+            className="text-[2.5rem] md:text-[3.5rem] font-extrabold text-white leading-[1.06] tracking-tight mb-16 max-w-xl"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
-            Como trabalhamos juntos.
+            Como trabalhamos{" "}
+            <span className="relative inline-block">
+              juntos.
+              <AmberUnderline />
+            </span>
           </h2>
         </div>
 

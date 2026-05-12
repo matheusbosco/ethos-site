@@ -1,229 +1,10 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import { AmberUnderline } from "@/components/ui/AmberUnderline";
 
 // ——————————————————————————————————————————————
-// BLOCO A — WhatsApp animado
-// ——————————————————————————————————————————————
-
-type MsgType = "bot" | "patient" | "slots" | "badge";
-
-interface ChatMsg {
-  type: MsgType;
-  text?: string;
-  time?: string;
-  ticks?: boolean;
-  slots?: string[];
-  selectedSlot?: string;
-  /** Delay (ms) entre a mensagem anterior e esta. Tempos variados simulam
-   *  ritmo natural — bot "pensando", paciente "digitando", etc. */
-  delayMs: number;
-}
-
-const chatMessages: ChatMsg[] = [
-  { type: "bot", text: "Olá, Marina! 🌺 Aqui é a Ethos, assistente da Clínica Meridian.", time: "09:10", delayMs: 600 },
-  { type: "bot", text: "Confirmando sua consulta com Dra. Helena, amanhã às 14h30. Posso confirmar?", time: "09:12", delayMs: 1900 },
-  { type: "patient", text: "Consegue trocar pra sexta? Surgiu um imprevisto", time: "09:14", ticks: true, delayMs: 2600 },
-  { type: "bot", text: "Claro. Tenho estes horários na sexta:", time: "09:16", delayMs: 1500 },
-  { type: "slots", slots: ["Sex 09:00", "Sex 10:00", "Sex 11:30", "Sex 14:00"], selectedSlot: "Sex 10:00", delayMs: 1000 },
-  { type: "patient", text: "Sexta 10h perfeito", time: "09:20", ticks: true, delayMs: 2200 },
-  { type: "bot", text: "Reagendado ✓ Dra. Helena · sexta 10h00. Te lembro no dia anterior.", time: "09:22", delayMs: 1800 },
-  { type: "badge", text: "ATUALIZADO NO SISTEMA · 0 INTERVENÇÕES HUMANAS", delayMs: 1300 },
-];
-
-const backofficeLog = [
-  { time: "09:10", action: "Intenção detectada", result: "Reagendamento" },
-  { time: "09:11", action: "Sistema consultado", result: "4 slots livres" },
-  { time: "09:13", action: "Paciente escolheu", result: "Sex 10:00" },
-  { time: "09:13", action: "Gravado no ERP", result: "✓ Meridian" },
-];
-
-function BotIcon() {
-  return (
-    <div className="w-8 h-8 rounded-full bg-[#C89A4F] flex items-center justify-center shrink-0">
-      <div className="flex flex-col gap-[3px]">
-        {[0,1,2].map(i => <div key={i} className="h-[1.5px] w-3.5 rounded-full bg-[#2C2620]" />)}
-      </div>
-    </div>
-  );
-}
-
-function WhatsAppSection({ visible }: { visible: boolean }) {
-  const [step, setStep] = useState(0);
-  const messagesScrollRef = useRef<HTMLDivElement>(null);
-
-  // Avança um step por vez, usando o delay próprio da próxima mensagem.
-  useEffect(() => {
-    if (!visible) return;
-    if (step >= chatMessages.length) return;
-    const next = chatMessages[step];
-    const id = setTimeout(() => setStep((s) => s + 1), next.delayMs);
-    return () => clearTimeout(id);
-  }, [visible, step]);
-
-  // Auto-scroll suave dentro do container do chat sempre que uma mensagem nova
-  // aparece. Restrito ao próprio container — não afeta a página.
-  useEffect(() => {
-    if (step === 0) return;
-    const c = messagesScrollRef.current;
-    if (!c) return;
-    c.scrollTo({ top: c.scrollHeight, behavior: "smooth" });
-  }, [step]);
-
-  const shownMessages = chatMessages.slice(0, step);
-  const shownLogItems = backofficeLog.slice(0, Math.max(0, step - 2));
-
-  return (
-    <div>
-      {/* Label + título */}
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-5 h-px bg-[#5A7090]/50" />
-        <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase">
-          04 · Na Prática
-        </p>
-      </div>
-      <h2
-        className="text-[2rem] md:text-[2.8rem] font-extrabold text-[#2C2620] leading-[1.1] tracking-tight mb-3"
-        style={{ fontFamily: "var(--font-jakarta)" }}
-      >
-        Um dia no WhatsApp da sua clínica.
-      </h2>
-      <p className="text-base text-[#8BA5BB] mb-12 leading-relaxed">
-        A simulação abaixo é real. São os mesmos fluxos que rodam em produção.
-      </p>
-
-      {/* Dois painéis com altura idêntica para alinhamento perfeito */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-
-        {/* Painel esquerdo — WhatsApp mock */}
-        <div className="rounded-2xl overflow-hidden bg-[#111B21] flex flex-col h-[480px]">
-          {/* Header do chat */}
-          <div className="flex items-center gap-3 px-4 py-3.5 bg-[#202C33] border-b border-white/5">
-            <BotIcon />
-            <div className="flex-1">
-              <p className="text-sm font-semibold text-white">Clínica Meridian</p>
-              <p className="text-[0.62rem] text-emerald-400">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1" />
-                online · via Ethos
-              </p>
-            </div>
-            <div className="flex items-center gap-3 text-white/30">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .98h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-              </svg>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>
-              </svg>
-            </div>
-          </div>
-
-          {/* Mensagens — scrollável internamente, com scroll suave automático */}
-          <div
-            ref={messagesScrollRef}
-            className="flex-1 px-3 py-4 flex flex-col gap-2.5 overflow-y-auto scroll-smooth [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full"
-          >
-            {shownMessages.map((msg, i) => {
-              if (msg.type === "bot") return (
-                <div key={i} className="flex gap-2 items-end max-w-[85%] animate-fade-in">
-                  <div className="bg-[#202C33] rounded-2xl rounded-bl-sm px-3.5 py-2.5">
-                    <p className="text-[0.82rem] text-white/90 leading-[1.5]">{msg.text}</p>
-                    <p className="text-[0.6rem] text-white/30 mt-1 text-right">{msg.time}</p>
-                  </div>
-                </div>
-              );
-              if (msg.type === "patient") return (
-                <div key={i} className="flex justify-end animate-fade-in">
-                  <div className="bg-[#005C4B] rounded-2xl rounded-br-sm px-3.5 py-2.5 max-w-[80%]">
-                    <p className="text-[0.82rem] text-white/90 leading-[1.5]">{msg.text}</p>
-                    <div className="flex items-center justify-end gap-1 mt-1">
-                      <p className="text-[0.6rem] text-white/40">{msg.time}</p>
-                      {msg.ticks && <span className="text-[0.62rem] text-[#34B7F1]">✓✓</span>}
-                    </div>
-                  </div>
-                </div>
-              );
-              if (msg.type === "slots") return (
-                <div key={i} className="flex gap-2 items-end max-w-[85%] animate-fade-in">
-                  <div className="bg-[#202C33] rounded-2xl rounded-bl-sm px-3.5 py-2.5">
-                    <div className="grid grid-cols-2 gap-2">
-                      {msg.slots?.map((slot) => (
-                        <button
-                          key={slot}
-                          className={`text-[0.78rem] font-medium rounded-lg px-3 py-2 border transition-colors ${
-                            slot === msg.selectedSlot
-                              ? "bg-[#C89A4F] border-[#C89A4F] text-[#2C2620]"
-                              : "border-white/20 text-white/70"
-                          }`}
-                        >
-                          {slot}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              );
-              if (msg.type === "badge") return (
-                <div key={i} className="flex justify-center animate-fade-in mt-1">
-                  <span className="text-[0.6rem] font-bold text-white/40 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 tracking-[0.12em] uppercase">
-                    {msg.text}
-                  </span>
-                </div>
-              );
-              return null;
-            })}
-          </div>
-        </div>
-
-        {/* Painel direito — back-office log (mesma altura do chat) */}
-        <div className="rounded-2xl bg-white border border-[#8BA5BB]/20 p-7 md:p-8 flex flex-col h-[480px]">
-          <div className="mb-5">
-            <p className="text-[0.6rem] font-bold text-[#8BA5BB] tracking-[0.2em] uppercase mb-3">
-              No Back-Office
-            </p>
-            <h3
-              className="text-xl md:text-2xl font-extrabold text-[#2C2620] leading-snug"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              A paciente reagendou sozinha.
-            </h3>
-          </div>
-
-          {/* Log: items se distribuem igualmente para preencher o espaço sem deixar
-              um vão grande entre o último item e o chip */}
-          <div className="flex-1 flex flex-col divide-y divide-[#F4EFE8]">
-            {backofficeLog.map((log, i) => (
-              <div
-                key={i}
-                className={`flex-1 flex items-center justify-between transition-all duration-500 ${
-                  i < shownLogItems.length ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-[0.6rem] font-medium text-[#8BA5BB] tracking-wide w-10 shrink-0">{log.time}</span>
-                  <span className="text-sm text-[#5A7090] font-medium">{log.action}</span>
-                </div>
-                <span className="text-sm font-bold text-[#2C2620]">{log.result}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Chip de custo */}
-          <div className="mt-5 border border-[#8BA5BB]/20 rounded-xl px-5 py-3.5 flex items-center gap-3">
-            <div className="flex flex-col gap-[3px] shrink-0">
-              {[0,1,2].map(i => <div key={i} className="h-[2px] w-4 rounded-full bg-[#C89A4F]" />)}
-            </div>
-            <p className="text-[0.75rem] font-semibold text-[#5A7090]">
-              0 min de equipe humana · R$ 0,18 por atendimento
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ——————————————————————————————————————————————
-// BLOCO B — Terminal diagnóstico (ex-TechProof)
+// Terminal de diagnóstico
 // ——————————————————————————————————————————————
 
 type TraceLine = { text: string; type: string };
@@ -250,23 +31,23 @@ const traces: Record<string, TraceLine[]> = {
     { text: "─────────────────────────────────────", type: "divider" },
     { text: "✓ Diagnóstico concluído em 2.3s", type: "done" },
   ],
-  saude: [
-    { text: "DIAGNÓSTICO ETHOS · SAÚDE PRIVADA", type: "header" },
+  cobranca: [
+    { text: "DIAGNÓSTICO ETHOS · CONTAS A RECEBER", type: "header" },
     { text: "─────────────────────────────────────", type: "divider" },
-    { text: "Processo: Agendamento e confirmação de consultas", type: "info" },
-    { text: "Fonte: WhatsApp + agenda manual + ligações", type: "info" },
+    { text: "Processo: Cobrança e conciliação de pagamentos", type: "info" },
+    { text: "Fonte: ERP + extratos + planilhas de controle", type: "info" },
     { text: "", type: "blank" },
     { text: "Analisando 3 meses de operação...", type: "running" },
     { text: "", type: "blank" },
     { text: "RESULTADO", type: "header" },
-    { text: "→ Taxa de no-show: 31% das consultas", type: "output" },
-    { text: "→ Perda estimada: R$ 8.200 / mês", type: "output" },
-    { text: "→ Gargalo: sem confirmação automatizada", type: "output" },
+    { text: "→ Inadimplência: 14% da carteira", type: "output" },
+    { text: "→ Conciliação manual: 11h / semana", type: "output" },
+    { text: "→ Gargalo: sem régua de cobrança automatizada", type: "output" },
     { text: "", type: "blank" },
     { text: "PROPOSTA", type: "header" },
-    { text: "→ Agente de confirmação por WhatsApp", type: "output" },
-    { text: "→ Reagendamento automático com 48h de antecedência", type: "output" },
-    { text: "→ Recuperação estimada: R$ 6.500 / mês", type: "success" },
+    { text: "→ Régua de cobrança automática multicanal", type: "output" },
+    { text: "→ Conciliação bancária integrada ao ERP", type: "output" },
+    { text: "→ Recuperação estimada: 30% da inadimplência", type: "success" },
     { text: "", type: "blank" },
     { text: "─────────────────────────────────────", type: "divider" },
     { text: "✓ Diagnóstico concluído em 1.8s", type: "done" },
@@ -274,15 +55,15 @@ const traces: Record<string, TraceLine[]> = {
   relatorio: [
     { text: "RELATÓRIO SEMANAL · 22-28 ABR", type: "header" },
     { text: "─────────────────────────────────────", type: "divider" },
-    { text: "Cliente: Clínica Meridian · 7 dias", type: "info" },
+    { text: "Cliente: operação consolidada · 7 dias", type: "info" },
     { text: "Última atualização: hoje, 08:00", type: "info" },
     { text: "", type: "blank" },
     { text: "Compilando dados da semana...", type: "running" },
     { text: "", type: "blank" },
     { text: "OPERAÇÃO", type: "header" },
-    { text: "→ Consultas realizadas: 142 (+11%)", type: "output" },
-    { text: "→ Tempo médio de consulta: 27min", type: "output" },
-    { text: "→ No-show: 8% (-3pp vs sem. ant.)", type: "output" },
+    { text: "→ Atendimentos resolvidos: 142 (+11%)", type: "output" },
+    { text: "→ Tempo médio de resposta: 27s", type: "output" },
+    { text: "→ Tarefas automatizadas: 1.380 no período", type: "output" },
     { text: "", type: "blank" },
     { text: "FINANCEIRO", type: "header" },
     { text: "→ Faturamento bruto: R$ 47.200", type: "output" },
@@ -302,8 +83,8 @@ const traces: Record<string, TraceLine[]> = {
     { text: "", type: "blank" },
     { text: "OPERAÇÃO", type: "header" },
     { text: "→ Atendimento: rodando ✓ (47 conversas)", type: "output" },
-    { text: "→ Máquinas: 1 pendente · Impressora 03", type: "output" },
-    { text: "→ Equipe: 11/12 online · 1 alerta overtime", type: "output" },
+    { text: "→ Estoque: 1 item em ponto de reposição", type: "output" },
+    { text: "→ Equipe: 11/12 online · 1 alerta de horas extras", type: "output" },
     { text: "", type: "blank" },
     { text: "OPORTUNIDADES", type: "header" },
     { text: "→ Pipeline: 28 leads · R$ 184k em propostas", type: "output" },
@@ -315,11 +96,11 @@ const traces: Record<string, TraceLine[]> = {
   ],
 };
 
-type TabKey = "leads" | "saude" | "relatorio" | "analise";
+type TabKey = "leads" | "cobranca" | "relatorio" | "analise";
 
 const tabs: { key: TabKey; label: string }[] = [
   { key: "leads", label: "Qualificação de leads" },
-  { key: "saude", label: "Consultório de saúde" },
+  { key: "cobranca", label: "Cobrança e conciliação" },
   { key: "relatorio", label: "Relatório semanal" },
   { key: "analise", label: "Análise empresarial" },
 ];
@@ -340,80 +121,82 @@ function TerminalSection({ visible }: { visible: boolean }) {
   const trace = traces[activeTab];
 
   return (
-    <div className="mt-20 md:mt-28 pt-16 border-t border-[#8BA5BB]/20">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start">
-        {/* Esquerda */}
-        <div className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-          <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start">
+      {/* Esquerda */}
+      <div className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-5 h-px bg-[#5A7090]/50" />
+          <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase">
             Diagnóstico
           </p>
-          <h2
-            className="text-2xl md:text-3xl font-extrabold text-[#2C2620] leading-tight tracking-tight mb-6"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            O diagnóstico vem antes de qualquer proposta.
-          </h2>
-          <p className="text-[#8BA5BB] leading-[1.85] text-base mb-10">
-            Antes de escrever uma linha de código, mapeamos o processo real,
-            não o idealizado. Medimos o custo atual, identificamos o gargalo e
-            só então desenhamos a solução.
+        </div>
+        <h2
+          className="text-[2rem] md:text-[2.75rem] font-extrabold text-[#2C2620] leading-[1.1] tracking-tight mb-6"
+          style={{ fontFamily: "var(--font-jakarta)" }}
+        >
+          O{" "}
+          <span className="relative inline-block">
+            diagnóstico
+            <AmberUnderline />
+          </span>{" "}
+          vem antes de qualquer proposta.
+        </h2>
+        <p className="text-[#5A7090] leading-[1.85] text-base mb-10">
+          Antes de escrever uma linha de código, mapeamos o processo real,
+          não o idealizado. Medimos o custo atual, identificamos o gargalo e
+          só então desenhamos a solução.
+        </p>
+        <div>
+          <p className="text-[0.65rem] text-[#5A7090]/60 tracking-widest uppercase mb-3 font-medium">
+            Ver diagnóstico para:
           </p>
-          <div>
-            <p className="text-[0.65rem] text-[#8BA5BB]/50 tracking-widest uppercase mb-3 font-medium">
-              Ver diagnóstico para:
-            </p>
-            <div className="grid grid-cols-2 gap-2">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveTab(tab.key)}
-                  className={`text-left px-4 py-3 rounded-lg text-sm font-medium border transition-[color,background-color,border-color] duration-200 ${
-                    activeTab === tab.key
-                      ? "bg-[#5A7090]/15 text-[#5A7090] border-[#5A7090]/30"
-                      : "text-[#8BA5BB]/70 border-[#8BA5BB]/15 hover:text-[#5A7090] hover:bg-[#5A7090]/8 hover:border-[#5A7090]/25"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+          <div className="grid grid-cols-2 gap-2">
+            {tabs.map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className={`text-left px-4 py-3 rounded-lg text-sm font-medium border transition-[color,background-color,border-color] duration-200 ${
+                  activeTab === tab.key
+                    ? "bg-[#5A7090]/15 text-[#5A7090] border-[#5A7090]/30"
+                    : "text-[#5A7090]/70 border-[#5A7090]/20 hover:text-[#5A7090] hover:bg-[#5A7090]/8 hover:border-[#5A7090]/30"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
         </div>
+      </div>
 
-        {/* Direita — terminal */}
-        <div className={`transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-          <div className="bg-[#1e1712] rounded-xl border border-white/8 overflow-hidden">
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8">
-              <span className="w-3 h-3 rounded-full bg-[#FF5F57] shadow-[inset_0_0.5px_0_rgba(255,255,255,0.22),inset_0_-0.5px_0_rgba(0,0,0,0.18)]" />
-              <span className="w-3 h-3 rounded-full bg-[#FEBC2E] shadow-[inset_0_0.5px_0_rgba(255,255,255,0.22),inset_0_-0.5px_0_rgba(0,0,0,0.18)]" />
-              <span className="w-3 h-3 rounded-full bg-[#28C840] shadow-[inset_0_0.5px_0_rgba(255,255,255,0.22),inset_0_-0.5px_0_rgba(0,0,0,0.18)]" />
-              <span className="text-[0.65rem] text-white/20 ml-2 tracking-wide font-medium">
-                ethos · diagnóstico
-              </span>
-            </div>
-            <div className="px-5 py-5 space-y-0.5">
-              {trace.map((line, i) => (
-                <div
-                  key={`${activeTab}-${i}`}
-                  className={`font-mono text-[0.75rem] leading-[1.6] transition-all duration-500 ${lineColor[line.type]} ${
-                    visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
-                  }`}
-                  style={{ transitionDelay: visible ? `${300 + i * 50}ms` : "0ms" }}
-                >
-                  {line.text || <>&nbsp;</>}
-                </div>
-              ))}
-            </div>
+      {/* Direita — terminal */}
+      <div className={`transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+        <div className="bg-[#1e1712] rounded-xl border border-white/8 overflow-hidden">
+          <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8">
+            <span className="w-3 h-3 rounded-full bg-[#FF5F57] shadow-[inset_0_0.5px_0_rgba(255,255,255,0.22),inset_0_-0.5px_0_rgba(0,0,0,0.18)]" />
+            <span className="w-3 h-3 rounded-full bg-[#FEBC2E] shadow-[inset_0_0.5px_0_rgba(255,255,255,0.22),inset_0_-0.5px_0_rgba(0,0,0,0.18)]" />
+            <span className="w-3 h-3 rounded-full bg-[#28C840] shadow-[inset_0_0.5px_0_rgba(255,255,255,0.22),inset_0_-0.5px_0_rgba(0,0,0,0.18)]" />
+            <span className="text-[0.65rem] text-white/20 ml-2 tracking-wide font-medium">
+              ethos · diagnóstico
+            </span>
+          </div>
+          <div className="px-5 py-5 space-y-0.5">
+            {trace.map((line, i) => (
+              <div
+                key={`${activeTab}-${i}`}
+                className={`font-mono text-[0.75rem] leading-[1.6] transition-all duration-500 ${lineColor[line.type]} ${
+                  visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
+                }`}
+                style={{ transitionDelay: visible ? `${300 + i * 50}ms` : "0ms" }}
+              >
+                {line.text || <>&nbsp;</>}
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-// ——————————————————————————————————————————————
-// Componente principal
-// ——————————————————————————————————————————————
 
 export function NaPratica() {
   const ref = useRef<HTMLElement>(null);
@@ -438,7 +221,6 @@ export function NaPratica() {
       className="w-full bg-[#F4EFE8] px-6 py-20 md:py-28 border-t border-[#8BA5BB]/20"
     >
       <div className="mx-auto max-w-5xl">
-        <WhatsAppSection visible={visible} />
         <TerminalSection visible={visible} />
       </div>
     </section>
