@@ -1,8 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 
 interface AnimatedTextCycleProps {
   words: string[];
@@ -40,7 +39,7 @@ export default function AnimatedTextCycle({
   }, [interval, words.length]);
 
   // Container animation for the whole word
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: {
       y: -20,
       opacity: 0,
