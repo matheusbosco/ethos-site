@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { AmberUnderline } from "@/components/ui/AmberUnderline";
 
 const steps = [
   {
@@ -77,11 +76,7 @@ export function Process() {
             className="text-[2.5rem] md:text-[3.5rem] font-extrabold text-white leading-[1.06] tracking-tight mb-16 max-w-xl"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
-            Como trabalhamos{" "}
-            <span className="relative inline-block">
-              juntos.
-              <AmberUnderline />
-            </span>
+            Como trabalhamos juntos.
           </h2>
         </div>
 

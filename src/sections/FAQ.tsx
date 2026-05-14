@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AmberUnderline } from "@/components/ui/AmberUnderline";
 
 const faqs = [
   {
@@ -48,12 +47,7 @@ export function FAQ() {
           className="text-[2rem] md:text-[2.75rem] font-extrabold text-white leading-[1.1] tracking-tight mb-10 max-w-2xl"
           style={{ fontFamily: "var(--font-jakarta)" }}
         >
-          O que você provavelmente quer{" "}
-          <span className="relative inline-block">
-            saber
-            <AmberUnderline />
-          </span>{" "}
-          antes de entrar em contato.
+          O que você provavelmente quer saber antes de entrar em contato.
         </h2>
 
         {/* 2 colunas independentes no desktop (3 perguntas cada). Cada coluna é
