@@ -43,38 +43,131 @@ export function Footer() {
 
   return (
     <>
-      <footer className="w-full bg-[#2C2620] px-6 py-10">
-        <div className="mx-auto max-w-5xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <footer className="w-full bg-[#2C2620] px-6 pt-16 pb-8 border-t border-white/8">
+        <div className="mx-auto max-w-5xl">
 
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="flex flex-col gap-[5px]">
-              <div className="h-[3px] w-6 rounded-full bg-[#C89A4F]" />
-              <div className="h-[3px] w-4 rounded-full bg-[#C89A4F]" />
-              <div className="h-[3px] w-5 rounded-full bg-[#C89A4F]" />
+          {/* Grid principal */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 pb-10">
+
+            {/* Logo + slogan */}
+            <div className="md:col-span-5">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex flex-col gap-[5px]">
+                  <div className="h-[3px] w-6 rounded-full bg-[#C89A4F]" />
+                  <div className="h-[3px] w-4 rounded-full bg-[#C89A4F]" />
+                  <div className="h-[3px] w-5 rounded-full bg-[#C89A4F]" />
+                </div>
+                <div className="flex flex-col">
+                  <span
+                    className="text-white font-extrabold tracking-[0.05em] text-base"
+                    style={{ fontFamily: "var(--font-jakarta)" }}
+                  >
+                    ETHOS.
+                  </span>
+                  <span className="text-[0.6rem] text-[#8BA5BB] tracking-widest uppercase font-medium mt-0.5">
+                    BPO de tecnologia
+                  </span>
+                </div>
+              </div>
+              <p className="text-sm text-white/45 leading-[1.7] max-w-xs">
+                Operamos a camada de tecnologia que executa, monitora e evolui a sua operação continuamente.
+              </p>
             </div>
-            <div className="flex flex-col">
-              <span
-                className="text-white font-extrabold tracking-[0.05em] text-base"
-                style={{ fontFamily: "var(--font-jakarta)" }}
-              >
-                ETHOS.
-              </span>
-              <span className="text-[0.6rem] text-[#8BA5BB] tracking-widest uppercase font-medium mt-0.5">
-                BPO de tecnologia
-              </span>
+
+            {/* Navegar */}
+            <div className="md:col-span-2">
+              <p className="text-[0.62rem] font-semibold text-[#C89A4F] tracking-[0.25em] uppercase mb-4">
+                Navegar
+              </p>
+              <ul className="flex flex-col gap-2.5">
+                <li>
+                  <a href="#servicos" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
+                    O que entregamos
+                  </a>
+                </li>
+                <li>
+                  <a href="#processo" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
+                    Como funciona
+                  </a>
+                </li>
+                <li>
+                  <a href="#faq" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
+                    FAQ
+                  </a>
+                </li>
+              </ul>
             </div>
+
+            {/* Contato */}
+            <div className="md:col-span-3">
+              <p className="text-[0.62rem] font-semibold text-[#C89A4F] tracking-[0.25em] uppercase mb-4">
+                Contato
+              </p>
+              <ul className="flex flex-col gap-2.5">
+                <li>
+                  <a href="mailto:contato@ethos.ai" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
+                    contato@ethos.ai
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors duration-200"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.99 0 1.78-.77 1.78-1.72V1.72C24 .77 23.21 0 22.22 0z" />
+                    </svg>
+                    LinkedIn
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors duration-200"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                      <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.43.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23a3.73 3.73 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.43.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.73 3.73 0 0 1-1.38-.9 3.73 3.73 0 0 1-.9-1.38c-.16-.43-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07c-1.28.06-2.15.26-2.91.55a5.88 5.88 0 0 0-2.13 1.39A5.88 5.88 0 0 0 .62 4.14C.33 4.9.13 5.77.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.28.26 2.15.55 2.91.3.79.7 1.46 1.39 2.13a5.88 5.88 0 0 0 2.13 1.39c.76.3 1.63.49 2.91.55C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.28-.06 2.15-.26 2.91-.55a5.88 5.88 0 0 0 2.13-1.39 5.88 5.88 0 0 0 1.39-2.13c.3-.76.49-1.63.55-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.28-.26-2.15-.55-2.91a5.88 5.88 0 0 0-1.39-2.13A5.88 5.88 0 0 0 19.86.62C19.1.33 18.23.13 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.84a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" />
+                    </svg>
+                    Instagram
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Institucional */}
+            <div className="md:col-span-2">
+              <p className="text-[0.62rem] font-semibold text-[#C89A4F] tracking-[0.25em] uppercase mb-4">
+                Institucional
+              </p>
+              <ul className="flex flex-col gap-2.5">
+                <li>
+                  <a href="#" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
+                    Política de privacidade
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
+                    Termos de uso
+                  </a>
+                </li>
+              </ul>
+            </div>
+
           </div>
 
-          {/* Copyright + Cookie Settings */}
-          <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6">
+          {/* Linha de base */}
+          <div className="border-t border-white/8 pt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
             <p className="text-xs text-white/30 font-medium">
               Copyright © 2026 Ethos AI - Automações e Integrações. Todos os direitos reservados.
             </p>
             <button
               type="button"
               onClick={() => setModalOpen(true)}
-              className="self-start md:self-auto text-xs text-white/40 hover:text-[#C89A4F] underline-offset-4 hover:underline transition-colors duration-200"
+              className="text-xs text-white/40 hover:text-[#C89A4F] underline-offset-4 hover:underline transition-colors duration-200"
             >
               Cookie Settings
             </button>

@@ -65,6 +65,7 @@ const CHOREO_FLOWS: ChoreoFlow[] = [
 // Amplitude da oscilação (pixels). Mantida pequena para um efeito sutil.
 const WAVE_AMPLITUDE = 4;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function ChoreographyAnimation() {
   return (
     <div className="absolute inset-0 bg-[#0D1117] overflow-hidden select-none">
