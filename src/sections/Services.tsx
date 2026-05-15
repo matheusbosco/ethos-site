@@ -260,7 +260,7 @@ export function Services() {
           {services.map((s, i) => (
             <Reveal key={s.id} delay={i * 80}>
               <article
-                className="relative h-full rounded-2xl border border-[#8BA5BB]/20 bg-white p-7 md:p-8 flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(44,38,32,0.25)]"
+                className="relative h-full rounded-2xl border border-[#8BA5BB]/20 bg-white p-7 md:p-8 flex flex-col overflow-hidden shadow-[0_2px_8px_-3px_rgba(44,38,32,0.08),0_12px_32px_-20px_rgba(44,38,32,0.13)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_22px_48px_-24px_rgba(44,38,32,0.28)]"
                 style={{ borderLeft: "3px solid #C89A4F" }}
               >
                 {/* Número em marca-d'água no canto superior direito */}

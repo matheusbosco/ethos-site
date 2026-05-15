@@ -92,7 +92,7 @@ export function Seguranca() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {pillars.map((p, i) => (
             <Reveal key={p.id} delay={i * 80}>
-              <article className="h-full rounded-2xl border border-[#8BA5BB]/20 bg-white p-6 md:p-7 flex flex-col gap-4 transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(44,38,32,0.25)]">
+              <article className="h-full rounded-2xl border border-[#8BA5BB]/20 bg-white p-6 md:p-7 flex flex-col gap-4 shadow-[0_2px_8px_-3px_rgba(44,38,32,0.08),0_12px_32px_-20px_rgba(44,38,32,0.13)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_22px_48px_-24px_rgba(44,38,32,0.28)]">
                 <span
                   className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#C89A4F]/10 text-[#C89A4F] shrink-0"
                   aria-hidden
