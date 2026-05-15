@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Reveal } from "@/components/ui/Reveal";
+import { Parallax } from "@/components/ui/Parallax";
 
 interface Pillar {
   id: string;
@@ -67,22 +68,24 @@ export function Seguranca() {
 
         {/* Header */}
         <Reveal>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-5 h-px bg-[#5A7090]/50" />
-            <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase">
-              Operação responsável
+          <Parallax amount={16}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-5 h-px bg-[#5A7090]/50" />
+              <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase">
+                Operação responsável
+              </p>
+            </div>
+            <h2
+              className="text-[2rem] md:text-[2.75rem] font-extrabold text-[#2C2620] leading-[1.1] tracking-tight max-w-3xl mb-6"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              A operação é nossa. A responsabilidade também.
+            </h2>
+            <p className="text-base md:text-lg text-[#5A7090] leading-[1.7] max-w-2xl mb-12">
+              Operar processos de outras empresas exige governança, segurança e continuidade.
+              Quatro compromissos sustentam a forma como a Ethos roda sua operação.
             </p>
-          </div>
-          <h2
-            className="text-[2rem] md:text-[2.75rem] font-extrabold text-[#2C2620] leading-[1.1] tracking-tight max-w-3xl mb-6"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            A operação é nossa. A responsabilidade também.
-          </h2>
-          <p className="text-base md:text-lg text-[#5A7090] leading-[1.7] max-w-2xl mb-12">
-            Operar processos de outras empresas exige governança, segurança e continuidade.
-            Quatro compromissos sustentam a forma como a Ethos roda sua operação.
-          </p>
+          </Parallax>
         </Reveal>
 
         {/* Grid de pilares */}

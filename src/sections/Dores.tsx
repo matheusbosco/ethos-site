@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal } from "@/components/ui/Reveal";
+import { Parallax } from "@/components/ui/Parallax";
 
 const dores = [
   "Mensagens de clientes acumulando enquanto a equipe resolve urgências.",
@@ -14,12 +15,14 @@ export function Dores() {
       <div className="mx-auto max-w-5xl">
         <div className="max-w-3xl">
           <Reveal>
-            <div className="flex items-center gap-3 mb-10 md:mb-12">
-              <div className="w-5 h-px bg-[#C89A4F]/60" />
-              <p className="text-[0.62rem] font-semibold text-[#C89A4F] tracking-[0.25em] uppercase">
-                Cenários recorrentes
-              </p>
-            </div>
+            <Parallax amount={14}>
+              <div className="flex items-center gap-3 mb-10 md:mb-12">
+                <div className="w-5 h-px bg-[#C89A4F]/60" />
+                <p className="text-[0.62rem] font-semibold text-[#C89A4F] tracking-[0.25em] uppercase">
+                  Cenários recorrentes
+                </p>
+              </div>
+            </Parallax>
           </Reveal>
 
           <ul className="space-y-6 md:space-y-8">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import { Parallax } from "@/components/ui/Parallax";
 
 // ——————————————————————————————————————————————
 // Terminal de diagnóstico
@@ -123,23 +124,25 @@ function TerminalSection({ visible }: { visible: boolean }) {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start">
       {/* Esquerda */}
       <div className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-5 h-px bg-[#5A7090]/50" />
-          <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase">
-            Na prática
+        <Parallax amount={14}>
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-5 h-px bg-[#5A7090]/50" />
+            <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase">
+              Na prática
+            </p>
+          </div>
+          <h2
+            className="text-[2rem] md:text-[2.75rem] font-extrabold text-[#2C2620] leading-[1.1] tracking-tight mb-6"
+            style={{ fontFamily: "var(--font-jakarta)" }}
+          >
+            O que a Ethos opera por dentro.
+          </h2>
+          <p className="text-[#5A7090] leading-[1.85] text-base mb-10">
+            Quatro recortes do que medimos, automatizamos e monitoramos.
+            Do diagnóstico inicial ao acompanhamento contínuo da operação,
+            cada terminal mostra um processo real em curso.
           </p>
-        </div>
-        <h2
-          className="text-[2rem] md:text-[2.75rem] font-extrabold text-[#2C2620] leading-[1.1] tracking-tight mb-6"
-          style={{ fontFamily: "var(--font-jakarta)" }}
-        >
-          O que a Ethos opera por dentro.
-        </h2>
-        <p className="text-[#5A7090] leading-[1.85] text-base mb-10">
-          Quatro recortes do que medimos, automatizamos e monitoramos.
-          Do diagnóstico inicial ao acompanhamento contínuo da operação,
-          cada terminal mostra um processo real em curso.
-        </p>
+        </Parallax>
         <div>
           <p className="text-[0.65rem] text-[#5A7090]/60 tracking-widest uppercase mb-3 font-medium">
             Recortes da operação:

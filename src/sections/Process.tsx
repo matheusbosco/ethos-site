@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import { Parallax } from "@/components/ui/Parallax";
 
 const steps = [
   {
@@ -66,18 +67,20 @@ export function Process() {
         <div
           className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
         >
-          <div className="flex items-center gap-3 mb-10">
-            <div className="w-5 h-px bg-[#C89A4F]/50" />
-            <p className="text-[0.62rem] font-semibold text-[#C89A4F] tracking-[0.25em] uppercase">
-              Como funciona
-            </p>
-          </div>
-          <h2
-            className="text-[2.5rem] md:text-[3.5rem] font-extrabold text-white leading-[1.06] tracking-tight mb-16 max-w-xl"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            Como trabalhamos juntos.
-          </h2>
+          <Parallax amount={16}>
+            <div className="flex items-center gap-3 mb-10">
+              <div className="w-5 h-px bg-[#C89A4F]/50" />
+              <p className="text-[0.62rem] font-semibold text-[#C89A4F] tracking-[0.25em] uppercase">
+                Como funciona
+              </p>
+            </div>
+            <h2
+              className="text-[2.5rem] md:text-[3.5rem] font-extrabold text-white leading-[1.06] tracking-tight mb-16 max-w-xl"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              Como trabalhamos juntos.
+            </h2>
+          </Parallax>
         </div>
 
         {/* Steps — lista com divisores */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Parallax } from "@/components/ui/Parallax";
 
 const faqs = [
   {
@@ -44,19 +45,21 @@ export function FAQ() {
     <section id="faq" className="w-full bg-[#2C2620] px-6 py-14 md:py-16">
       <div className="mx-auto max-w-5xl">
 
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-5 h-px bg-[#C89A4F]/50" />
-          <p className="text-[0.62rem] font-semibold text-[#C89A4F] tracking-[0.25em] uppercase">
-            Perguntas frequentes
-          </p>
-        </div>
+        <Parallax amount={16}>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-5 h-px bg-[#C89A4F]/50" />
+            <p className="text-[0.62rem] font-semibold text-[#C89A4F] tracking-[0.25em] uppercase">
+              Perguntas frequentes
+            </p>
+          </div>
 
-        <h2
-          className="text-[2rem] md:text-[2.75rem] font-extrabold text-white leading-[1.1] tracking-tight mb-10 max-w-2xl"
-          style={{ fontFamily: "var(--font-jakarta)" }}
-        >
-          O que você provavelmente quer saber antes de entrar em contato.
-        </h2>
+          <h2
+            className="text-[2rem] md:text-[2.75rem] font-extrabold text-white leading-[1.1] tracking-tight mb-10 max-w-2xl"
+            style={{ fontFamily: "var(--font-jakarta)" }}
+          >
+            O que você provavelmente quer saber antes de entrar em contato.
+          </h2>
+        </Parallax>
 
         {/* 2 colunas independentes no desktop (3 perguntas cada). Cada coluna é
             seu próprio bloco — abrir uma pergunta empurra só os items abaixo

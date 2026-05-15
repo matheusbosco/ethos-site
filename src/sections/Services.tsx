@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal } from "@/components/ui/Reveal";
+import { Parallax } from "@/components/ui/Parallax";
 
 // ——————————————————————————————————————————————
 // Automações — Choreography: sistemas conectados, dados fluindo
@@ -234,22 +235,24 @@ export function Services() {
 
         {/* Header */}
         <Reveal>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-5 h-px bg-[#5A7090]/50" />
-            <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase">
-              O que trava a operação
+          <Parallax amount={16}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-5 h-px bg-[#5A7090]/50" />
+              <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase">
+                O que trava a operação
+              </p>
+            </div>
+            <h2
+              className="text-[2.25rem] md:text-[3.25rem] font-extrabold text-[#2C2620] leading-[1.08] tracking-tight max-w-3xl mb-6"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              O que está travando a sua operação agora.
+            </h2>
+            <p className="text-base md:text-lg text-[#5A7090] leading-[1.7] max-w-2xl mb-8">
+              Você provavelmente reconhece pelo menos um deles. Para cada caso,
+              a Ethos opera uma solução desenhada a partir do seu contexto, não de um modelo pronto.
             </p>
-          </div>
-          <h2
-            className="text-[2.25rem] md:text-[3.25rem] font-extrabold text-[#2C2620] leading-[1.08] tracking-tight max-w-3xl mb-6"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            O que está travando a sua operação agora.
-          </h2>
-          <p className="text-base md:text-lg text-[#5A7090] leading-[1.7] max-w-2xl mb-8">
-            Você provavelmente reconhece pelo menos um deles. Para cada caso,
-            a Ethos opera uma solução desenhada a partir do seu contexto, não de um modelo pronto.
-          </p>
+          </Parallax>
         </Reveal>
 
         {/* Cards — a dor em destaque; a solução, secundária */}
