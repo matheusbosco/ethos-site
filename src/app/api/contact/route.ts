@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const from = process.env.CONTACT_FROM_EMAIL ?? "site@somosethos.com.br";
+  const from = process.env.CONTACT_FROM_EMAIL ?? "site@mail.somosethos.com.br";
   const to = process.env.CONTACT_TO_EMAIL ?? "contato@somosethos.com.br";
 
   const subject = `[Site Ethos] Novo contato — ${body.empresa}`;
