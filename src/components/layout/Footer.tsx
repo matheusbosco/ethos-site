@@ -150,7 +150,7 @@ export function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
+                  <a href="/termos" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
                     Termos de uso
                   </a>
                 </li>
