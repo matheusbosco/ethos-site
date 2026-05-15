@@ -9,32 +9,32 @@ interface Persona {
 
 const personas: Persona[] = [
   {
-    id: "pmes",
-    tag: "Crescimento",
-    title: "PMEs que cresceram além da operação manual.",
+    id: "porte",
+    tag: "Porte",
+    title: "PMEs em fase de profissionalização.",
     description:
-      "Planilhas, e-mails e WhatsApp já não dão conta do volume. O time gasta o dia em tarefa repetitiva.",
+      "Entre 10 e 200 funcionários, com a operação crescendo mais rápido do que a estrutura interna acompanha.",
   },
   {
-    id: "times",
-    tag: "Escala",
-    title: "Times pequenos com escopo grande.",
+    id: "governance",
+    tag: "Governance",
+    title: "Empresas sem CTO ou TI dedicada.",
     description:
-      "Equipes enxutas tentando rodar a operação de uma empresa três vezes maior do que o quadro permite.",
+      "Não há interesse em contratar e gerenciar um time de tecnologia. A operação digital precisa funcionar sob outra responsabilidade.",
   },
   {
-    id: "sem-ti",
-    tag: "Tecnologia",
-    title: "Empresas sem TI dedicada.",
-    description:
-      "Você não quer contratar e gerenciar um time de tecnologia. Quer que a tecnologia funcione e responda por si.",
-  },
-  {
-    id: "escala-recente",
-    tag: "Maturidade",
+    id: "momento",
+    tag: "Momento",
     title: "Negócios em escala recente.",
     description:
-      "Cresceu rápido nos últimos 12 a 24 meses. A operação manual já trinca em pontos críticos.",
+      "Cresceram de duas a cinco vezes nos últimos 24 meses. A operação manual já não acompanha o volume.",
+  },
+  {
+    id: "modelo",
+    tag: "Modelo",
+    title: "Times enxutos com alavancagem alta.",
+    description:
+      "Equipes pequenas operando o que normalmente exige times três vezes maiores. Cada hora liberada do humano vale muito.",
   },
 ];
 
@@ -55,11 +55,11 @@ export function ParaQuem() {
             className="text-[2.25rem] md:text-[3.25rem] font-extrabold text-[#2C2620] leading-[1.08] tracking-tight max-w-3xl mb-6"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
-            Você provavelmente se reconhece em um destes cenários.
+            Você provavelmente se reconhece em um destes perfis.
           </h2>
           <p className="text-base md:text-lg text-[#5A7090] leading-[1.7] max-w-2xl mb-12">
-            A Ethos foi desenhada para empresas em que a operação cresceu mais rápido do que o tempo
-            disponível para sustentá-la manualmente.
+            Quatro recortes do tipo de empresa para quem a Ethos foi desenhada,
+            cruzando porte, governança de tecnologia, momento e modelo de operação.
           </p>
         </Reveal>
 
