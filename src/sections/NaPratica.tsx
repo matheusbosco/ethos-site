@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { AmberUnderline } from "@/components/ui/AmberUnderline";
 
 // ——————————————————————————————————————————————
 // Terminal de diagnóstico
@@ -127,38 +126,33 @@ function TerminalSection({ visible }: { visible: boolean }) {
         <div className="flex items-center gap-3 mb-8">
           <div className="w-5 h-px bg-[#5A7090]/50" />
           <p className="text-[0.62rem] font-semibold text-[#5A7090] tracking-[0.25em] uppercase">
-            Diagnóstico
+            Na prática
           </p>
         </div>
         <h2
           className="text-[2rem] md:text-[2.75rem] font-extrabold text-[#2C2620] leading-[1.1] tracking-tight mb-6"
           style={{ fontFamily: "var(--font-jakarta)" }}
         >
-          O{" "}
-          <span className="relative inline-block">
-            diagnóstico
-            <AmberUnderline />
-          </span>{" "}
-          vem antes de qualquer proposta.
+          O que a Ethos opera por dentro.
         </h2>
         <p className="text-[#5A7090] leading-[1.85] text-base mb-10">
-          Antes de escrever uma linha de código, mapeamos o processo real,
-          não o idealizado. Medimos o custo atual, identificamos o gargalo e
-          só então desenhamos a solução.
+          Quatro recortes do que medimos, automatizamos e monitoramos.
+          Do diagnóstico inicial ao acompanhamento contínuo da operação,
+          cada terminal mostra um processo real em curso.
         </p>
         <div>
           <p className="text-[0.65rem] text-[#5A7090]/60 tracking-widest uppercase mb-3 font-medium">
-            Ver diagnóstico para:
+            Recortes da operação:
           </p>
           <div className="grid grid-cols-2 gap-2">
             {tabs.map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`text-left px-4 py-3 rounded-lg text-sm font-medium border transition-[color,background-color,border-color] duration-200 ${
+                className={`text-left px-4 py-3 rounded-lg text-sm font-medium border-l-2 border-y border-r transition-[color,background-color,border-color] duration-200 ${
                   activeTab === tab.key
-                    ? "bg-[#5A7090]/15 text-[#5A7090] border-[#5A7090]/30"
-                    : "text-[#5A7090]/70 border-[#5A7090]/20 hover:text-[#5A7090] hover:bg-[#5A7090]/8 hover:border-[#5A7090]/30"
+                    ? "bg-[#C89A4F]/8 text-[#2C2620] border-l-[#C89A4F] border-y-[#C89A4F]/20 border-r-[#C89A4F]/20"
+                    : "text-[#5A7090]/70 border-l-[#5A7090]/20 border-y-[#5A7090]/15 border-r-[#5A7090]/15 hover:text-[#2C2620] hover:bg-[#5A7090]/5 hover:border-l-[#5A7090]/40"
                 }`}
               >
                 {tab.label}
@@ -175,8 +169,12 @@ function TerminalSection({ visible }: { visible: boolean }) {
             <span className="w-3 h-3 rounded-full bg-[#FF5F57] shadow-[inset_0_0.5px_0_rgba(255,255,255,0.22),inset_0_-0.5px_0_rgba(0,0,0,0.18)]" />
             <span className="w-3 h-3 rounded-full bg-[#FEBC2E] shadow-[inset_0_0.5px_0_rgba(255,255,255,0.22),inset_0_-0.5px_0_rgba(0,0,0,0.18)]" />
             <span className="w-3 h-3 rounded-full bg-[#28C840] shadow-[inset_0_0.5px_0_rgba(255,255,255,0.22),inset_0_-0.5px_0_rgba(0,0,0,0.18)]" />
-            <span className="text-[0.65rem] text-white/20 ml-2 tracking-wide font-medium">
-              ethos · diagnóstico
+            <span className="text-[0.65rem] text-white/20 ml-2 tracking-wide font-medium flex-1">
+              ethos · operação
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#28C840] animate-pulse" />
+              <span className="text-[0.6rem] text-white/40 tracking-[0.18em] uppercase">ao vivo</span>
             </span>
           </div>
           <div className="px-5 py-5 space-y-0.5">

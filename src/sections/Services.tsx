@@ -1,7 +1,6 @@
 "use client";
 
 import { Reveal } from "@/components/ui/Reveal";
-import { AmberUnderline } from "@/components/ui/AmberUnderline";
 
 // ——————————————————————————————————————————————
 // Automações — Choreography: sistemas conectados, dados fluindo
@@ -66,6 +65,7 @@ const CHOREO_FLOWS: ChoreoFlow[] = [
 // Amplitude da oscilação (pixels). Mantida pequena para um efeito sutil.
 const WAVE_AMPLITUDE = 4;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function ChoreographyAnimation() {
   return (
     <div className="absolute inset-0 bg-[#0D1117] overflow-hidden select-none">
@@ -185,83 +185,6 @@ function ChoreographyAnimation() {
 }
 
 // ——————————————————————————————————————————————
-// IA Preditiva — rede neural abstrata
-// ——————————————————————————————————————————————
-
-const BRAIN_INPUT_NODES = [{ x: 70, y: 90 }, { x: 70, y: 160 }, { x: 70, y: 230 }];
-const BRAIN_HIDDEN_1 = [{ x: 180, y: 70 }, { x: 180, y: 130 }, { x: 180, y: 190 }, { x: 180, y: 250 }];
-const BRAIN_HIDDEN_2 = [{ x: 290, y: 70 }, { x: 290, y: 130 }, { x: 290, y: 190 }, { x: 290, y: 250 }];
-const BRAIN_OUTPUT_NODES = [{ x: 400, y: 100 }, { x: 400, y: 160 }, { x: 400, y: 220 }];
-const BRAIN_ALL_NODES = [...BRAIN_INPUT_NODES, ...BRAIN_HIDDEN_1, ...BRAIN_HIDDEN_2, ...BRAIN_OUTPUT_NODES];
-
-const BRAIN_CONNECTIONS: { x1: number; y1: number; x2: number; y2: number }[] = [];
-BRAIN_INPUT_NODES.forEach((a) => BRAIN_HIDDEN_1.forEach((b) => BRAIN_CONNECTIONS.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y })));
-BRAIN_HIDDEN_1.forEach((a) => BRAIN_HIDDEN_2.forEach((b) => BRAIN_CONNECTIONS.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y })));
-BRAIN_HIDDEN_2.forEach((a) => BRAIN_OUTPUT_NODES.forEach((b) => BRAIN_CONNECTIONS.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y })));
-
-const BRAIN_PARTICLE_PATHS = [
-  { path: "M 70 90 L 180 70 L 290 70 L 400 100", dur: 3.2, delay: 0 },
-  { path: "M 70 90 L 180 130 L 290 130 L 400 160", dur: 2.8, delay: 0.6 },
-  { path: "M 70 160 L 180 130 L 290 190 L 400 160", dur: 3.6, delay: 1.2 },
-  { path: "M 70 160 L 180 190 L 290 130 L 400 100", dur: 2.6, delay: 1.8 },
-  { path: "M 70 230 L 180 250 L 290 250 L 400 220", dur: 3.0, delay: 0.9 },
-];
-
-function PersonalizedBrainAnimation() {
-  return (
-    <div className="absolute inset-0 bg-[#0D1117] overflow-hidden select-none">
-      <svg viewBox="0 0 470 320" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <radialGradient id="brain-particle-glow2">
-            <stop offset="0%" stopColor="#C89A4F" stopOpacity="1" />
-            <stop offset="40%" stopColor="#C89A4F" stopOpacity="0.45" />
-            <stop offset="100%" stopColor="#C89A4F" stopOpacity="0" />
-          </radialGradient>
-          <radialGradient id="brain-node-glow2">
-            <stop offset="0%" stopColor="#C89A4F" stopOpacity="0.5" />
-            <stop offset="100%" stopColor="#C89A4F" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-
-        {BRAIN_CONNECTIONS.map((c, i) => (
-          <line key={`bc-${i}`} x1={c.x1} y1={c.y1} x2={c.x2} y2={c.y2} stroke="rgba(200,154,79,0.06)" strokeWidth="0.4" />
-        ))}
-
-        {BRAIN_ALL_NODES.map((n, i) => (
-          <g key={`bn-${i}`}>
-            <circle cx={n.x} cy={n.y} r="9" fill="url(#brain-node-glow2)">
-              <animate attributeName="opacity" values="0.15;0.45;0.15" dur={`${2.8 + (i % 4) * 0.5}s`} repeatCount="indefinite" begin={`${(i * 0.27) % 3}s`} />
-            </circle>
-            <circle cx={n.x} cy={n.y} r="2" fill="#C89A4F" opacity="0.6">
-              <animate attributeName="opacity" values="0.45;1;0.45" dur={`${2.2 + (i % 3) * 0.4}s`} repeatCount="indefinite" begin={`${(i * 0.35) % 2.5}s`} />
-            </circle>
-          </g>
-        ))}
-
-        {BRAIN_PARTICLE_PATHS.map((p, i) => (
-          <g key={`bp-${i}`}>
-            <circle r="3.5" fill="url(#brain-particle-glow2)">
-              <animateMotion dur={`${p.dur}s`} repeatCount="indefinite" begin={`${p.delay}s`} path={p.path} />
-            </circle>
-            <circle r="1.3" fill="#C89A4F">
-              <animateMotion dur={`${p.dur}s`} repeatCount="indefinite" begin={`${p.delay}s`} path={p.path} />
-            </circle>
-          </g>
-        ))}
-      </svg>
-
-      <div className="absolute top-5 left-5 right-5 flex items-center justify-between">
-        <span className="text-[0.58rem] text-white/30 tracking-[0.2em] uppercase font-medium">IA Personalizada</span>
-        <div className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#C89A4F]/80 animate-pulse" />
-          <span className="text-[0.58rem] text-white/30 tracking-[0.15em] uppercase">aprendendo</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ——————————————————————————————————————————————
 // Dados dos serviços
 // ——————————————————————————————————————————————
 
@@ -288,7 +211,7 @@ const services: Service[] = [
     tag: "OPERAÇÃO",
     title: "Sua equipe executa manualmente o que deveria ser automático.",
     description:
-      "Tarefas repetitivas como cobranças, agendamentos, relatórios e cadastros consomem horas da equipe e podem ser automatizadas de ponta a ponta.",
+      "Cobranças, agendamentos, relatórios e cadastros automatizados de ponta a ponta. A Ethos opera os fluxos repetitivos para o seu time focar no que decide.",
   },
   {
     id: "gestao",
@@ -321,16 +244,11 @@ export function Services() {
             className="text-[2.25rem] md:text-[3.25rem] font-extrabold text-[#2C2620] leading-[1.08] tracking-tight max-w-3xl mb-6"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
-            O que está travando a sua{" "}
-            <span className="relative inline-block">
-              operação
-              <AmberUnderline />
-            </span>{" "}
-            agora.
+            O que está travando a sua operação agora.
           </h2>
           <p className="text-base md:text-lg text-[#5A7090] leading-[1.7] max-w-2xl mb-8">
-            Você provavelmente reconhece pelo menos um destes cenários. Para cada um,
-            a solução é projetada a partir do seu contexto, não de um modelo pronto.
+            Você provavelmente reconhece pelo menos um deles. Para cada caso,
+            a Ethos opera uma solução desenhada a partir do seu contexto, não de um modelo pronto.
           </p>
         </Reveal>
 

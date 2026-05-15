@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useContact } from "@/contexts/ContactContext";
 
 const links = [
-  { label: "O que entregamos", href: "#servicos" },
+  { label: "O que operamos", href: "#servicos" },
   { label: "Como funciona", href: "#processo" },
   { label: "FAQ", href: "#faq" },
 ];

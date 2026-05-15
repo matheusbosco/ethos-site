@@ -1,31 +1,38 @@
 "use client";
 
 import { useState } from "react";
-import { AmberUnderline } from "@/components/ui/AmberUnderline";
 
 const faqs = [
   {
-    q: "Quanto tempo leva um projeto típico?",
-    a: "Da descoberta à primeira entrega em produção, de 4 a 6 semanas. Projetos mais complexos são divididos em fases, de forma que há resultado concreto antes do comprometimento de todo o orçamento.",
+    q: "O que acontece depois que a solução entra em operação?",
+    a: "O acompanhamento continua. Monitoramos a operação por inteiro, aplicamos ajustes, evoluímos o que precisa evoluir e respondemos pelo que foi construído. O trabalho não termina quando a operação começa.",
   },
   {
-    q: "Como vocês cobram?",
-    a: "Trabalhamos por projeto, não por hora. Após o diagnóstico, apresentamos uma proposta com escopo e valor fixos, sem cobranças variáveis ao fim do mês.",
+    q: "Onde a solução roda e quem é responsável por ela?",
+    a: "Na nossa infraestrutura, monitorada e mantida pela Ethos. Você recebe documentação completa do que foi construído, mas a responsabilidade pela operação fica conosco. É uma escolha deliberada: alguém precisa permanecer responsável pelo que está em funcionamento.",
   },
   {
-    q: "O que acontece depois que o projeto é entregue?",
-    a: "A solução entra em operação e o acompanhamento continua, com ajustes e evoluções. Esse acompanhamento pós-lançamento já está incluído. O trabalho não termina quando a operação começa.",
+    q: "Como vocês tratam os dados do nosso negócio?",
+    a: "Em conformidade com a LGPD. Cada operação tem ambiente próprio, com regras claras sobre o que é acessado, armazenado e processado. Os dados do cliente são utilizados apenas para a operação contratada.",
   },
   {
-    q: "O projeto fica nos servidores de vocês?",
-    a: "Sim. A solução opera na nossa infraestrutura, monitorada e mantida por nós, e você recebe a documentação completa do que foi construído. É uma escolha deliberada: alguém precisa permanecer responsável pelo que está em funcionamento.",
+    q: "Qual é o SLA de resposta a incidentes?",
+    a: "Monitoramento automatizado 24 horas por dia, com alertas em tempo real para a Ethos. Resposta humana priorizada para incidentes críticos. Os tempos exatos de resposta são acordados em contrato, conforme a criticidade da operação.",
+  },
+  {
+    q: "De quem é a propriedade do código e dos agentes?",
+    a: "O que é construído sob medida para a sua operação fica documentado e acessível. Os termos exatos de propriedade são definidos em contrato, conforme o tipo de solução.",
+  },
+  {
+    q: "E se quisermos encerrar a parceria?",
+    a: "Entregamos a documentação e os fluxos prontos para que você ou um terceiro continue a operação. Os prazos de transição são acordados em contrato, garantindo saída sem aprisionamento.",
   },
   {
     q: "Precisamos ter equipe técnica interna?",
-    a: "Não. Atendemos empresas que não têm equipe de TI. O que precisamos é de acesso ao processo, não ao código que o sustenta hoje.",
+    a: "Não. Atendemos empresas que não têm equipe de TI. O que precisamos é acesso ao processo, não ao código que o sustenta hoje.",
   },
   {
-    q: "Como é o diagnóstico gratuito?",
+    q: "Como é o diagnóstico inicial?",
     a: "Uma conversa de 30 minutos em que mapeamos o processo, identificamos o gargalo e estimamos o impacto real da automação. Sem apresentação de vendas e sem compromisso.",
   },
 ];
@@ -48,12 +55,7 @@ export function FAQ() {
           className="text-[2rem] md:text-[2.75rem] font-extrabold text-white leading-[1.1] tracking-tight mb-10 max-w-2xl"
           style={{ fontFamily: "var(--font-jakarta)" }}
         >
-          O que você provavelmente quer{" "}
-          <span className="relative inline-block">
-            saber
-            <AmberUnderline />
-          </span>{" "}
-          antes de entrar em contato.
+          O que você provavelmente quer saber antes de entrar em contato.
         </h2>
 
         {/* 2 colunas independentes no desktop (3 perguntas cada). Cada coluna é
@@ -89,7 +91,7 @@ export function FAQ() {
                       </button>
                       <div
                         className="overflow-hidden transition-all duration-300"
-                        style={{ maxHeight: open === i ? "240px" : "0px" }}
+                        style={{ maxHeight: open === i ? "320px" : "0px" }}
                       >
                         <p className="text-[0.82rem] text-white/55 leading-[1.7] pb-4 pr-8">
                           {faq.a}

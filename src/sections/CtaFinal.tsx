@@ -1,7 +1,6 @@
 "use client";
 
 import { useContact } from "@/contexts/ContactContext";
-import { AmberUnderline } from "@/components/ui/AmberUnderline";
 
 export function CtaFinal() {
   const { open } = useContact();
@@ -39,11 +38,7 @@ export function CtaFinal() {
           className="text-[2.8rem] md:text-[4rem] lg:text-[5rem] font-extrabold text-[#2C2620] leading-[1.06] tracking-tight mb-10 max-w-2xl"
           style={{ fontFamily: "var(--font-jakarta)" }}
         >
-          O primeiro passo é uma{" "}
-          <span className="relative inline-block">
-            conversa.
-            <AmberUnderline />
-          </span>
+          O primeiro passo é uma conversa.
         </h2>
 
         {/* CTA */}
@@ -51,7 +46,7 @@ export function CtaFinal() {
           onClick={open}
           className="inline-flex items-center gap-3 bg-[#C89A4F] text-[#2C2620] hover:bg-[#b88c47] text-sm font-bold tracking-wide rounded-full px-8 py-3.5 transition-colors duration-200 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C89A4F]"
         >
-          Conversar com a Ethos
+          Agendar diagnóstico
           <span aria-hidden="true">→</span>
         </button>
 

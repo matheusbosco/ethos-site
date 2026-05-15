@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import AnimatedTextCycle from "@/components/ui/animated-text-cycle";
 import { Button } from "@/components/ui/Button";
 import { SplineScene } from "@/components/ui/SplineScene";
@@ -61,41 +60,20 @@ export function Hero() {
         </p>
 
         <h1
-          className="whitespace-nowrap text-[clamp(1.55rem,6.6vw,5rem)] font-extrabold text-white leading-[1.05] tracking-tight mb-7 [text-shadow:0_2px_30px_rgba(0,0,0,0.45)]"
+          className="text-[clamp(1.85rem,6vw,4.75rem)] font-extrabold text-white leading-[1.05] tracking-tight mb-7 max-w-4xl mx-auto [text-shadow:0_2px_30px_rgba(0,0,0,0.45)]"
           style={{ fontFamily: "var(--font-jakarta)" }}
         >
-          Inteligência sob{" "}
-          <span className="relative inline-block">
-            medida.
-            <motion.svg
-              aria-hidden
-              viewBox="0 0 300 20"
-              preserveAspectRatio="none"
-              className="absolute left-0 -bottom-[0.18em] w-full h-[0.3em] text-[#C89A4F] overflow-visible"
-            >
-              <motion.path
-                d="M 0,12 Q 75,2 150,12 Q 225,22 300,12"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                fill="none"
-                vectorEffect="non-scaling-stroke"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 1.3, ease: "easeInOut", delay: 0.6 }}
-              />
-            </motion.svg>
-          </span>
+          A tecnologia que opera <br className="hidden md:block" />sua empresa.
         </h1>
 
         <p className="text-base md:text-lg text-[#cdd7e0] leading-[1.8] max-w-xl mx-auto [text-shadow:0_1px_16px_rgba(0,0,0,0.5)]">
-          Cada operação tem gargalos próprios.
+          Não entregamos software.
           <br />
-          A solução precisa ser desenhada para os seus.
+          Operamos a camada de tecnologia que executa, monitora e evolui sua operação continuamente.
         </p>
 
         <div className="mt-6 text-base md:text-lg text-[#8BA5BB] [text-shadow:0_1px_16px_rgba(0,0,0,0.5)]">
-          Feita para{" "}
+          Operada para{" "}
           <AnimatedTextCycle
             words={[
               "o seu atendimento",

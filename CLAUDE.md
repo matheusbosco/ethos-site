@@ -10,9 +10,11 @@
 - **Projeto:** Site institucional da Ethos
 - **Repo:** `ethos-ia/ethos-site`
 - **Colaboradores:** Matheus Bosco (`matheusbosco`), Luca Braggio (`Lbraggioo`)
+- **Posicionamento:** BPO de tecnologia. A Ethos opera continuamente a camada de tecnologia que sustenta a operacao do cliente — nao entrega projetos pontuais. Copy e design devem reforcar operacao continua, nao entrega.
+- **Modelo operacional:** monitoramento continuo 24/7 + resposta humana priorizada. Nunca prometer time alocado em dedicacao exclusiva.
 - **Estetica alvo:** minimalista, premium, moderno
 - **Referencias visuais:** Manus, Anthropic — layout limpo, espacamento generoso, tipografia forte
-- **Referencia de conceito:** LeftClick.ai — posicionamento e funcionalidades de agencia de IA
+- **Referencia de conceito:** LeftClick.ai — posicionamento e funcionalidades de agencia de IA (referencia parcial; nossa posicao final e BPO de tecnologia, nao agencia)
 
 ---
 
@@ -32,11 +34,20 @@ src/
     layout.tsx        — layout raiz, metadata global, fonte
     page.tsx          — composicao das secoes da landing page
   components/
-    ui/               — componentes atomicos (Button, etc.)
+    ui/               — componentes atomicos (Button, Reveal, AnimatedTextCycle, SplineScene, etc.)
     layout/           — Nav, Footer, Section wrapper
-  sections/           — secoes da landing page (Hero, Manifesto, etc.)
+  sections/           — secoes da landing page
 brand_assets/         — logo, paleta, tipografia (ver README la dentro)
 ```
+
+### Ordem das secoes na landing (page.tsx)
+
+```
+Hero → Dores → ParaQuem → Services → Process → NaPratica → Seguranca → FAQ → CtaFinal
+```
+
+- **ProvaSocial.tsx** existe em `src/sections/` mas nao esta importada na page.tsx — ativar quando houver cases reais. Estrutura espera array `clients` com `{name, logoUrl?}`.
+- **Numbers.tsx** foi removido propositalmente — sem cases reais, claims numericos ficam off.
 
 ### Comandos
 
@@ -168,4 +179,14 @@ Nao e necessario invocar para:
 > Secao auto-corretiva. Adicionar regras aqui conforme erros forem encontrados ou preferencias definidas durante o desenvolvimento.
 > Formato: `N. [CATEGORIA] Sempre/Nunca faca X — porque Y.`
 
-<!-- nenhuma regra ainda — sera preenchido durante o desenvolvimento -->
+1. [POSITIONING] Sempre falar como BPO de tecnologia, nunca como agencia de IA — o cliente terceiriza operacao continua, nao compra projeto/software.
+2. [POSITIONING] Nunca listar modelos de engajamento (preco fixo, mensalidade, performance, escopo) no site — cortar criterios afasta leads, queremos so o positivo.
+3. [OPERACAO] Nunca prometer time alocado em dedicacao exclusiva. Pode prometer monitoramento automatico 24/7 + resposta humana priorizada para incidentes criticos, com tempos definidos em contrato.
+4. [COPY] Nunca usar em-dashes (—) em texto user-facing — soa AI-written. Usar virgulas, pontos ou parenteses.
+5. [COPY] Tom: declarativo, profissional, sem girias e sem exclamacoes. Preservar termos concretos.
+6. [DESIGN] Headings ficam chapadas, sem nenhum dispositivo de enfase (sem AmberUnderline, sem squiggle, sem highlight) — o squiggle handwritten nao passa tecnologia.
+7. [DESIGN] Robo 3D Spline no Hero fica mantido — decisao do usuario. Nao propor remocao novamente sem ser pedido.
+8. [DESIGN] Animacao `ChoreographyAnimation` em Services esta dormente (nao renderizada) mas mantida no codigo pra ativacao futura. Brain animation foi removida — soava agencia de IA.
+9. [CONTEUDO] Nao criar secao Numbers / contador de metricas enquanto nao houver projetos reais entregues — qualquer claim numerico sem base soa enganoso (ex: "0 projetos sem resultado").
+10. [WORKFLOW] Commitar ao fim de cada bloco coerente de mudancas e seguir pra proxima tarefa. Usuario nao quer pausar pra revisar com `npm run dev` a cada batida.
+11. [ORDEM] A ordem atual da landing reflete um funil pain-led BPO. Antes de reorganizar, considerar: Hero (posicionamento) → Dores (recognize pain) → ParaQuem (recognize self) → Services (how we solve) → Process (how we work) → NaPratica (see it operating) → Seguranca (trust signals) → FAQ → CtaFinal.
