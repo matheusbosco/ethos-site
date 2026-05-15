@@ -82,7 +82,7 @@ export function Footer() {
               <ul className="flex flex-col gap-2.5">
                 <li>
                   <a href="#servicos" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
-                    O que entregamos
+                    O que operamos
                   </a>
                 </li>
                 <li>

@@ -211,7 +211,7 @@ const services: Service[] = [
     tag: "OPERAÇÃO",
     title: "Sua equipe executa manualmente o que deveria ser automático.",
     description:
-      "Tarefas repetitivas como cobranças, agendamentos, relatórios e cadastros consomem horas da equipe e podem ser automatizadas de ponta a ponta.",
+      "Cobranças, agendamentos, relatórios e cadastros automatizados de ponta a ponta. A Ethos opera os fluxos repetitivos para o seu time focar no que decide.",
   },
   {
     id: "gestao",
@@ -247,8 +247,8 @@ export function Services() {
             O que está travando a sua operação agora.
           </h2>
           <p className="text-base md:text-lg text-[#5A7090] leading-[1.7] max-w-2xl mb-8">
-            Você provavelmente reconhece pelo menos um destes cenários. Para cada um,
-            a solução é projetada a partir do seu contexto, não de um modelo pronto.
+            Você provavelmente reconhece pelo menos um deles. Para cada caso,
+            a Ethos opera uma solução desenhada a partir do seu contexto, não de um modelo pronto.
           </p>
         </Reveal>
 
