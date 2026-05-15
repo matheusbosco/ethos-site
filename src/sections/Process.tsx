@@ -8,32 +8,32 @@ const steps = [
     categoria: "Diagnóstico",
     title: "Diagnóstico",
     description:
-      "Mapeamos o processo real, não o idealizado. Medimos o custo atual em tempo, foco e recursos e identificamos onde a IA pode intervir.",
-    badge: "Entregue em até 5 dias",
+      "Mapeamos o processo real, não o idealizado. Medimos o custo atual em tempo, foco e recursos e identificamos por onde a tecnologia entra na operação.",
+    badge: "Primeiro diagnóstico em até 5 dias",
   },
   {
     number: "02",
     categoria: "Planejamento",
     title: "Planejamento",
     description:
-      "Projetamos a solução sob medida: fluxos, agentes e integrações. Você aprova cada etapa antes do início da construção.",
+      "Projetamos a camada de tecnologia que vai operar com você: fluxos, agentes, integrações e governança. Cada etapa é validada antes da construção.",
     badge: "Prioridades definidas em conjunto",
   },
   {
     number: "03",
-    categoria: "Implementação",
-    title: "Implementação",
+    categoria: "Implantação",
+    title: "Implantação",
     description:
-      "Construímos, testamos e documentamos. A solução opera na nossa infraestrutura, com qualidade e segurança sob nossa responsabilidade.",
-    badge: "Em produção em até 3 semanas",
+      "Construímos, testamos e ligamos a operação na infraestrutura da Ethos. A partir do primeiro processo rodando, a responsabilidade já é nossa.",
+    badge: "Operação ligada em até 3 semanas",
   },
   {
     number: "04",
-    categoria: "Acompanhamento",
-    title: "Acompanhamento",
+    categoria: "Operação",
+    title: "Operação",
     description:
-      "A solução entra em operação e o acompanhamento continua. Ajustamos, evoluímos e respondemos pelo que foi entregue. O trabalho não termina quando a operação começa.",
-    badge: "Revisão mensal contínua",
+      "A operação fica em curso sob monitoramento contínuo, com ajustes, evoluções e respostas pelo que está rodando. O trabalho não termina quando a operação começa.",
+    badge: "Monitoramento contínuo + revisão mensal",
   },
 ];
 
