@@ -60,10 +60,10 @@ export function Hero() {
         </p>
 
         <h1
-          className="whitespace-nowrap text-[clamp(1.55rem,6.6vw,5rem)] font-extrabold text-white leading-[1.05] tracking-tight mb-7 [text-shadow:0_2px_30px_rgba(0,0,0,0.45)]"
+          className="text-[clamp(1.85rem,6vw,4.75rem)] font-extrabold text-white leading-[1.05] tracking-tight mb-7 max-w-4xl mx-auto [text-shadow:0_2px_30px_rgba(0,0,0,0.45)]"
           style={{ fontFamily: "var(--font-jakarta)" }}
         >
-          Inteligência sob medida.
+          A tecnologia que opera <br className="hidden md:block" />sua empresa.
         </h1>
 
         <p className="text-base md:text-lg text-[#cdd7e0] leading-[1.8] max-w-xl mx-auto [text-shadow:0_1px_16px_rgba(0,0,0,0.5)]">
@@ -73,7 +73,7 @@ export function Hero() {
         </p>
 
         <div className="mt-6 text-base md:text-lg text-[#8BA5BB] [text-shadow:0_1px_16px_rgba(0,0,0,0.5)]">
-          Feita para{" "}
+          Operada para{" "}
           <AnimatedTextCycle
             words={[
               "o seu atendimento",
