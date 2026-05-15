@@ -60,16 +60,16 @@ export function Hero() {
         </p>
 
         <h1
-          className="text-[clamp(1.85rem,6vw,4.75rem)] font-extrabold text-white leading-[1.05] tracking-tight mb-7 max-w-4xl mx-auto [text-shadow:0_2px_30px_rgba(0,0,0,0.45)]"
+          className="whitespace-nowrap text-[clamp(1.55rem,6.6vw,5rem)] font-extrabold text-white leading-[1.05] tracking-tight mb-7 [text-shadow:0_2px_30px_rgba(0,0,0,0.45)]"
           style={{ fontFamily: "var(--font-jakarta)" }}
         >
-          A tecnologia que opera <br className="hidden md:block" />sua empresa.
+          Inteligência sob medida.
         </h1>
 
-        <p className="text-base md:text-lg text-[#cdd7e0] leading-[1.8] max-w-xl mx-auto [text-shadow:0_1px_16px_rgba(0,0,0,0.5)]">
-          Não entregamos software.
-          <br />
-          Operamos a camada de tecnologia que executa, monitora e evolui sua operação continuamente.
+        <p className="text-base md:text-lg text-[#cdd7e0] leading-[1.8] max-w-2xl mx-auto [text-shadow:0_1px_16px_rgba(0,0,0,0.5)]">
+          Entramos na sua operação, mostramos onde a tecnologia gera retorno,
+          construímos sob medida e operamos sob nossa responsabilidade. 4 fases.
+          Retorno calculado antes da operação ligar.
         </p>
 
         <div className="mt-6 text-base md:text-lg text-[#8BA5BB] [text-shadow:0_1px_16px_rgba(0,0,0,0.5)]">
