@@ -8,22 +8,22 @@ type Status = "idle" | "sending" | "sent" | "error";
 
 // Estilos compartilhados entre os campos do formulário — mantém visual consistente.
 const labelCls =
-  "font-[family-name:var(--font-mono)] text-[0.65rem] text-[#87867F] tracking-[0.15em] uppercase";
+  "font-[family-name:var(--font-mono)] text-[0.65rem] text-[#5A7090] tracking-[0.15em] uppercase";
 
 const inputCls =
-  "bg-transparent border border-[#DFD6C2] rounded-lg px-4 py-3 text-sm text-[#1E1D1B] placeholder:text-[#87867F]/40 focus:outline-none focus:border-[#2A3D52] transition-colors";
+  "bg-transparent border border-[#8BA5BB]/30 rounded-lg px-4 py-3 text-sm text-[#2C2620] placeholder:text-[#5A7090]/40 focus:outline-none focus:border-[#C89A4F] transition-colors";
 
 // Select reutiliza inputCls + remove o chevron nativo (appearance-none) e
 // usa pr-10 pra abrir espaço para o chevron customizado (definido em chevronStyle).
 // Cor de placeholder enquanto a option selecionada é a placeholder (que tem
 // `disabled`). Quando o usuário escolhe qualquer outra (não disabled), o
 // :has(option:checked:not([disabled])) ativa e aplica a cor de texto normal.
-const selectCls = `${inputCls} appearance-none pr-10 cursor-pointer bg-no-repeat bg-[right_1rem_center] bg-[length:0.7rem_auto] text-[#87867F]/60 has-[option:checked:not([disabled])]:text-[#1E1D1B]`;
+const selectCls = `${inputCls} appearance-none pr-10 cursor-pointer bg-no-repeat bg-[right_1rem_center] bg-[length:0.7rem_auto] text-[#5A7090]/60 has-[option:checked:not([disabled])]:text-[#2C2620]`;
 
 // Chevron como SVG inline em data-URL — sem dependência externa.
 const chevronStyle: React.CSSProperties = {
   backgroundImage:
-    "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2387867F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>\")",
+    "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235A7090' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>\")",
 };
 
 export function ContactModal() {
@@ -76,11 +76,11 @@ export function ContactModal() {
       aria-label="Formulário de contato"
       onClick={(e) => { if (e.target === overlayRef.current) close(); }}
     >
-      <div className="relative w-full max-w-lg bg-[#F0E9D6] rounded-2xl shadow-2xl p-8 md:p-10 max-h-[90vh] overflow-y-auto animate-modal-in">
+      <div className="relative w-full max-w-lg bg-[#F4EFE8] rounded-2xl shadow-2xl p-8 md:p-10 max-h-[90vh] overflow-y-auto animate-modal-in">
         {/* Fechar */}
         <button
           onClick={close}
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-[#87867F] hover:text-[#1E1D1B] transition-colors rounded-lg hover:bg-[#DFD6C2]"
+          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-[#5A7090] hover:text-[#2C2620] transition-colors rounded-lg hover:bg-[#8BA5BB]/15"
           aria-label="Fechar"
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -90,13 +90,13 @@ export function ContactModal() {
 
         {status === "sent" ? (
           <div>
-            <p className="font-[family-name:var(--font-heading)] italic text-xl text-[#1E1D1B] mb-2">
+            <p className="font-[family-name:var(--font-heading)] italic text-xl text-[#2C2620] mb-2">
               Mensagem recebida.
             </p>
-            <p className="text-sm text-[#87867F] mb-6">Respondemos em até 24 horas úteis.</p>
+            <p className="text-sm text-[#5A7090] mb-6">Respondemos em até 24 horas úteis.</p>
             <button
               onClick={close}
-              className="text-sm text-[#2A3D52] underline underline-offset-4 hover:text-[#1C2B3A] transition-colors"
+              className="text-sm text-[#C89A4F] underline underline-offset-4 hover:text-[#b88c47] transition-colors"
             >
               Fechar
             </button>
@@ -104,11 +104,11 @@ export function ContactModal() {
         ) : (
           <>
             <div className="mb-8">
-              <div className="w-8 h-px bg-[#2A3D52] mb-6" />
-              <h2 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-extrabold text-[#1E1D1B] tracking-tight leading-tight mb-3">
+              <div className="w-8 h-px bg-[#C89A4F] mb-6" />
+              <h2 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-extrabold text-[#2C2620] tracking-tight leading-tight mb-3">
                 Descreva o que está travando. Nós mapeamos o restante.
               </h2>
-              <p className="text-sm text-[#87867F] leading-relaxed">
+              <p className="text-sm text-[#5A7090] leading-relaxed">
                 Uma conversa de 30 minutos, sem apresentação de vendas.
               </p>
             </div>
@@ -194,8 +194,8 @@ export function ContactModal() {
                       Selecione um porte
                     </option>
                     <option value="1-5">1-5 pessoas</option>
-                    <option value="5-15">5-15 pessoas</option>
-                    <option value="16-25">16-25 pessoas</option>
+                    <option value="6-15">6-15 pessoas</option>
+                    <option value="16-30">16-30 pessoas</option>
                     <option value="30+">Mais de 30 funcionários</option>
                   </select>
                 </div>
@@ -222,7 +222,7 @@ export function ContactModal() {
                 >
                   {status === "sending" ? "Enviando..." : "Enviar mensagem"}
                 </Button>
-                <p className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[#87867F] tracking-wide">
+                <p className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[#5A7090] tracking-wide">
                   Respondemos em até 24h.
                 </p>
               </div>
@@ -238,12 +238,12 @@ export function ContactModal() {
             </form>
 
             {/* Alternativa WhatsApp */}
-            <div className="mt-6 pt-6 border-t border-[#DFD6C2] flex items-center gap-4">
+            <div className="mt-6 pt-6 border-t border-[#8BA5BB]/25 flex items-center gap-4">
               <a
                 href="https://wa.me/5511999999999"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 text-sm text-[#2A3D52] hover:text-[#1C2B3A] transition-colors group"
+                className="flex items-center gap-2.5 text-sm text-[#C89A4F] hover:text-[#b88c47] transition-colors group"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
