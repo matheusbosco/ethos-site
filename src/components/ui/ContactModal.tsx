@@ -6,29 +6,38 @@ import { Button } from "@/components/ui/Button";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
-// Estilos compartilhados entre os campos do formulário — mantém visual consistente.
 const labelCls =
   "font-[family-name:var(--font-mono)] text-[0.65rem] text-[#5A7090] tracking-[0.15em] uppercase";
 
 const inputCls =
   "bg-transparent border border-[#8BA5BB]/30 rounded-lg px-4 py-3 text-sm text-[#2C2620] placeholder:text-[#5A7090]/40 focus:outline-none focus:border-[#C89A4F] transition-colors";
 
-// Select reutiliza inputCls + remove o chevron nativo (appearance-none) e
-// usa pr-10 pra abrir espaço para o chevron customizado (definido em chevronStyle).
-// Cor de placeholder enquanto a option selecionada é a placeholder (que tem
-// `disabled`). Quando o usuário escolhe qualquer outra (não disabled), o
-// :has(option:checked:not([disabled])) ativa e aplica a cor de texto normal.
 const selectCls = `${inputCls} appearance-none pr-10 cursor-pointer bg-no-repeat bg-[right_1rem_center] bg-[length:0.7rem_auto] text-[#5A7090]/60 has-[option:checked:not([disabled])]:text-[#2C2620]`;
 
-// Chevron como SVG inline em data-URL — sem dependência externa.
 const chevronStyle: React.CSSProperties = {
   backgroundImage:
     "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235A7090' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>\")",
 };
 
+const FALLBACK_EMAIL = "contato@somosethos.com.br";
+const WHATSAPP_URL = "https://wa.me/5561995688476";
+
+function maskPhone(value: string): string {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  if (!digits.length) return "";
+  if (digits.length <= 2) return `(${digits}`;
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  if (digits.length <= 10)
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
 export function ContactModal() {
   const { isOpen, close } = useContact();
   const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState<string>("");
+  const [telefone, setTelefone] = useState<string>("");
+  const [consent, setConsent] = useState<boolean>(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const firstInputRef = useRef<HTMLInputElement>(null);
 
@@ -47,21 +56,50 @@ export function ContactModal() {
     };
   }, [isOpen, close]);
 
+  function resetForm(form: HTMLFormElement) {
+    form.reset();
+    setTelefone("");
+    setConsent(false);
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
-    const data = new FormData(e.currentTarget);
+    setErrorMsg("");
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      nome: String(data.get("nome") || "").trim(),
+      empresa: String(data.get("empresa") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      telefone: String(data.get("telefone") || "").trim(),
+      faturamento: String(data.get("faturamento") || ""),
+      tamanho: String(data.get("tamanho") || ""),
+      mensagem: String(data.get("mensagem") || "").trim(),
+      consent: data.get("consent") === "on",
+      _gotcha: String(data.get("_gotcha") || ""),
+    };
+
     try {
-      // Crie sua conta em formspree.io e substitua REPLACE_WITH_FORM_ID pelo seu ID
-      const res = await fetch("https://formspree.io/f/REPLACE_WITH_FORM_ID", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        body: data,
-        headers: { Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
-      setStatus(res.ok ? "sent" : "error");
-      if (res.ok) (e.target as HTMLFormElement).reset();
+
+      if (res.ok) {
+        setStatus("sent");
+        resetForm(form);
+        return;
+      }
+
+      const body = (await res.json().catch(() => null)) as { error?: string } | null;
+      setStatus("error");
+      setErrorMsg(body?.error || "Não foi possível enviar agora.");
     } catch {
       setStatus("error");
+      setErrorMsg("Falha de conexão. Tente novamente.");
     }
   }
 
@@ -77,7 +115,6 @@ export function ContactModal() {
       onClick={(e) => { if (e.target === overlayRef.current) close(); }}
     >
       <div className="relative w-full max-w-lg bg-[#F4EFE8] rounded-2xl shadow-2xl p-8 md:p-10 max-h-[90vh] overflow-y-auto animate-modal-in">
-        {/* Fechar */}
         <button
           onClick={close}
           className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-[#5A7090] hover:text-[#2C2620] transition-colors rounded-lg hover:bg-[#8BA5BB]/15"
@@ -89,7 +126,7 @@ export function ContactModal() {
         </button>
 
         {status === "sent" ? (
-          <div>
+          <div role="status" aria-live="polite">
             <p className="font-[family-name:var(--font-heading)] italic text-xl text-[#2C2620] mb-2">
               Mensagem recebida.
             </p>
@@ -113,12 +150,20 @@ export function ContactModal() {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              {/* Nome + Empresa */}
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
+              {/* Honeypot anti-spam — invisível e fora do alcance do tab */}
+              <div aria-hidden="true" className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden">
+                <label>
+                  Não preencher
+                  <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" />
+                </label>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
-                  <label className={labelCls}>Nome</label>
+                  <label htmlFor="cm-nome" className={labelCls}>Nome</label>
                   <input
+                    id="cm-nome"
                     ref={firstInputRef}
                     name="nome"
                     required
@@ -127,8 +172,9 @@ export function ContactModal() {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label className={labelCls}>Empresa</label>
+                  <label htmlFor="cm-empresa" className={labelCls}>Empresa</label>
                   <input
+                    id="cm-empresa"
                     name="empresa"
                     required
                     placeholder="Nome da empresa"
@@ -137,11 +183,11 @@ export function ContactModal() {
                 </div>
               </div>
 
-              {/* E-mail + Telefone */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
-                  <label className={labelCls}>E-mail</label>
+                  <label htmlFor="cm-email" className={labelCls}>E-mail</label>
                   <input
+                    id="cm-email"
                     type="email"
                     name="email"
                     required
@@ -150,22 +196,26 @@ export function ContactModal() {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label className={labelCls}>Telefone</label>
+                  <label htmlFor="cm-telefone" className={labelCls}>Telefone</label>
                   <input
+                    id="cm-telefone"
                     type="tel"
                     name="telefone"
                     required
-                    placeholder="(99) 99999-9999"
+                    inputMode="numeric"
+                    placeholder="(61) 99999-9999"
+                    value={telefone}
+                    onChange={(e) => setTelefone(maskPhone(e.target.value))}
                     className={inputCls}
                   />
                 </div>
               </div>
 
-              {/* Faturamento + Tamanho */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
-                  <label className={labelCls}>Faturamento mensal</label>
+                  <label htmlFor="cm-faturamento" className={labelCls}>Faturamento mensal</label>
                   <select
+                    id="cm-faturamento"
                     name="faturamento"
                     required
                     defaultValue=""
@@ -182,8 +232,9 @@ export function ContactModal() {
                   </select>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label className={labelCls}>Tamanho da empresa</label>
+                  <label htmlFor="cm-tamanho" className={labelCls}>Tamanho da empresa</label>
                   <select
+                    id="cm-tamanho"
                     name="tamanho"
                     required
                     defaultValue=""
@@ -201,17 +252,45 @@ export function ContactModal() {
                 </div>
               </div>
 
-              {/* Desafio */}
               <div className="flex flex-col gap-2">
-                <label className={labelCls}>Qual o seu maior desafio na empresa hoje?</label>
+                <label htmlFor="cm-mensagem" className={labelCls}>
+                  Qual o seu maior desafio na empresa hoje?
+                </label>
                 <textarea
+                  id="cm-mensagem"
                   name="mensagem"
                   required
                   rows={4}
+                  maxLength={4000}
                   placeholder="Descreva o processo ou problema que você quer resolver..."
                   className={`${inputCls} resize-none`}
                 />
               </div>
+
+              {/* Consentimento LGPD */}
+              <label className="flex items-start gap-3 text-[0.78rem] text-[#5A7090] leading-relaxed cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  name="consent"
+                  required
+                  checked={consent}
+                  onChange={(e) => setConsent(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 rounded border border-[#8BA5BB]/50 accent-[#C89A4F] cursor-pointer shrink-0"
+                />
+                <span>
+                  Concordo com o uso dos meus dados para que a Ethos entre em contato,
+                  conforme a{" "}
+                  <a
+                    href="/privacidade"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#C89A4F] underline underline-offset-2 hover:text-[#b88c47]"
+                  >
+                    Política de Privacidade
+                  </a>
+                  .
+                </span>
+              </label>
 
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-2">
                 <Button
@@ -228,19 +307,27 @@ export function ContactModal() {
               </div>
 
               {status === "error" && (
-                <p className="text-xs text-red-700">
-                  Não foi possível enviar agora. Escreva diretamente para{" "}
-                  <a href="mailto:contato@ethos.ai" className="underline">
-                    contato@ethos.ai
-                  </a>
-                </p>
+                <div
+                  role="alert"
+                  aria-live="assertive"
+                  className="mt-2 rounded-lg border border-red-200 bg-red-50/70 p-3 text-xs text-red-800"
+                >
+                  <p className="font-semibold mb-1">{errorMsg}</p>
+                  <p>
+                    Você pode tentar novamente ou escrever diretamente para{" "}
+                    <a href={`mailto:${FALLBACK_EMAIL}`} className="underline">
+                      {FALLBACK_EMAIL}
+                    </a>
+                    .
+                  </p>
+                </div>
               )}
             </form>
 
             {/* Alternativa WhatsApp */}
             <div className="mt-6 pt-6 border-t border-[#8BA5BB]/25 flex items-center gap-4">
               <a
-                href="https://wa.me/5511999999999"
+                href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 text-sm text-[#C89A4F] hover:text-[#b88c47] transition-colors group"
