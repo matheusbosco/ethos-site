@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Google_Sans_Flex } from "next/font/google";
 import { ContactProvider } from "@/contexts/ContactContext";
 import { ContactModal } from "@/components/ui/ContactModal";
-import { ScrollCTA } from "@/components/ui/ScrollCTA";
+import { ChatWidget } from "@/components/ui/ChatWidget";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -40,7 +40,7 @@ export default function RootLayout({
         <ContactProvider>
           {children}
           <ContactModal />
-          <ScrollCTA />
+          <ChatWidget />
         </ContactProvider>
       </body>
     </html>
