@@ -17,20 +17,21 @@ const DEFAULT_PREFS: CookiePrefs = {
 
 export function Footer() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [prefs, setPrefs] = useState<CookiePrefs>(DEFAULT_PREFS);
-
-  // Carrega preferências salvas no carregamento (client-side)
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (!saved) return;
+  // Carrega preferências salvas no primeiro render (guardado contra SSR).
+  // Lazy initializer em vez de useEffect: prefs só alimenta o modal (que monta
+  // sob demanda), então não há risco de mismatch de hidratação.
+  const [prefs, setPrefs] = useState<CookiePrefs>(() => {
+    if (typeof window === "undefined") return DEFAULT_PREFS;
     try {
+      const saved = window.localStorage.getItem(STORAGE_KEY);
+      if (!saved) return DEFAULT_PREFS;
       const parsed = JSON.parse(saved) as Partial<CookiePrefs>;
-      setPrefs({ ...DEFAULT_PREFS, ...parsed, essential: true });
+      return { ...DEFAULT_PREFS, ...parsed, essential: true };
     } catch {
       // armazenamento corrompido — ignora e mantém defaults
+      return DEFAULT_PREFS;
     }
-  }, []);
+  });
 
   const handleSave = (next: CookiePrefs) => {
     const sanitized = { ...next, essential: true };
