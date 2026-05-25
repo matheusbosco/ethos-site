@@ -2,11 +2,11 @@
 // Nome provisorio — trocar aqui quando o nome definitivo for definido.
 // Este e o unico lugar que precisa mudar: front (header/boas-vindas) e back
 // (system prompt) leem daqui.
-export const AGENT_NAME = "Ethos";
-export const AGENT_TAGLINE = "Concierge digital";
+export const AGENT_NAME = "Otto";
+export const AGENT_TAGLINE = "Concierge digital da Ethos";
 
 export const WELCOME_MESSAGE =
-  "Ola. Sou o concierge digital da Ethos. Me conta em que sua operacao precisa de ajuda que eu te oriento e conecto com o time certo.";
+  "Ola, sou o Otto, concierge digital da Ethos. Me conta em que sua operacao precisa de ajuda que eu te oriento e conecto com o time certo.";
 
 // System prompt do concierge. Reforca o posicionamento BPO e as regras de
 // copy/posicionamento aprendidas no projeto (CLAUDE.md, secao 8).
