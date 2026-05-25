@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import Anthropic from "@anthropic-ai/sdk";
 import { sendLeadEmail } from "@/lib/lead";
 import { REGISTRAR_LEAD_TOOL, SYSTEM_PROMPT } from "@/lib/agent";
 
@@ -6,29 +7,6 @@ import { REGISTRAR_LEAD_TOOL, SYSTEM_PROMPT } from "@/lib/agent";
 const MAX_MESSAGES = 40;
 const MAX_CONTENT_CHARS = 2000;
 const MAX_TOOL_ROUNDS = 3;
-
-interface ChatMessage {
-  role: "user" | "assistant" | "system" | "tool";
-  content: string;
-  tool_call_id?: string;
-}
-
-interface ToolCall {
-  id: string;
-  type: "function";
-  function: { name: string; arguments: string };
-}
-
-interface MoonshotChoiceMessage {
-  role: "assistant";
-  content: string | null;
-  tool_calls?: ToolCall[];
-}
-
-interface MoonshotResponse {
-  choices?: Array<{ message: MoonshotChoiceMessage; finish_reason: string }>;
-  error?: { message?: string };
-}
 
 function isValidEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
@@ -38,33 +16,31 @@ function hasPhone(value: string): boolean {
   return value.replace(/\D/g, "").length >= 10;
 }
 
-// Executa a tool registrar_lead: valida o que o modelo coletou e dispara o
-// email. Retorna o texto que volta para o modelo como resultado da tool.
-async function runRegistrarLead(rawArgs: string): Promise<string> {
-  let args: Record<string, string>;
-  try {
-    args = JSON.parse(rawArgs);
-  } catch {
-    return "erro: argumentos invalidos, tente novamente.";
-  }
+function str(value: unknown): string {
+  return typeof value === "string" ? value.trim() : "";
+}
 
-  const nome = (args.nome ?? "").trim();
-  const empresa = (args.empresa ?? "").trim();
-  const necessidade = (args.necessidade ?? "").trim();
-  const email = (args.email ?? "").trim();
-  const telefone = (args.telefone ?? "").trim();
+// Executa a tool registrar_lead: valida o que o modelo coletou e dispara o
+// email. Retorna o texto que volta para a Claude como resultado da tool.
+async function runRegistrarLead(input: unknown): Promise<{ text: string; ok: boolean }> {
+  const args = (input ?? {}) as Record<string, unknown>;
+  const nome = str(args.nome);
+  const empresa = str(args.empresa);
+  const necessidade = str(args.necessidade);
+  const email = str(args.email);
+  const telefone = str(args.telefone);
 
   if (!nome || !empresa || !necessidade) {
-    return "erro: faltam dados obrigatorios (nome, empresa ou necessidade). Continue a conversa para coleta-los.";
+    return { ok: false, text: "erro: faltam dados obrigatorios (nome, empresa ou necessidade). Continue a conversa para coleta-los." };
   }
   if (!email && !telefone) {
-    return "erro: nenhum contato informado. Peca um email ou telefone antes de registrar.";
+    return { ok: false, text: "erro: nenhum contato informado. Peca um email ou telefone antes de registrar." };
   }
   if (email && !isValidEmail(email)) {
-    return "erro: o email informado parece invalido. Confirme o email com o visitante.";
+    return { ok: false, text: "erro: o email informado parece invalido. Confirme o email com o visitante." };
   }
   if (telefone && !hasPhone(telefone)) {
-    return "erro: o telefone informado parece invalido. Confirme o telefone com o visitante.";
+    return { ok: false, text: "erro: o telefone informado parece invalido. Confirme o telefone com o visitante." };
   }
 
   const result = await sendLeadEmail({
@@ -72,59 +48,26 @@ async function runRegistrarLead(rawArgs: string): Promise<string> {
     empresa,
     email: email || undefined,
     telefone: telefone || undefined,
-    faturamento: (args.faturamento ?? "").trim() || undefined,
-    tamanho: (args.tamanho ?? "").trim() || undefined,
+    faturamento: str(args.faturamento) || undefined,
+    tamanho: str(args.tamanho) || undefined,
     mensagem: necessidade,
     origem: "chat",
   });
 
   if (!result.ok) {
-    return "erro: falha ao enviar o lead para o time. Peca desculpas e sugira tentar pelo formulario de contato do site.";
+    return { ok: false, text: "erro: falha ao enviar o lead para o time. Peca desculpas e sugira tentar pelo formulario de contato do site." };
   }
 
-  return "sucesso: lead registrado e time da Ethos notificado. Confirme ao visitante que o time vai retornar pelo contato informado.";
-}
-
-async function callMoonshot(
-  messages: ChatMessage[],
-  baseUrl: string,
-  apiKey: string,
-  model: string
-): Promise<MoonshotResponse> {
-  const res = await fetch(`${baseUrl}/chat/completions`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model,
-      temperature: 0.4,
-      messages,
-      tools: [REGISTRAR_LEAD_TOOL],
-      tool_choice: "auto",
-    }),
-  });
-
-  if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    throw new Error(`Moonshot ${res.status}: ${text.slice(0, 300)}`);
-  }
-
-  return (await res.json()) as MoonshotResponse;
+  return { ok: true, text: "sucesso: lead registrado e time da Ethos notificado. Confirme ao visitante que o time vai retornar pelo contato informado." };
 }
 
 export async function POST(req: NextRequest) {
-  const apiKey = process.env.MOONSHOT_API_KEY;
+  const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    return NextResponse.json(
-      { error: "Assistente nao configurado." },
-      { status: 503 }
-    );
+    return NextResponse.json({ error: "Assistente nao configurado." }, { status: 503 });
   }
 
-  const baseUrl = (process.env.MOONSHOT_BASE_URL ?? "https://api.moonshot.ai/v1").replace(/\/$/, "");
-  const model = process.env.MOONSHOT_MODEL ?? "kimi-k2-0905-preview";
+  const model = process.env.ANTHROPIC_MODEL ?? "claude-haiku-4-5";
 
   let body: { messages?: unknown };
   try {
@@ -140,62 +83,63 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Conversa muito longa." }, { status: 400 });
   }
 
-  // Aceita somente role user/assistant vindos do client; system e injetado aqui.
-  const history: ChatMessage[] = [];
+  // Aceita somente role user/assistant vindos do client; system vai a parte.
+  const messages: Anthropic.MessageParam[] = [];
   for (const raw of body.messages) {
-    const m = raw as Partial<ChatMessage>;
+    const m = raw as { role?: unknown; content?: unknown };
     if (m.role !== "user" && m.role !== "assistant") continue;
     if (typeof m.content !== "string") continue;
-    history.push({ role: m.role, content: m.content.slice(0, MAX_CONTENT_CHARS) });
+    messages.push({ role: m.role, content: m.content.slice(0, MAX_CONTENT_CHARS) });
   }
-  if (history.length === 0) {
+  if (messages.length === 0) {
     return NextResponse.json({ error: "Mensagens invalidas." }, { status: 400 });
   }
 
-  const messages: ChatMessage[] = [
-    { role: "system", content: SYSTEM_PROMPT },
-    ...history,
-  ];
+  const client = new Anthropic({ apiKey });
 
   try {
     let leadRegistered = false;
 
     for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {
-      const data = await callMoonshot(messages, baseUrl, apiKey, model);
-      const choice = data.choices?.[0]?.message;
-      if (!choice) {
-        return NextResponse.json({ error: "Resposta vazia do assistente." }, { status: 502 });
-      }
-
-      const toolCalls = choice.tool_calls ?? [];
-      if (toolCalls.length === 0) {
-        return NextResponse.json({
-          reply: choice.content ?? "",
-          leadRegistered,
-        });
-      }
-
-      // Reanexa a mensagem do assistente com as tool_calls antes dos resultados.
-      messages.push({
-        role: "assistant",
-        content: choice.content ?? "",
-        // @ts-expect-error tool_calls nao faz parte do tipo simplificado, mas a API exige.
-        tool_calls: toolCalls,
+      const response = await client.messages.create({
+        model,
+        max_tokens: 1024,
+        temperature: 0.3,
+        // System estavel + tools: cacheia o prefixo (no-op enquanto curto).
+        system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
+        tools: [REGISTRAR_LEAD_TOOL],
+        messages,
       });
 
-      for (const call of toolCalls) {
-        if (call.function.name === "registrar_lead") {
-          const out = await runRegistrarLead(call.function.arguments);
-          if (out.startsWith("sucesso")) leadRegistered = true;
-          messages.push({ role: "tool", tool_call_id: call.id, content: out });
+      if (response.stop_reason !== "tool_use") {
+        const reply = response.content
+          .filter((b): b is Anthropic.TextBlock => b.type === "text")
+          .map((b) => b.text)
+          .join("")
+          .trim();
+        return NextResponse.json({ reply, leadRegistered });
+      }
+
+      // Reanexa a resposta do assistente (com os blocos tool_use) antes dos resultados.
+      messages.push({ role: "assistant", content: response.content });
+
+      const toolResults: Anthropic.ToolResultBlockParam[] = [];
+      for (const block of response.content) {
+        if (block.type !== "tool_use") continue;
+        if (block.name === "registrar_lead") {
+          const out = await runRegistrarLead(block.input);
+          if (out.ok) leadRegistered = true;
+          toolResults.push({ type: "tool_result", tool_use_id: block.id, content: out.text });
         } else {
-          messages.push({
-            role: "tool",
-            tool_call_id: call.id,
+          toolResults.push({
+            type: "tool_result",
+            tool_use_id: block.id,
             content: "erro: ferramenta desconhecida.",
+            is_error: true,
           });
         }
       }
+      messages.push({ role: "user", content: toolResults });
     }
 
     // Esgotou as rodadas de tool sem resposta final em texto.
@@ -204,10 +148,15 @@ export async function POST(req: NextRequest) {
       leadRegistered,
     });
   } catch (err) {
+    if (err instanceof Anthropic.AuthenticationError) {
+      console.error("Anthropic auth error:", err.message);
+      return NextResponse.json({ error: "Assistente nao configurado." }, { status: 503 });
+    }
+    if (err instanceof Anthropic.APIError) {
+      console.error(`Anthropic API error ${err.status}:`, err.message);
+      return NextResponse.json({ error: "Erro ao falar com o assistente." }, { status: 502 });
+    }
     console.error("Chat route exception:", err);
-    return NextResponse.json(
-      { error: "Erro ao falar com o assistente." },
-      { status: 502 }
-    );
+    return NextResponse.json({ error: "Erro ao falar com o assistente." }, { status: 502 });
   }
 }

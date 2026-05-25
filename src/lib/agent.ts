@@ -33,29 +33,28 @@ LIMITES
 - Se perguntarem algo fora do escopo da Ethos, redirecione com cordialidade para o que a Ethos faz.
 - Nao prometa prazos ou SLAs especificos que nao estejam definidos aqui.`;
 
-// Schema da ferramenta (function calling, protocolo OpenAI/Moonshot).
+// Schema da ferramenta (tool use da Claude API).
 // O modelo decide quando chamar; o servidor valida e dispara o email.
-export const REGISTRAR_LEAD_TOOL = {
-  type: "function" as const,
-  function: {
-    name: "registrar_lead",
-    description:
-      "Registra o lead e notifica o time da Ethos. Chame apenas quando ja tiver coletado nome, empresa, pelo menos um contato (email ou telefone) e um resumo da necessidade.",
-    parameters: {
-      type: "object",
-      properties: {
-        nome: { type: "string", description: "Nome do visitante." },
-        empresa: { type: "string", description: "Nome da empresa do visitante." },
-        email: { type: "string", description: "Email de contato, se informado." },
-        telefone: { type: "string", description: "Telefone/WhatsApp de contato, se informado." },
-        necessidade: {
-          type: "string",
-          description: "Resumo do que o visitante precisa, em uma ou duas frases.",
-        },
-        faturamento: { type: "string", description: "Faturamento mensal aproximado, se informado." },
-        tamanho: { type: "string", description: "Tamanho/numero de funcionarios da empresa, se informado." },
+import type Anthropic from "@anthropic-ai/sdk";
+
+export const REGISTRAR_LEAD_TOOL: Anthropic.Tool = {
+  name: "registrar_lead",
+  description:
+    "Registra o lead e notifica o time da Ethos. Chame apenas quando ja tiver coletado nome, empresa, pelo menos um contato (email ou telefone) e um resumo da necessidade.",
+  input_schema: {
+    type: "object",
+    properties: {
+      nome: { type: "string", description: "Nome do visitante." },
+      empresa: { type: "string", description: "Nome da empresa do visitante." },
+      email: { type: "string", description: "Email de contato, se informado." },
+      telefone: { type: "string", description: "Telefone/WhatsApp de contato, se informado." },
+      necessidade: {
+        type: "string",
+        description: "Resumo do que o visitante precisa, em uma ou duas frases.",
       },
-      required: ["nome", "empresa", "necessidade"],
+      faturamento: { type: "string", description: "Faturamento mensal aproximado, se informado." },
+      tamanho: { type: "string", description: "Tamanho/numero de funcionarios da empresa, se informado." },
     },
+    required: ["nome", "empresa", "necessidade"],
   },
 };
