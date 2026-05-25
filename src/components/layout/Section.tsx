@@ -1,12 +1,10 @@
 import { HTMLAttributes } from "react";
 
 interface SectionProps extends HTMLAttributes<HTMLElement> {
-  surface?: boolean;
   as?: "section" | "div" | "article";
 }
 
 export function Section({
-  surface = false,
   as: Tag = "section",
   className = "",
   children,
