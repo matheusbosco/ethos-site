@@ -21,6 +21,20 @@ export type SendLeadResult =
   | { ok: true }
   | { ok: false; status: number; error: string };
 
+// Paleta Ethos (mesma de globals.css).
+const C = {
+  carvao: "#2C2620",
+  areia: "#F4EFE8",
+  areiaClara: "#FBF8F3",
+  ambar: "#C89A4F",
+  azul: "#5A7090",
+  nevoa: "#8BA5BB",
+  borda: "#E2DACE",
+} as const;
+
+const FONT_STACK =
+  "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif";
+
 function escape(value: string): string {
   return value
     .replace(/&/g, "&amp;")
@@ -28,13 +42,49 @@ function escape(value: string): string {
     .replace(/>/g, "&gt;");
 }
 
-// Monta uma linha da tabela de email so quando o valor existe.
-function row(label: string, value: string | undefined, isLink = false): string {
+// EthosMark inline: tres barras ambar (≡) + wordmark ETHOS em ExtraBold.
+// SVG inline evita bloqueio de imagens externas em clients de email.
+function ethosMark(): string {
+  return `
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+      <tr>
+        <td style="padding-right: 10px; vertical-align: middle;">
+          <svg width="22" height="20" viewBox="0 0 22 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="0" y="2"  width="22" height="3" rx="1.5" fill="${C.ambar}"/>
+            <rect x="0" y="8"  width="22" height="3" rx="1.5" fill="${C.ambar}"/>
+            <rect x="0" y="14" width="22" height="3" rx="1.5" fill="${C.ambar}"/>
+          </svg>
+        </td>
+        <td style="vertical-align: middle;">
+          <span style="font-family: ${FONT_STACK}; font-size: 16px; font-weight: 800; letter-spacing: 0.18em; color: ${C.carvao};">ETHOS</span>
+        </td>
+      </tr>
+    </table>
+  `;
+}
+
+// Linha de campo na tabela editorial. So renderiza se houver valor.
+function field(label: string, value: string | undefined, opts: { link?: "mailto" | "tel" } = {}): string {
   if (!value || value.trim().length === 0) return "";
-  const cell = isLink
-    ? `<a href="mailto:${escape(value)}" style="color: #C89A4F;">${escape(value)}</a>`
-    : `<strong>${escape(value)}</strong>`;
-  return `<tr><td style="padding: 4px 0; color: #5A7090; width: 140px;">${label}</td><td style="padding: 4px 0;">${cell}</td></tr>`;
+  let cell: string;
+  if (opts.link === "mailto") {
+    cell = `<a href="mailto:${escape(value)}" style="color: ${C.carvao}; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: ${C.ambar};">${escape(value)}</a>`;
+  } else if (opts.link === "tel") {
+    const digits = value.replace(/\D/g, "");
+    cell = `<a href="tel:+55${digits}" style="color: ${C.carvao}; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: ${C.ambar};">${escape(value)}</a>`;
+  } else {
+    cell = escape(value);
+  }
+  return `
+    <tr>
+      <td style="padding: 10px 0; border-bottom: 1px solid ${C.borda}; width: 140px; vertical-align: top;">
+        <span style="font-family: ${FONT_STACK}; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: ${C.azul};">${label}</span>
+      </td>
+      <td style="padding: 10px 0; border-bottom: 1px solid ${C.borda}; vertical-align: top;">
+        <span style="font-family: ${FONT_STACK}; font-size: 15px; font-weight: 500; color: ${C.carvao};">${cell}</span>
+      </td>
+    </tr>
+  `;
 }
 
 export async function sendLeadEmail(payload: LeadPayload): Promise<SendLeadResult> {
@@ -47,7 +97,8 @@ export async function sendLeadEmail(payload: LeadPayload): Promise<SendLeadResul
   const to = process.env.CONTACT_TO_EMAIL ?? "contato@somosethos.com.br";
 
   const origemLabel = payload.origem === "chat" ? "chat do site" : "formulario do site";
-  const subject = `[Site Ethos] Novo contato (${origemLabel}) — ${payload.empresa}`;
+  const origemTag = payload.origem === "chat" ? "Chat · Otto" : "Formulario";
+  const subject = `[Ethos] Novo lead (${origemLabel}) · ${payload.empresa}`;
 
   const plain = [
     `Origem: ${origemLabel}`,
@@ -67,24 +118,120 @@ export async function sendLeadEmail(payload: LeadPayload): Promise<SendLeadResul
     .filter((line): line is string => line !== null)
     .join("\n");
 
-  const html = `
-    <div style="font-family: -apple-system, system-ui, sans-serif; line-height: 1.6; color: #2C2620; max-width: 560px;">
-      <h2 style="margin: 0 0 16px; font-size: 18px; color: #2C2620;">Novo contato via ${escape(origemLabel)}</h2>
-      <table style="border-collapse: collapse; width: 100%; font-size: 14px;">
-        ${row("Nome", payload.nome)}
-        ${row("Empresa", payload.empresa)}
-        ${row("Email", payload.email, true)}
-        ${row("Telefone", payload.telefone)}
-        ${row("Faturamento", payload.faturamento)}
-        ${row("Tamanho", payload.tamanho)}
-      </table>
-      <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #8BA5BB33;">
-        <p style="margin: 0 0 8px; color: #5A7090; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Mensagem</p>
-        <p style="margin: 0; white-space: pre-wrap;">${escape(payload.mensagem)}</p>
-      </div>
-      <p style="margin-top: 24px; font-size: 12px; color: #8BA5BB;">Enviado via ${escape(origemLabel)} em somosethos.com.br</p>
+  // HTML em tabelas + estilos inline: padrao de email pra renderizar bem em
+  // Gmail / Outlook / Apple Mail. Sem <style> no head (varios clients removem).
+  const html = `<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>${escape(subject)}</title>
+  </head>
+  <body style="margin: 0; padding: 0; background-color: ${C.areia}; font-family: ${FONT_STACK}; color: ${C.carvao};">
+    <!-- Preview (visivel na inbox antes do email abrir) -->
+    <div style="display: none; max-height: 0; overflow: hidden; opacity: 0; font-size: 1px; line-height: 1px; color: ${C.areia};">
+      ${escape(payload.nome)} de ${escape(payload.empresa)} entrou em contato via ${escape(origemLabel)}.
     </div>
-  `;
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: ${C.areia}; padding: 32px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; width: 100%; background-color: ${C.areiaClara}; border: 1px solid ${C.borda}; border-radius: 14px; overflow: hidden;">
+
+            <!-- Header com a marca -->
+            <tr>
+              <td style="padding: 28px 32px; border-bottom: 1px solid ${C.borda};">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td style="vertical-align: middle;">${ethosMark()}</td>
+                    <td align="right" style="vertical-align: middle;">
+                      <span style="display: inline-block; padding: 5px 10px; border: 1px solid ${C.ambar}; border-radius: 999px; font-family: ${FONT_STACK}; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: ${C.ambar};">${escape(origemTag)}</span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Titulo editorial -->
+            <tr>
+              <td style="padding: 32px 32px 8px 32px;">
+                <p style="margin: 0 0 6px; font-family: ${FONT_STACK}; font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: ${C.azul};">Novo lead</p>
+                <h1 style="margin: 0; font-family: ${FONT_STACK}; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; color: ${C.carvao};">${escape(payload.empresa)}</h1>
+                <p style="margin: 6px 0 0; font-family: ${FONT_STACK}; font-size: 15px; font-weight: 500; color: ${C.azul};">via ${escape(payload.nome)}</p>
+              </td>
+            </tr>
+
+            <!-- Tabela de dados -->
+            <tr>
+              <td style="padding: 24px 32px 8px 32px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+                  ${field("Empresa", payload.empresa)}
+                  ${field("Contato", payload.nome)}
+                  ${field("Email", payload.email, { link: "mailto" })}
+                  ${field("Telefone", payload.telefone, { link: "tel" })}
+                  ${field("Faturamento", payload.faturamento)}
+                  ${field("Tamanho", payload.tamanho)}
+                </table>
+              </td>
+            </tr>
+
+            <!-- Mensagem -->
+            <tr>
+              <td style="padding: 24px 32px 32px 32px;">
+                <p style="margin: 0 0 10px; font-family: ${FONT_STACK}; font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: ${C.azul};">Mensagem</p>
+                <div style="padding: 18px 20px; background-color: ${C.areia}; border-left: 3px solid ${C.ambar}; border-radius: 6px;">
+                  <p style="margin: 0; font-family: ${FONT_STACK}; font-size: 15px; line-height: 1.7; color: ${C.carvao}; white-space: pre-wrap;">${escape(payload.mensagem)}</p>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Acao rapida -->
+            ${
+              payload.email
+                ? `
+            <tr>
+              <td align="center" style="padding: 8px 32px 32px 32px;">
+                <a href="mailto:${escape(payload.email)}?subject=${encodeURIComponent(`Re: contato com a Ethos — ${payload.empresa}`)}"
+                   style="display: inline-block; padding: 12px 24px; background-color: ${C.carvao}; color: ${C.areia}; font-family: ${FONT_STACK}; font-size: 14px; font-weight: 700; text-decoration: none; border-radius: 999px; letter-spacing: 0.02em;">
+                  Responder ${escape(payload.nome.split(" ")[0])}
+                </a>
+              </td>
+            </tr>`
+                : ""
+            }
+
+            <!-- Footer institucional -->
+            <tr>
+              <td style="padding: 24px 32px; background-color: ${C.areia}; border-top: 1px solid ${C.borda};">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td style="vertical-align: middle;">
+                      <span style="font-family: ${FONT_STACK}; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: ${C.nevoa};">BPO de tecnologia</span>
+                    </td>
+                    <td align="right" style="vertical-align: middle;">
+                      <a href="https://www.somosethos.com.br" style="font-family: ${FONT_STACK}; font-size: 12px; font-weight: 500; color: ${C.azul}; text-decoration: none;">somosethos.com.br</a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+          </table>
+
+          <!-- Nota fora do card -->
+          <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; width: 100%;">
+            <tr>
+              <td align="center" style="padding: 16px 24px 0 24px;">
+                <p style="margin: 0; font-family: ${FONT_STACK}; font-size: 11px; color: ${C.nevoa};">Notificacao automatica enviada via ${escape(origemLabel)}.</p>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
 
   const replyTo = payload.email;
 
