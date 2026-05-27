@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { after } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { sendLeadEmail } from "@/lib/lead";
+import { sendLeadEmail, type LeadPayload } from "@/lib/lead";
+import { notifyHubLead } from "@/lib/hubIngest";
 import { REGISTRAR_LEAD_TOOL, SYSTEM_PROMPT } from "@/lib/agent";
 
 // Limites anti-abuso para o endpoint publico.
@@ -21,8 +23,13 @@ function str(value: unknown): string {
 }
 
 // Executa a tool registrar_lead: valida o que o modelo coletou e dispara o
-// email. Retorna o texto que volta para a Claude como resultado da tool.
-async function runRegistrarLead(input: unknown): Promise<{ text: string; ok: boolean }> {
+// email. Retorna o texto que volta para a Claude como resultado da tool +
+// o payload (pra ser usado pelo caller pra notificar o Hub).
+type RunLeadResult =
+  | { ok: false; text: string }
+  | { ok: true; text: string; payload: LeadPayload };
+
+async function runRegistrarLead(input: unknown): Promise<RunLeadResult> {
   const args = (input ?? {}) as Record<string, unknown>;
   const nome = str(args.nome);
   const empresa = str(args.empresa);
@@ -43,7 +50,7 @@ async function runRegistrarLead(input: unknown): Promise<{ text: string; ok: boo
     return { ok: false, text: "erro: o telefone informado parece invalido. Confirme o telefone com o visitante." };
   }
 
-  const result = await sendLeadEmail({
+  const payload: LeadPayload = {
     nome,
     empresa,
     email: email || undefined,
@@ -52,13 +59,19 @@ async function runRegistrarLead(input: unknown): Promise<{ text: string; ok: boo
     tamanho: str(args.tamanho) || undefined,
     mensagem: necessidade,
     origem: "chat",
-  });
+  };
+
+  const result = await sendLeadEmail(payload);
 
   if (!result.ok) {
     return { ok: false, text: "erro: falha ao enviar o lead para o time. Peca desculpas e sugira tentar pelo formulario de contato do site." };
   }
 
-  return { ok: true, text: "sucesso: lead registrado e time da Ethos notificado. Confirme ao visitante que o time vai retornar pelo contato informado." };
+  return {
+    ok: true,
+    text: "sucesso: lead registrado e time da Ethos notificado. Confirme ao visitante que o time vai retornar pelo contato informado.",
+    payload,
+  };
 }
 
 export async function POST(req: NextRequest) {
@@ -128,7 +141,11 @@ export async function POST(req: NextRequest) {
         if (block.type !== "tool_use") continue;
         if (block.name === "registrar_lead") {
           const out = await runRegistrarLead(block.input);
-          if (out.ok) leadRegistered = true;
+          if (out.ok) {
+            leadRegistered = true;
+            // Best-effort: cria deal no pipeline do Hub apos a resposta.
+            after(() => notifyHubLead(out.payload));
+          }
           toolResults.push({ type: "tool_result", tool_use_id: block.id, content: out.text });
         } else {
           toolResults.push({
