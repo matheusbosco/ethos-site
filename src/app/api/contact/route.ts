@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { after } from "next/server";
 import { sendLeadEmail } from "@/lib/lead";
+import { notifyHubLead } from "@/lib/hubIngest";
 
 interface ContactPayload {
   nome: string;
@@ -74,7 +76,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const result = await sendLeadEmail({
+  const lead = {
     nome: body.nome,
     empresa: body.empresa,
     email: body.email,
@@ -82,12 +84,17 @@ export async function POST(req: NextRequest) {
     faturamento: body.faturamento,
     tamanho: body.tamanho,
     mensagem: body.mensagem,
-    origem: "form",
-  });
+    origem: "form" as const,
+  };
+
+  const result = await sendLeadEmail(lead);
 
   if (!result.ok) {
     return NextResponse.json({ error: result.error }, { status: result.status });
   }
+
+  // Best-effort: cria deal no pipeline do Hub apos responder ao visitante.
+  after(() => notifyHubLead(lead));
 
   return NextResponse.json({ ok: true }, { status: 200 });
 }
