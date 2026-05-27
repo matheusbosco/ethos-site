@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { after } from "next/server";
 import { sendLeadEmail } from "@/lib/lead";
 import { notifyHubLead } from "@/lib/hubIngest";
+import { rateLimit } from "@/lib/rateLimit";
 
 interface ContactPayload {
   nome: string;
@@ -25,6 +26,16 @@ function isValidBrazilianPhone(value: string): boolean {
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limit: form tem honeypot + validacao estrita + LGPD consent,
+  // entao 10/min/IP da pra usar normalmente e ainda bloqueia bots agressivos.
+  const rl = rateLimit(req, { key: "contact", max: 10, windowSec: 60 });
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: "Muitas tentativas. Aguarde um instante." },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfterSec) } },
+    );
+  }
+
   let body: ContactPayload;
   try {
     body = (await req.json()) as ContactPayload;
