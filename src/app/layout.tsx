@@ -18,12 +18,17 @@ const googleSans = Google_Sans_Flex({
   display: "swap",
 });
 
+const SITE_TITLE = "Ethos · Inteligência sob medida";
+const SITE_DESCRIPTION =
+  "BPO de tecnologia. Operamos continuamente a camada de tecnologia que sustenta a sua operação, com monitoramento 24/7 e resposta humana priorizada.";
+
 export const metadata: Metadata = {
-  title: "Ethos · Inteligência sob medida",
-  description: "Agência de soluções com IA. Automação e agentes de IA para empresas que querem operar com mais inteligência.",
+  metadataBase: new URL("https://www.somosethos.com.br"),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
   openGraph: {
-    title: "Ethos · Inteligência sob medida",
-    description: "Agência de soluções com IA. Automação e agentes de IA para empresas que querem operar com mais inteligência.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     locale: "pt_BR",
     type: "website",
   },

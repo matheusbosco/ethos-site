@@ -3,6 +3,7 @@ import { after } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { sendLeadEmail, type LeadPayload } from "@/lib/lead";
 import { notifyHubLead } from "@/lib/hubIngest";
+import { rateLimit } from "@/lib/rateLimit";
 import { REGISTRAR_LEAD_TOOL, SYSTEM_PROMPT } from "@/lib/agent";
 
 // Limites anti-abuso para o endpoint publico.
@@ -75,6 +76,16 @@ async function runRegistrarLead(input: unknown): Promise<RunLeadResult> {
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limit por IP: protege os tokens da Anthropic de bots/abuso.
+  // Cada IP pode fazer ate 20 chamadas por minuto.
+  const rl = rateLimit(req, { key: "chat", max: 20, windowSec: 60 });
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: "Muitas mensagens. Aguarde um instante." },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfterSec) } },
+    );
+  }
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return NextResponse.json({ error: "Assistente nao configurado." }, { status: 503 });
