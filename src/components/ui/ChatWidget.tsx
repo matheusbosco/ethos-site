@@ -12,7 +12,20 @@ interface Msg {
 }
 
 const STORAGE_KEY = "ethos-chat-history";
+const CONTACT_ID_KEY = "ethos-contact-id";
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+function getOrCreateContactId(): string {
+  try {
+    const stored = localStorage.getItem(CONTACT_ID_KEY);
+    if (stored) return stored;
+    const id = crypto.randomUUID();
+    localStorage.setItem(CONTACT_ID_KEY, id);
+    return id;
+  } catch {
+    return crypto.randomUUID();
+  }
+}
 
 // Superficies derivadas da paleta Ethos (carvao/azul). Mantidas em hex para
 // controlar a elevacao do painel sobre o fundo carvao do site.
@@ -95,10 +108,11 @@ export function ChatWidget() {
     setLoading(true);
 
     try {
+      const contactId = getOrCreateContactId();
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next }),
+        body: JSON.stringify({ messages: next, contact_id: contactId }),
       });
       const data = await res.json();
       if (!res.ok || !data.reply) throw new Error(data.error ?? "falha");
