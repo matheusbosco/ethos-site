@@ -18,6 +18,7 @@ export interface HubIngestPayload extends LeadPayload {
 export async function notifyHubLead(payload: HubIngestPayload): Promise<void> {
   const baseUrl = process.env.HUB_BASE_URL ?? "https://ethos-hub.vercel.app";
   const token = process.env.HUB_INGEST_TOKEN;
+  console.log("hubIngest: token?", !!token, "url:", baseUrl.slice(0, 40));
   if (!token) return;
 
   const endpoint = `${baseUrl.replace(/\/$/, "")}/api/ingest/lead`;
@@ -26,6 +27,7 @@ export async function notifyHubLead(payload: HubIngestPayload): Promise<void> {
   const timeoutId = setTimeout(() => controller.abort(), 8000);
 
   try {
+    console.log("hubIngest: fetching", endpoint);
     const res = await fetch(endpoint, {
       method: "POST",
       headers: {
@@ -36,6 +38,7 @@ export async function notifyHubLead(payload: HubIngestPayload): Promise<void> {
       signal: controller.signal,
     });
 
+    console.log("hubIngest: response", res.status);
     if (!res.ok) {
       const body = await res.text().catch(() => "");
       console.error(`hubIngest: ${res.status} ${res.statusText} - ${body.slice(0, 200)}`);
