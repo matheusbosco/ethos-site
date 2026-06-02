@@ -141,6 +141,7 @@ export async function POST(req: NextRequest) {
           .map((b) => b.text)
           .join("")
           .trim();
+        if (!leadRegistered) console.log("chat: stop_reason=end_turn round=" + round);
         return NextResponse.json({ reply, leadRegistered });
       }
 
@@ -153,7 +154,7 @@ export async function POST(req: NextRequest) {
           const out = await runRegistrarLead(block.input);
           if (out.ok) {
             leadRegistered = true;
-            // Não usa after() — no Hobby plan o processo pode ser encerrado antes do fetch completar.
+            console.log("chat: registrar_lead ok, notifying hub");
             await notifyHubLead({
               ...out.payload,
               contact_id: contactId,
