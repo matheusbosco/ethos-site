@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { after } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { sendLeadEmail, type LeadPayload } from "@/lib/lead";
 import { notifyHubLead } from "@/lib/hubIngest";
@@ -154,16 +153,15 @@ export async function POST(req: NextRequest) {
           const out = await runRegistrarLead(block.input);
           if (out.ok) {
             leadRegistered = true;
-            after(() =>
-              notifyHubLead({
-                ...out.payload,
-                contact_id: contactId,
-                messages: fullHistory.map((m) => ({
-                  role: String(m.role),
-                  content: typeof m.content === "string" ? m.content : "",
-                })),
-              }),
-            );
+            // Não usa after() — no Hobby plan o processo pode ser encerrado antes do fetch completar.
+            await notifyHubLead({
+              ...out.payload,
+              contact_id: contactId,
+              messages: fullHistory.map((m) => ({
+                role: String(m.role),
+                content: typeof m.content === "string" ? m.content : "",
+              })),
+            });
           }
           toolResults.push({ type: "tool_result", tool_use_id: block.id, content: out.text });
         } else {
