@@ -1,10 +1,10 @@
 import { Resend } from "resend";
 
-// Origem do lead: formulario de contato ou chat do concierge.
+// Origem do lead: formulario de contato ou chat do assistente.
 export type LeadOrigem = "form" | "chat";
 
 // Payload flexivel. No form todos os campos vem preenchidos; no chat o
-// concierge coleta o essencial (nome, empresa, contato, necessidade) e os
+// assistente coleta o essencial (nome, empresa, contato, necessidade) e os
 // demais ficam opcionais para nao virar interrogatorio.
 export interface LeadPayload {
   nome: string;
