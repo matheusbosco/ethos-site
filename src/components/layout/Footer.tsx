@@ -66,7 +66,7 @@ export function Footer() {
                     ETHOS.
                   </span>
                   <span className="text-[0.6rem] text-[#8BA5BB] tracking-widest uppercase font-medium mt-0.5">
-                    BPO de tecnologia
+                    BPO de tecnologia especializado em IA
                   </span>
                 </div>
               </div>

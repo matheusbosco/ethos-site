@@ -33,7 +33,7 @@ export default function OgImage() {
             marginBottom: 40,
           }}
         >
-          Agência de IA · Ethos
+          BPO de tecnologia · especializado em IA
         </div>
 
         {/* Divider */}

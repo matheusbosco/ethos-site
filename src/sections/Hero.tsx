@@ -56,7 +56,7 @@ export function Hero() {
       {/* Texto — por cima do robô, centralizado */}
       <div className="relative z-10 mx-auto max-w-5xl w-full px-6 text-center animate-fade-up">
         <p className="text-xs font-semibold text-[#C89A4F] tracking-[0.22em] uppercase mb-5">
-          O seu BPO de tecnologia
+          BPO de tecnologia especializado em IA
         </p>
 
         <h1
@@ -67,7 +67,7 @@ export function Hero() {
         </h1>
 
         <p className="text-base md:text-lg text-[#cdd7e0] leading-[1.8] max-w-2xl mx-auto [text-shadow:0_1px_16px_rgba(0,0,0,0.5)]">
-          Entramos na sua operação, mostramos onde a tecnologia gera retorno,
+          Entramos na sua operação, mostramos onde a IA gera retorno,
           construímos sob medida e operamos sob nossa responsabilidade. 4 fases.
           Retorno calculado antes da operação ligar.
         </p>

@@ -18,9 +18,9 @@ const googleSans = Google_Sans_Flex({
   display: "swap",
 });
 
-const SITE_TITLE = "Ethos · Inteligência sob medida";
+const SITE_TITLE = "Ethos · BPO de tecnologia especializado em IA";
 const SITE_DESCRIPTION =
-  "BPO de tecnologia. Operamos continuamente a camada de tecnologia que sustenta a sua operação, com monitoramento 24/7 e resposta humana priorizada.";
+  "BPO de tecnologia especializado em soluções com IA. Entramos na sua operação, achamos onde a IA gera retorno real e operamos sob nossa responsabilidade — com monitoramento 24/7 e resposta humana priorizada.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.somosethos.com.br"),
